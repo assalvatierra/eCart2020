@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="da403231fa2d42db801b54b6b611a007" Name="Diagram1" ZoomLevel="57" >
+        <EntityTypeShape EntityType="ecartdb.UserDetail" Width="1.5" PointX="19" PointY="11.875" />
+        <EntityTypeShape EntityType="ecartdb.StoreDetail" Width="1.5" PointX="18.5" PointY="27.25" />
+        <EntityTypeShape EntityType="ecartdb.UserStatus" Width="1.5" PointX="21.875" PointY="11" />
+        <EntityTypeShape EntityType="ecartdb.StoreStatus" Width="1.5" PointX="13.875" PointY="26" />
+        <EntityTypeShape EntityType="ecartdb.StoreCategory" Width="1.5" PointX="15" PointY="30.5" />
+        <EntityTypeShape EntityType="ecartdb.MasterCity" Width="1.5" PointX="6.625" PointY="13" />
+        <EntityTypeShape EntityType="ecartdb.MasterArea" Width="1.5" PointX="9.625" PointY="18.625" />
+        <EntityTypeShape EntityType="ecartdb.ItemMaster" Width="1.5" PointX="17.75" PointY="48.625" />
+        <EntityTypeShape EntityType="ecartdb.ItemCategory" Width="1.5" PointX="12.625" PointY="44.75" />
+        <EntityTypeShape EntityType="ecartdb.ItemMasterCategory" Width="1.5" PointX="15.375" PointY="45.375" />
+        <EntityTypeShape EntityType="ecartdb.StoreItem" Width="1.5" PointX="30.125" PointY="40.375" />
+        <EntityTypeShape EntityType="ecartdb.CartDetail" Width="1.5" PointX="40.75" PointY="21.75" />
+        <EntityTypeShape EntityType="ecartdb.CartItem" Width="1.5" PointX="40.25" PointY="36" />
+        <EntityTypeShape EntityType="ecartdb.CartStatus" Width="1.5" PointX="44.625" PointY="22.25" />
+        <EntityTypeShape EntityType="ecartdb.CartHistory" Width="1.5" PointX="43" PointY="18.75" />
+        <EntityTypeShape EntityType="ecartdb.CartItemStatus" Width="1.5" PointX="36.875" PointY="35.875" />
+        <EntityTypeShape EntityType="ecartdb.ItemCatGroup" Width="1.5" PointX="10.375" PointY="45" />
+        <EntityTypeShape EntityType="ecartdb.StorePickupPoint" Width="1.5" PointX="25.125" PointY="29.875" />
+        <EntityTypeShape EntityType="ecartdb.StorePickupPartner" Width="1.5" PointX="22" PointY="30.75" />
+        <EntityTypeShape EntityType="ecartdb.StorePickupStatus" Width="1.5" PointX="28.125" PointY="31.125" />
+        <EntityTypeShape EntityType="ecartdb.CartDelivery" Width="1.5" PointX="35.25" PointY="4.75" />
+        <EntityTypeShape EntityType="ecartdb.RiderDetail" Width="1.5" PointX="26.5" PointY="4" />
+        <EntityTypeShape EntityType="ecartdb.RiderStatus" Width="1.5" PointX="24.25" PointY="2" />
+        <EntityTypeShape EntityType="ecartdb.CartActivity" Width="1.5" PointX="39.625" PointY="2.875" />
+        <EntityTypeShape EntityType="ecartdb.CartActivityType" Width="1.5" PointX="43.125" PointY="2.5" />
+        <EntityTypeShape EntityType="ecartdb.StoreImage" Width="1.5" PointX="22.125" PointY="34.25" />
+        <EntityTypeShape EntityType="ecartdb.ItemImage" Width="1.5" PointX="20.25" PointY="51.25" />
+        <EntityTypeShape EntityType="ecartdb.StoreImgType" Width="1.5" PointX="24.375" PointY="34.125" />
+        <EntityTypeShape EntityType="ecartdb.StorePayment" Width="1.5" PointX="14.875" PointY="33.875" />
+        <EntityTypeShape EntityType="ecartdb.StorePaymentType" Width="1.5" PointX="8.625" PointY="33.25" />
+        <EntityTypeShape EntityType="ecartdb.StorePaymentStatus" Width="1.5" PointX="8.5" PointY="36" />
+        <EntityTypeShape EntityType="ecartdb.PaymentDetail" Width="1.5" PointX="46.75" PointY="22.5" />
+        <EntityTypeShape EntityType="ecartdb.PaymentReceiver" Width="1.5" PointX="50" PointY="20" />
+        <EntityTypeShape EntityType="ecartdb.PaymentStatus" Width="1.5" PointX="50.25" PointY="22.625" />
+        <EntityTypeShape EntityType="ecartdb.RiderCashDetail" Width="1.5" PointX="69.75" PointY="0.5" />
+        <EntityTypeShape EntityType="ecartdb.RiderCashParty" Width="1.5" PointX="72.75" PointY="1" />
+        <EntityTypeShape EntityType="ecartdb.PaymentParty" Width="1.5" PointX="50.75" PointY="25.5" />
+        <EntityTypeShape EntityType="ecartdb.StoreKiosk" Width="1.5" PointX="29.875" PointY="24.25" />
+        <EntityTypeShape EntityType="ecartdb.StoreKioskOrder" Width="1.5" PointX="33.25" PointY="24.125" />
+        <AssociationConnector Association="ecartdb.UserStatusUserDetail" />
+        <AssociationConnector Association="ecartdb.MasterCityUserDetail" />
+        <AssociationConnector Association="ecartdb.UserDetailCartDetail" />
+        <AssociationConnector Association="ecartdb.MasterAreaUserDetail" />
+        <AssociationConnector Association="ecartdb.StoreStatusStoreDetail" />
+        <AssociationConnector Association="ecartdb.StoreCategoryStoreDetail" />
+        <AssociationConnector Association="ecartdb.MasterCityStoreDetail" />
+        <AssociationConnector Association="ecartdb.StoreDetailStoreItem" />
+        <AssociationConnector Association="ecartdb.StoreDetailCartDetail" />
+        <AssociationConnector Association="ecartdb.MasterAreaStoreDetail" />
+        <AssociationConnector Association="ecartdb.StoreDetailStorePickupPoint" />
+        <AssociationConnector Association="ecartdb.StoreDetailStorePickupPartner" />
+        <AssociationConnector Association="ecartdb.StoreDetailStoreImage" />
+        <AssociationConnector Association="ecartdb.StoreDetailStorePayment" />
+        <AssociationConnector Association="ecartdb.StoreDetailStoreQue" />
+        <AssociationConnector Association="ecartdb.MasterCityMasterBarangay" />
+        <AssociationConnector Association="ecartdb.ItemMasterItemMasterCategory" />
+        <AssociationConnector Association="ecartdb.ItemMasterStoreItem" />
+        <AssociationConnector Association="ecartdb.ItemMasterItemImage" />
+        <AssociationConnector Association="ecartdb.ItemCategoryStoreItemCategory" />
+        <AssociationConnector Association="ecartdb.ItemCatGroupItemCategory" />
+        <AssociationConnector Association="ecartdb.CartDetailCartItem" />
+        <AssociationConnector Association="ecartdb.StoreItemCartItem" />
+        <AssociationConnector Association="ecartdb.CartItemStatusCartItem" />
+        <AssociationConnector Association="ecartdb.CartStatusCartDetail" />
+        <AssociationConnector Association="ecartdb.CartStatusCartHistory" />
+        <AssociationConnector Association="ecartdb.StorePickupPointStorePickupPartner" />
+        <AssociationConnector Association="ecartdb.StorePickupStatusStorePickupPoint" />
+        <AssociationConnector Association="ecartdb.CartDetailCartDelivery" />
+        <AssociationConnector Association="ecartdb.RiderDetailCartDelivery" />
+        <AssociationConnector Association="ecartdb.CartDeliveryCartDeliveryActivity" />
+        <AssociationConnector Association="ecartdb.RiderStatusRiderDetail" />
+        <AssociationConnector Association="ecartdb.MasterCityRiderDetail" />
+        <AssociationConnector Association="ecartdb.CartActivityTypeCartActivity" />
+        <AssociationConnector Association="ecartdb.StoreImgTypeStoreImage" />
+        <AssociationConnector Association="ecartdb.StorePaymentTypeStorePayment" />
+        <AssociationConnector Association="ecartdb.StorePaymentStatusStorePayment" />
+        <AssociationConnector Association="ecartdb.CartDetailPaymentDetail" />
+        <AssociationConnector Association="ecartdb.PaymentReceiverPaymentDetail" />
+        <AssociationConnector Association="ecartdb.PaymentStatusPaymentDetail" />
+        <AssociationConnector Association="ecartdb.PaymentPartyPaymentDetail" />
+        <AssociationConnector Association="ecartdb.RiderDetailRiderCashDetail" />
+        <AssociationConnector Association="ecartdb.RiderCashPartyRiderCashDetail" />
+        <AssociationConnector Association="ecartdb.CartDetailRiderCashDetail" />
+        <AssociationConnector Association="ecartdb.CartDetailStoreQueOrder" />
+        <AssociationConnector Association="ecartdb.StoreKioskStoreKioskOrder" ManuallyRouted="false" >
+        </AssociationConnector>
+        <AssociationConnector Association="ecartdb.StorePickupPointCartDetail" />
+        <AssociationConnector Association="ecartdb.CartDetailCartHistory" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

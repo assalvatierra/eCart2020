@@ -1,0 +1,12 @@
+D:\Company\2020.RealSys\eCart\eCartInterfaces\bin\Debug\eCartInterfaces.dll
+D:\Company\2020.RealSys\eCart\eCartInterfaces\bin\Debug\eCartInterfaces.pdb
+D:\Company\2020.RealSys\eCart\eCartInterfaces\bin\Debug\eCartModels.dll
+D:\Company\2020.RealSys\eCart\eCartInterfaces\bin\Debug\EntityFramework.dll
+D:\Company\2020.RealSys\eCart\eCartInterfaces\bin\Debug\eCartModels.pdb
+D:\Company\2020.RealSys\eCart\eCartInterfaces\bin\Debug\eCartModels.dll.config
+D:\Company\2020.RealSys\eCart\eCartInterfaces\bin\Debug\EntityFramework.xml
+D:\Company\2020.RealSys\eCart\eCartInterfaces\obj\Debug\eCartInterfaces.csprojAssemblyReference.cache
+D:\Company\2020.RealSys\eCart\eCartInterfaces\obj\Debug\eCartInterfaces.csproj.CoreCompileInputs.cache
+D:\Company\2020.RealSys\eCart\eCartInterfaces\obj\Debug\eCartInterfaces.csproj.CopyComplete
+D:\Company\2020.RealSys\eCart\eCartInterfaces\obj\Debug\eCartInterfaces.dll
+D:\Company\2020.RealSys\eCart\eCartInterfaces\obj\Debug\eCartInterfaces.pdb

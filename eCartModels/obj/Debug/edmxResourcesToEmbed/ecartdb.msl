@@ -1,0 +1,398 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ecartdbStoreContainer" CdmEntityContainer="ecartdbContainer">
+    <EntitySetMapping Name="UserDetails">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.UserDetail)">
+        <MappingFragment StoreEntitySet="UserDetails">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="UserStatusId" ColumnName="UserStatusId" />
+          <ScalarProperty Name="MasterCityId" ColumnName="MasterCityId" />
+          <ScalarProperty Name="MasterAreaId" ColumnName="MasterAreaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StoreDetails">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StoreDetail)">
+        <MappingFragment StoreEntitySet="StoreDetails">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="StoreStatusId" ColumnName="StoreStatusId" />
+          <ScalarProperty Name="StoreCategoryId" ColumnName="StoreCategoryId" />
+          <ScalarProperty Name="MasterCityId" ColumnName="MasterCityId" />
+          <ScalarProperty Name="MasterAreaId" ColumnName="MasterAreaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserStatus">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.UserStatus)">
+        <MappingFragment StoreEntitySet="UserStatus">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StoreStatus">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StoreStatus)">
+        <MappingFragment StoreEntitySet="StoreStatus">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StoreCategories">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StoreCategory)">
+        <MappingFragment StoreEntitySet="StoreCategories">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MasterCities">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.MasterCity)">
+        <MappingFragment StoreEntitySet="MasterCities">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MasterAreas">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.MasterArea)">
+        <MappingFragment StoreEntitySet="MasterAreas">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="MasterCityId" ColumnName="MasterCityId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ItemMasters">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.ItemMaster)">
+        <MappingFragment StoreEntitySet="ItemMasters">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ItemCategories">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.ItemCategory)">
+        <MappingFragment StoreEntitySet="ItemCategories">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="ItemCatGroupId" ColumnName="ItemCatGroupId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ItemMasterCategories">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.ItemMasterCategory)">
+        <MappingFragment StoreEntitySet="ItemMasterCategories">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ItemCategoryId" ColumnName="ItemCategoryId" />
+          <ScalarProperty Name="ItemMasterId" ColumnName="ItemMasterId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StoreItems">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StoreItem)">
+        <MappingFragment StoreEntitySet="StoreItems">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ItemMasterId" ColumnName="ItemMasterId" />
+          <ScalarProperty Name="StoreDetailId" ColumnName="StoreDetailId" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CartDetails">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.CartDetail)">
+        <MappingFragment StoreEntitySet="CartDetails">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserDetailId" ColumnName="UserDetailId" />
+          <ScalarProperty Name="StoreDetailId" ColumnName="StoreDetailId" />
+          <ScalarProperty Name="CartStatusId" ColumnName="CartStatusId" />
+          <ScalarProperty Name="DtPickup" ColumnName="DtPickup" />
+          <ScalarProperty Name="DeliveryType" ColumnName="DeliveryType" />
+          <ScalarProperty Name="StorePickupPointId" ColumnName="StorePickupPointId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CartItems">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.CartItem)">
+        <MappingFragment StoreEntitySet="CartItems">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CartDetailId" ColumnName="CartDetailId" />
+          <ScalarProperty Name="StoreItemId" ColumnName="StoreItemId" />
+          <ScalarProperty Name="ItemQty" ColumnName="ItemQty" />
+          <ScalarProperty Name="ItemOrder" ColumnName="ItemOrder" />
+          <ScalarProperty Name="CartItemStatusId" ColumnName="CartItemStatusId" />
+          <ScalarProperty Name="Remarks1" ColumnName="Remarks1" />
+          <ScalarProperty Name="Remarks2" ColumnName="Remarks2" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CartStatus">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.CartStatus)">
+        <MappingFragment StoreEntitySet="CartStatus">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CartHistories">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.CartHistory)">
+        <MappingFragment StoreEntitySet="CartHistories">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CartStatusId" ColumnName="CartStatusId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="dtStatus" ColumnName="dtStatus" />
+          <ScalarProperty Name="CartDetailId" ColumnName="CartDetailId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CartItemStatus">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.CartItemStatus)">
+        <MappingFragment StoreEntitySet="CartItemStatus">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ItemCatGroups">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.ItemCatGroup)">
+        <MappingFragment StoreEntitySet="ItemCatGroups">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StorePickupPoints">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StorePickupPoint)">
+        <MappingFragment StoreEntitySet="StorePickupPoints">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StoreDetailId" ColumnName="StoreDetailId" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="StorePickupStatusId" ColumnName="StorePickupStatusId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StorePickupPartners">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StorePickupPartner)">
+        <MappingFragment StoreEntitySet="StorePickupPartners">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StorePickupPointId" ColumnName="StorePickupPointId" />
+          <ScalarProperty Name="StoreDetailId" ColumnName="StoreDetailId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StorePickupStatus">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StorePickupStatus)">
+        <MappingFragment StoreEntitySet="StorePickupStatus">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CartDeliveries">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.CartDelivery)">
+        <MappingFragment StoreEntitySet="CartDeliveries">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CartDetailId" ColumnName="CartDetailId" />
+          <ScalarProperty Name="dtDelivery" ColumnName="dtDelivery" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="RiderDetailId" ColumnName="RiderDetailId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RiderDetails">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.RiderDetail)">
+        <MappingFragment StoreEntitySet="RiderDetails">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="RiderStatusId" ColumnName="RiderStatusId" />
+          <ScalarProperty Name="MasterCityId" ColumnName="MasterCityId" />
+          <ScalarProperty Name="Mobile2" ColumnName="Mobile2" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RiderStatus">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.RiderStatus)">
+        <MappingFragment StoreEntitySet="RiderStatus">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CartActivities">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.CartActivity)">
+        <MappingFragment StoreEntitySet="CartActivities">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CartDeliveryId" ColumnName="CartDeliveryId" />
+          <ScalarProperty Name="dtActivity" ColumnName="dtActivity" />
+          <ScalarProperty Name="CartActivityTypeId" ColumnName="CartActivityTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CartActivityTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.CartActivityType)">
+        <MappingFragment StoreEntitySet="CartActivityTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StoreImages">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StoreImage)">
+        <MappingFragment StoreEntitySet="StoreImages">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StoreDetailId" ColumnName="StoreDetailId" />
+          <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+          <ScalarProperty Name="StoreImgTypeId" ColumnName="StoreImgTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ItemImages">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.ItemImage)">
+        <MappingFragment StoreEntitySet="ItemImages">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ItemMasterId" ColumnName="ItemMasterId" />
+          <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StoreImgTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StoreImgType)">
+        <MappingFragment StoreEntitySet="StoreImgTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StorePayments">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StorePayment)">
+        <MappingFragment StoreEntitySet="StorePayments">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StoreDetailId" ColumnName="StoreDetailId" />
+          <ScalarProperty Name="dtPayment" ColumnName="dtPayment" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="StorePaymentTypeId" ColumnName="StorePaymentTypeId" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="dtPosted" ColumnName="dtPosted" />
+          <ScalarProperty Name="StorePaymentStatusId" ColumnName="StorePaymentStatusId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StorePaymentTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StorePaymentType)">
+        <MappingFragment StoreEntitySet="StorePaymentTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StorePaymentStatus">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StorePaymentStatus)">
+        <MappingFragment StoreEntitySet="StorePaymentStatus">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PaymentDetails">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.PaymentDetail)">
+        <MappingFragment StoreEntitySet="PaymentDetails">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CartDetailId" ColumnName="CartDetailId" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="dtPayment" ColumnName="dtPayment" />
+          <ScalarProperty Name="PaymentReceiverId" ColumnName="PaymentReceiverId" />
+          <ScalarProperty Name="ReceiverInfo" ColumnName="ReceiverInfo" />
+          <ScalarProperty Name="PaymentPartyId" ColumnName="PaymentPartyId" />
+          <ScalarProperty Name="PartyInfo" ColumnName="PartyInfo" />
+          <ScalarProperty Name="PaymentStatusId" ColumnName="PaymentStatusId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PaymentReceivers">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.PaymentReceiver)">
+        <MappingFragment StoreEntitySet="PaymentReceivers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PaymentStatus">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.PaymentStatus)">
+        <MappingFragment StoreEntitySet="PaymentStatus">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RiderCashDetails">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.RiderCashDetail)">
+        <MappingFragment StoreEntitySet="RiderCashDetails">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="RiderDetailId" ColumnName="RiderDetailId" />
+          <ScalarProperty Name="DtCash" ColumnName="DtCash" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="RiderCashPartyId" ColumnName="RiderCashPartyId" />
+          <ScalarProperty Name="CartDetailId" ColumnName="CartDetailId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RiderCashParties">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.RiderCashParty)">
+        <MappingFragment StoreEntitySet="RiderCashParties">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Operation" ColumnName="Operation" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PaymentParties">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.PaymentParty)">
+        <MappingFragment StoreEntitySet="PaymentParties">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StoreKiosks">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StoreKiosk)">
+        <MappingFragment StoreEntitySet="StoreKiosks">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StoreDetailId" ColumnName="StoreDetailId" />
+          <ScalarProperty Name="KioskName" ColumnName="KioskName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StoreKioskOrders">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StoreKioskOrder)">
+        <MappingFragment StoreEntitySet="StoreKioskOrders">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Customer" ColumnName="Customer" />
+          <ScalarProperty Name="DtOrder" ColumnName="DtOrder" />
+          <ScalarProperty Name="CartDetailId" ColumnName="CartDetailId" />
+          <ScalarProperty Name="StoreKioskId" ColumnName="StoreKioskId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
