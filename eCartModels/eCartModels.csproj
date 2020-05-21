@@ -212,6 +212,9 @@
       <LastGenOutput>ecartdb.cs</LastGenOutput>
       <DependentUpon>ecartdb.edmx</DependentUpon>
     </Content>
+    <Content Include="Migration\AuthenticationTables.sql" />
+    <Content Include="Migration\Initialize_01.sql" />
+    <Content Include="Migration\Sample_01.sql" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -1,0 +1,58 @@
+﻿
+@model IEnumerable<eCartModels.StoreItem>
+
+<div class="row col-lg-12" style="display:flex;align-items:baseline;">
+    <h3 class="col-lg-2"> Featured&nbsp;Items </h3>
+    <div class="col-lg-9">
+        <span class="badge badge-categories"> Vegetables </span>
+        <span class="badge badge-categories"> Canned Goods </span>
+        <span class="badge badge-categories"> Cooking </span>
+        <span class="badge badge-categories"> Snacks </span>
+        <span class="badge badge-categories"> Beverages </span>
+        <span class="badge badge-categories"> Personal Care </span>
+    </div>
+</div>
+<div class="row item-panel">
+    @foreach (var item in Model)
+    {
+
+        <div class="col-sm-12 col-md-3 col-lg-2 item-list">
+            @if (item.ItemMaster.ItemImages.FirstOrDefault() != null)
+            {
+                var image = item.ItemMaster.ItemImages.FirstOrDefault();
+                <img src="@image.ImageUrl" width="60" class="item-image" />
+            }
+            else
+            {
+                <img src="~/img/placeholders/placeholder-product.png" class="img-thumbnail" width="60" />
+            }
+            <div class="item-desc">
+                <span style="font-size:9px;color:royalblue;"> @item.StoreDetail.Name </span>
+                <h4 style="margin-top:0px;">
+
+                    @if (item.ItemMaster.Name.Length < 17)
+                    {
+                        @item.ItemMaster.Name
+                    }
+                    else
+                    {
+                        @item.ItemMaster.Name.Substring(0, 17)
+                        <text>... </text>
+                    }
+                </h4>
+                <b class="text-success"> Php @item.UnitPrice.ToString("0.00") </b>
+            </div>
+            <div class="add-to-Cart">
+                <button class="btn btn-primary" onclick="AddtoCart(this)" style="width:100%;"> Add to Cart </button>
+                <div class="btn-group hidden">
+                    <button class="btn btn-default" type="button" onclick="SubtractQty(this)"> - </button>
+                    <div class="btn btn-default disabled item-qty">
+                        1
+                    </div>
+                    <button class="btn btn-default" type="button" onclick="AddQty(this)"> + </button>
+                    <button class="btn btn-default" onclick="AddtoCart_Submit(this,'@item.Id', '@item.ItemMaster.Name', '@item.UnitPrice')"> Submit </button>
+                </div>
+            </div>
+        </div>
+    }
+</div>

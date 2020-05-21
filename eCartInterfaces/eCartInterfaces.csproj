@@ -46,6 +46,8 @@
     <Compile Include="iRiderMgr.cs" />
     <Compile Include="iStoreDb.cs" />
     <Compile Include="iStoreMgr.cs" />
+    <Compile Include="iUserDb.cs" />
+    <Compile Include="iUserMgr.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

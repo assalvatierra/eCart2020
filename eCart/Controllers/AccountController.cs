@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using eCart.Models;
+using eCartModels;
+using System.Collections.Generic;
 
 namespace eCart.Controllers
 {
@@ -86,6 +88,7 @@ namespace eCart.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
+                    
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
@@ -480,6 +483,26 @@ namespace eCart.Controllers
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
         }
+        #endregion
+
+
+        #region Cart
+
+        private bool CreateCart()
+        {
+            try
+            {
+                List<cCartDetails> cartDetails = new List<cCartDetails>();
+                Session["CARTDETAILS"] = (List<cCartDetails>)cartDetails;
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         #endregion
     }
 }

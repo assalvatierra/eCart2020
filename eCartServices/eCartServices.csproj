@@ -57,6 +57,7 @@
     <Compile Include="RiderMgr.cs" />
     <Compile Include="StoreFactory.cs" />
     <Compile Include="StoreMgr.cs" />
+    <Compile Include="UserMgr.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

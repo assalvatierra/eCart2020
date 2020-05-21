@@ -32,9 +32,9 @@ namespace eCartServices
                 
                 return stores.ToList();
             }
-            catch
+            catch (Exception ex)
             { 
-                throw new NotImplementedException();
+                throw ex;
             }
         }
 

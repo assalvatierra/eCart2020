@@ -167,6 +167,10 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Rider\RiderAreaRegistration.cs" />
+    <Compile Include="Areas\Shopper\ShopperAreaRegistration.cs" />
+    <Compile Include="Areas\Store\StoreAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -180,17 +184,38 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\aspnet-eCart-20200518113945.mdf" />
+    <Content Include="App_Data\aspnet-eCart-20200518113945_log.ldf">
+      <DependentUpon>aspnet-eCart-20200518113945.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\daterangepicker.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="img\placeholders\food-delivery.png" />
+    <Content Include="img\placeholders\image-placeholder.png" />
+    <Content Include="img\placeholders\item-placeholder.png" />
+    <Content Include="img\placeholders\placeholder-images-product-2.png" />
+    <Content Include="img\placeholders\placeholder-images-product-3_large.png" />
+    <Content Include="img\placeholders\placeholder-product.png" />
+    <Content Include="img\placeholders\shopping-cart-colour-thumbnail.png" />
+    <Content Include="img\store\shopping-cart-24.png" />
+    <Content Include="img\store\storefront.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Areas\Shopper\Views\web.config" />
+    <Content Include="Areas\Store\Views\web.config" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Rider\Views\web.config" />
+    <Content Include="Content\daterangepicker.scss" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\DateRangePicker\daterangepicker.js" />
+    <Content Include="Scripts\DateRangePicker\moment.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -235,9 +260,25 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Home\_ProductList.cshtml" />
+    <Content Include="Views\Home\_StoreList.cshtml" />
+    <Content Include="Views\Home\Store.cshtml" />
+    <Content Include="Views\Home\AboutHow.cshtml" />
+    <Content Include="Views\Home\FeaturedStores.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Controllers\" />
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Views\Shared\" />
+    <Folder Include="Areas\Rider\Controllers\" />
+    <Folder Include="Areas\Rider\Data\" />
+    <Folder Include="Areas\Rider\Views\Shared\" />
+    <Folder Include="Areas\Shopper\Controllers\" />
+    <Folder Include="Areas\Shopper\Data\" />
+    <Folder Include="Areas\Shopper\Views\Shared\" />
+    <Folder Include="Areas\Store\Controllers\" />
+    <Folder Include="Areas\Store\Data\" />
+    <Folder Include="Areas\Store\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -260,6 +301,10 @@
     <ProjectReference Include="..\eCartInterfaces\eCartInterfaces.csproj">
       <Project>{d98a8c75-9213-4089-bfb3-ab2fee34d62f}</Project>
       <Name>eCartInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\eCartModels\eCartModels.csproj">
+      <Project>{F4A34F0E-8759-4A82-A837-21477FD4A4E8}</Project>
+      <Name>eCartModels</Name>
     </ProjectReference>
     <ProjectReference Include="..\eCartServices\eCartServices.csproj">
       <Project>{baab89dc-d373-4fb4-8fb0-04c684a157b6}</Project>
