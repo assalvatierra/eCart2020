@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using eCart.Models;
 using eCartModels;
 using System.Collections.Generic;
+using eCartServices;
 
 namespace eCart.Controllers
 {
@@ -81,7 +82,12 @@ namespace eCart.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    if (CreateCart(model.Email))
+                    {
+                        return RedirectToLocal(returnUrl);
+                    }
+                    ModelState.AddModelError("", "Invalid login attempt. Shopper Cart Cannot be created");
+                    return View(model);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -395,6 +401,12 @@ namespace eCart.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+
+            //clear cart and user session
+            Session["CARTDETAILS"] = null;
+            Session["USER"] = null;
+            Session["USERID"] = null;
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -485,24 +497,28 @@ namespace eCart.Controllers
         }
         #endregion
 
-
-        #region Cart
-
-        private bool CreateCart()
+        private bool CreateCart(string email)
         {
-            try
-            {
-                List<cCartDetails> cartDetails = new List<cCartDetails>();
-                Session["CARTDETAILS"] = (List<cCartDetails>)cartDetails;
+            StoreFactory store = new StoreFactory();
 
-                return true;
-            }
-            catch (Exception)
+            var userId = store.UserMgr.GetUserId(email);
+
+            if (userId != null)
             {
-                return false;
+                //create cart 
+                List<CartDetail> cartDetails = new List<CartDetail>();
+                Session["CARTDETAILS"] = (List<CartDetail>)cartDetails;
+
+                //assign user to session
+                Session["USERID"] = userId;
+                Session["USER"] = email;
+                return true;
+
             }
+
+            return false;
+
         }
 
-        #endregion
     }
 }

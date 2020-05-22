@@ -5,19 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using eCartInterfaces;
 using eCartModels;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace eCartDBLayer
 {
-    class UserDBLayer : iUserDb
+    public class UserDBLayer : iUserDb
     {
-        ecartdbContainer db = new ecartdbContainer();
-
         public string GetUserId(string email)
         {
             try
             {
-               
-                return null;
+                var context = new IdentityDbContext();
+                var users = context.Users.Where(u=>u.Email.ToLower() == email.ToLower()).FirstOrDefault().Id;
+                return users;
             }
             catch
             {

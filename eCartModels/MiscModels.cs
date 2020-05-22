@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eCartModels
 {
-    public class cCart
+    public class cCart : CartItem
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -20,7 +20,7 @@ namespace eCartModels
     }
 
 
-    public class cCartDetails
+    public class cCartDetails : CartDetail
     {
         public int Id { get; set; }
         public int StoreId { get; set; }
@@ -35,7 +35,7 @@ namespace eCartModels
 
     }
 
-    public class cCartPayment
+    public class cCartPayment : PaymentDetail
     {
         public int Id { get; set; }
         public int PaymentRecieverId { get; set; }
@@ -55,12 +55,7 @@ namespace eCartModels
 
     public class CartClass
     {
-        ecartdbContainer db = new ecartdbContainer();
-
-        public StoreItem getStoreItem(int id)
-        {
-            return db.StoreItems.Find(id);
-        }
+      
     }
 
 

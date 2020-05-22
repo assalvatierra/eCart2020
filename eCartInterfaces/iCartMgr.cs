@@ -20,8 +20,8 @@ namespace eCartInterfaces
         List<CartHistory> getCartHistory(int id);
         List<CartActivity> getCartDeliveryActivities(int id);
 
-        void addItemToCart(int id, int qty);
         bool addItemToCart(int id, int qty, decimal price);
+        List<CartDetail> addItemToCart(int id, int qty, decimal price, List<CartDetail> cartSession);
         void addCartItemToDb(CartItem cartItem);
         bool addCartDetailToDb(CartDetail cartDetail);
         bool addCartHistory(CartDetail cart, int statusId, string userId);

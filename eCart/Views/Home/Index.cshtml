@@ -10,6 +10,9 @@
 @{ Html.RenderAction("_StoreList"); }
 @{ Html.RenderAction("_ProductList"); }
 
+
+@{ Html.RenderAction("_CartSummary", "CartDetails", new { area = "Shopper" }); }
+
 @section Scripts{
     <script src="~/Areas/Shopper/Scripts/cart.js"></script>
     <script>

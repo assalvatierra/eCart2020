@@ -19,11 +19,6 @@ namespace eCartServices
             this.cartdb = cartdblayer;
         }
 
-        public void addItemToCart(int id, int qty)
-        {
-            throw new NotImplementedException();
-        }
-
         public int getDefaultPickupPointId(int storeId)
         {
             var pickupPoint = db.StorePickupPoints.Where(s => s.StoreDetailId == storeId).FirstOrDefault();
@@ -45,20 +40,75 @@ namespace eCartServices
                 var cartList = getCartDetails();
                 var isAssigned = false;
 
-                if (cartList == null)
+                if (cartList != null)
                 {
                     return false;
+                }
+                foreach (var cart in cartList)
+                    {
+                        if (cart.StoreId == newItem.StoreId)
+                        {
+                            if (cart.CartStatus == 1)
+                            {
+                                //add new item to the current active cart
+                                newCart.Id = cartList.LastOrDefault().Id;
+                                cart.cartItems.Add(newItem);
+                                isAssigned = true;
+                            }
+                            else
+                            {
+                                newCart.Id = cartList.LastOrDefault().Id + 1;
+                                cartList.Add(newCart);
+                                isAssigned = true;
+                            }
+                        }
+                    }
+
+                if (isAssigned == false)
+                {
+                    newCart.Id = cartList.Count() + 1;
+                    cartList.Add(newCart);
+                    isAssigned = true;
+                }
+
+                return isAssigned;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+                return false;
+            }
+        }
+
+        public List<CartDetail> addItemToCart(int id, int qty, decimal price, List<CartDetail> cartSession)
+        {
+            try
+            {
+                //create cartItem
+                var newItem = CreateCartItem(id, qty);
+
+                //create cartDetails
+                var newCart = CreateCart(newItem);
+
+                //get current cart from session
+                var cartList = cartSession;
+                var isAssigned = false;
+
+                if (cartList != null)
+                {
+                    //return false;
                 }
 
                 foreach (var cart in cartList)
                 {
-                    if (cart.StoreId == newItem.StoreId)
+                    if (cart.StoreDetailId == newItem.StoreId)
                     {
-                        if(cart.CartStatus == 1)
+                        if (cart.CartStatusId == 1)
                         {
                             //add new item to the current active cart
                             newCart.Id = cartList.LastOrDefault().Id;
-                            cart.cartItems.Add(newItem);
+                            cart.CartItems.Add(newItem);
                             isAssigned = true;
                         }
                         else
@@ -77,12 +127,18 @@ namespace eCartServices
                     isAssigned = true;
                 }
 
-                return isAssigned;
+                if (isAssigned)
+                {
+                    return cartList;
+                }
+
+                return null;
 
             }
-            catch
+            catch (Exception ex)
             {
-                return false;
+                throw ex;
+                return null;
             }
         }
 

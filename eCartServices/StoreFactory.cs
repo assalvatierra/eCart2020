@@ -14,7 +14,7 @@ namespace eCartServices
         iStoreMgr storemgr;
         iCartMgr cartmgr;
         iRiderMgr riderMgr;
-        //iAccMgr accMgr;
+        iUserMgr userMgr;
 
         public StoreFactory()
         {
@@ -25,7 +25,7 @@ namespace eCartServices
             this.cartmgr = new CartMgr();
             this.cartmgr.setDbLayer(new CartDbLayer());
 
-            //this.accMgr = new Services.AccMgr();
+            this.userMgr = new UserMgr();
             this.riderMgr = new RiderMgr();
 
          
@@ -43,10 +43,10 @@ namespace eCartServices
         }
 
 
-        //public iAccMgr AccMgr
-        //{
-        //    get { return this.accMgr; }
-        //}
+        public iUserMgr UserMgr
+        {
+            get { return this.userMgr; }
+        }
 
         public iRiderMgr RiderMgr
         {
