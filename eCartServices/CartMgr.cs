@@ -28,57 +28,60 @@ namespace eCartServices
 
         public bool addItemToCart(int id, int qty, decimal price)
         {
-            try
-            {
-                //create cartItem
-                var newItem = CreateCartItem(id, qty);
+            //try
+            //{
+            //    //create cartItem
+            //    var newItem = CreateCartItem(id, qty);
 
-                //create cartDetails
-                var newCart = CreateCart(newItem);
+            //    //create cartDetails
+            //    var newCart = CreateCart(newItem);
 
-                //get current cart from session
-                var cartList = getCartDetails();
-                var isAssigned = false;
+            //    //get current cart from session
+            //    var cartList = getCartDetails();
+            //    var isAssigned = false;
 
-                if (cartList != null)
-                {
-                    return false;
-                }
-                foreach (var cart in cartList)
-                    {
-                        if (cart.StoreId == newItem.StoreId)
-                        {
-                            if (cart.CartStatus == 1)
-                            {
-                                //add new item to the current active cart
-                                newCart.Id = cartList.LastOrDefault().Id;
-                                cart.cartItems.Add(newItem);
-                                isAssigned = true;
-                            }
-                            else
-                            {
-                                newCart.Id = cartList.LastOrDefault().Id + 1;
-                                cartList.Add(newCart);
-                                isAssigned = true;
-                            }
-                        }
-                    }
+            //    if (cartList != null)
+            //    {
+            //        return false;
+            //    }
 
-                if (isAssigned == false)
-                {
-                    newCart.Id = cartList.Count() + 1;
-                    cartList.Add(newCart);
-                    isAssigned = true;
-                }
+            //    foreach (var cart in cartList)
+            //        {
+            //            //if (cart.StoreId == newItem.StoreId)
+            //            //{
+            //            //    if (cart.CartStatus == 1)
+            //            //    {
+            //            //        //add new item to the current active cart
+            //            //        newCart.Id = cartList.LastOrDefault().Id;
+            //            //        cart.cartItems.Add(newItem);
+            //            //        isAssigned = true;
+            //            //    }
+            //            //    else
+            //            //    {
+            //            //        newCart.Id = cartList.LastOrDefault().Id + 1;
+            //            //        cartList.Add(newCart);
+            //            //        isAssigned = true;
+            //            //    }
+            //            //}
+            //        }
 
-                return isAssigned;
+            //    if (isAssigned == false)
+            //    {
+            //        newCart.Id = cartList.Count() + 1;
+            //        cartList.Add(newCart);
+            //        isAssigned = true;
+            //    }
 
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-                return false;
-            }
+            //    return isAssigned;
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //    return false;
+            //}
+
+            return false;
         }
 
         public List<CartDetail> addItemToCart(int id, int qty, decimal price, List<CartDetail> cartSession)
@@ -102,7 +105,7 @@ namespace eCartServices
 
                 foreach (var cart in cartList)
                 {
-                    if (cart.StoreDetailId == newItem.StoreId)
+                    if (cart.StoreDetailId == newItem.StoreItem.StoreDetailId)
                     {
                         if (cart.CartStatusId == 1)
                         {
@@ -143,34 +146,26 @@ namespace eCartServices
         }
 
         //create default cart
-        private cCartDetails CreateCart( cCart cartItem)
+        private CartDetail CreateCart( CartItem cartItem)
         {
-            return new cCartDetails
+            var storeItem = db.StoreItems.Find(cartItem.StoreItemId);
+
+            return new CartDetail
             {
-                Id = 1,
-                CheckedOut = "false",
-                StoreId = cartItem.StoreId,
-                CartStatus = 1,
+                CartStatusId = 1,
                 DeliveryType = "Pickup",
                 DtPickup = DateTime.Now.AddHours(4),
-                PickupPointId = getDefaultPickupPointId(cartItem.StoreId),
-                cartItems = new List<cCart> { cartItem }
+                CartItems = new List<CartItem> { cartItem }
             };
         }
 
         //create default cart item
-        private cCart CreateCartItem(int id, int qty)
+        private CartItem CreateCartItem(int id, int qty)
         {
-            var item = db.StoreItems.Find(id);
-
-            return new cCart
+            return new CartItem
             {
-                Id = id,
-                Name = item.ItemMaster.Name,
-                Price = item.UnitPrice,
-                Qty = qty,
-                StoreId = item.StoreDetailId,
-                ItemImage = item.ItemMaster.ItemImages.FirstOrDefault() != null ? item.ItemMaster.ItemImages.FirstOrDefault().ImageUrl : "",
+                ItemQty = qty,
+                StoreItemId = id,
                 CartItemStatusId = 1
             };
         }

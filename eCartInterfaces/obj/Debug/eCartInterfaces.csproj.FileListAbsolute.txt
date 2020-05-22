@@ -22,3 +22,15 @@ D:\Projects\eCart2020\eCartInterfaces\obj\Debug\eCartInterfaces.csproj.CoreCompi
 D:\Projects\eCart2020\eCartInterfaces\obj\Debug\eCartInterfaces.csproj.CopyComplete
 D:\Projects\eCart2020\eCartInterfaces\obj\Debug\eCartInterfaces.dll
 D:\Projects\eCart2020\eCartInterfaces\obj\Debug\eCartInterfaces.pdb
+C:\Users\VILLOSA\source\repos\eCart2020\eCartInterfaces\bin\Debug\eCartInterfaces.dll
+C:\Users\VILLOSA\source\repos\eCart2020\eCartInterfaces\bin\Debug\eCartInterfaces.pdb
+C:\Users\VILLOSA\source\repos\eCart2020\eCartInterfaces\bin\Debug\eCartModels.dll
+C:\Users\VILLOSA\source\repos\eCart2020\eCartInterfaces\bin\Debug\EntityFramework.dll
+C:\Users\VILLOSA\source\repos\eCart2020\eCartInterfaces\bin\Debug\eCartModels.pdb
+C:\Users\VILLOSA\source\repos\eCart2020\eCartInterfaces\bin\Debug\eCartModels.dll.config
+C:\Users\VILLOSA\source\repos\eCart2020\eCartInterfaces\bin\Debug\EntityFramework.xml
+C:\Users\VILLOSA\source\repos\eCart2020\eCartInterfaces\obj\Debug\eCartInterfaces.csprojAssemblyReference.cache
+C:\Users\VILLOSA\source\repos\eCart2020\eCartInterfaces\obj\Debug\eCartInterfaces.csproj.CoreCompileInputs.cache
+C:\Users\VILLOSA\source\repos\eCart2020\eCartInterfaces\obj\Debug\eCartInterfaces.csproj.CopyComplete
+C:\Users\VILLOSA\source\repos\eCart2020\eCartInterfaces\obj\Debug\eCartInterfaces.dll
+C:\Users\VILLOSA\source\repos\eCart2020\eCartInterfaces\obj\Debug\eCartInterfaces.pdb

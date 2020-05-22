@@ -30,8 +30,8 @@ namespace eCart.Areas.Shopper.Controllers
         public List<CartDetail> GetCartDetails()
         {
            
-            var cartSession = (List<CartDetail>)Session["CARTDETAILS"] ?? null;
-            
+            var cartSession = (List<CartDetail>)Session["CARTDETAILS"];
+            ViewBag.cart = cartSession;
             return cartSession;
         }
 
@@ -41,13 +41,13 @@ namespace eCart.Areas.Shopper.Controllers
 
             if (cart != null)
             {
-                var cartSession = new List<CartDetail>();
+                //var cartSession = new List<CartDetail>();
 
-                cart.ForEach(c => {
-                    cartSession.Add(c);
-                });
+                //cart.ForEach(c => {
+                //    cartSession.Add(c);
+                //});
 
-                Session["CARTDETAILS"] = cartSession;
+                Session["CARTDETAILS"] = cart;
             }
 
         }
