@@ -1,0 +1,295 @@
+﻿@model IEnumerable<eCartModels.CartDetail>
+@{
+    ViewBag.Title = "Cart Checkout";
+    Layout = "~/Areas/Shopper/Views/Shared/_Layout.cshtml";
+    var userDetails = ViewBag.UserDetails as eCartModels.UserDetail;
+}
+
+<h2>Cart Page</h2>
+
+<div>
+    <p>
+        @Html.ActionLink("Go to Main Page", "Index", "Home", new { area = "" }, null) |
+        <a href="@Url.Action("PendingCarts", "CartDetails", new { area ="Shopper" })"> Pending Carts </a>
+    </p>
+</div>
+
+<div class="panel bordered">
+    <div class="panel-body">
+        <h3> Shopper Details </h3>
+        <p> Name: <b> @userDetails.Name </b> </p>
+        <p> Address: <b>  @userDetails.Address </b> </p>
+        <p> Contact No.: <b> @userDetails.Mobile</b> </p>
+    </div>
+</div>
+
+@{ decimal totalAmount = 0; }
+
+@if (Model != null )
+{
+
+    foreach (var cart in Model)
+    {
+        decimal subtotalAmount = 0;
+        <div class="panel bordered">
+            <div class="panel-body">
+                <!-- Error Message -->
+                <div class="alert alert-danger" role="alert" id="cart-alert-box-@cart.Id" hidden>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <p><strong>Warning!</strong> Better check yourself, you're not looking too good.</p>
+                </div>
+                <!-- Error Message -->
+
+                <div class="row">
+                    <div class="col-lg-12 cart-ID-div">
+                        <p> Cart #: <span class="Cart-ID" id="cartID"> @cart.Id.ToString("0000")  </span></p>
+                    </div>
+                </div>
+
+                <div class="cart-summary-store ">
+                    <div class="col-lg-2 col-md-4 col-sm-12">
+                        <h3> @cart.StoreDetail.Name </h3>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                        <span> Pickup Point: </span> <br />
+                        @if (cart.DeliveryType == "Delivery")
+                        {
+                            <a href="" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetailId')" id="pickupAddress-@cart.Id" value="0">
+                                Delivery
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetailId')" id="pickupAddress-@cart.Id" value="@cart.StorePickupPointId">
+                                @cart.StorePickupPoint.Address
+                            </a>
+                        }
+
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                        <span> DateTime Pickup: </span>
+                        <input type="text" name="pickup-date" value="@cart.DtPickup" class="date-link" onchange="dateChanged(@cart.Id)">
+                        <span id="cartID" hidden> @cart.Id </span>
+                    </div>
+                    <div class="col-lg-3 col-md-5 col-sm-12">
+                        <span> Payment: </span> <br />
+                        <a href="" id="paymentMode-@cart.Id" data-toggle="modal" data-target="#paymentModal" onclick="getPaymentReceivers(@cart.Id)">
+                            @if (cart.PaymentDetails != null)
+                            {
+                                switch (cart.PaymentDetails.LastOrDefault().PaymentReceiverId)
+                                {
+                                    case 1:<text> Store </text> break;
+                                case 2: <text> Bank  </text> break;
+                            case 3: <text> Paypal </text> break;
+                        case 4: <text> Padala </text> break;
+                    case 0: <text> Cash On Delivery </text> break;
+            }
+        }
+        else
+        {
+            <span> On Pickup </span>
+        }
+
+                        </a>
+                    </div>
+                </div>
+
+                @*<span  id="cartID"> CARTID:  @cart.Id </span>*@
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td> <b>Item Description</b> </td>
+                            <td> Qty </td>
+                            <td> Price per Item</td>
+                            <td> Total </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in cart.CartItems)
+                        {
+                            var qty = item.ItemQty;
+                            var unitprice = item.StoreItem.UnitPrice;
+                            var subtotal = qty * unitprice;
+                            subtotalAmount += subtotal;
+                            <tr>
+                                <td style="display:flex;flex-direction:row;">
+                                    @if (item.StoreItem.ItemMaster.ItemImages.FirstOrDefault() != null)
+                                    {
+                                        var image = item.StoreItem.ItemMaster.ItemImages.FirstOrDefault();
+                                        <img src="@image.ImageUrl" class="img-thumbnail" width="50" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/img/placeholders/placeholder-product.png" class="img-thumbnail" width="50" />
+                                    }
+
+                                    <span style="display:flex;flex-direction:column;padding-left:5px;">
+                                        <span class="item-ID"> Item #:  @item.StoreItemId </span>
+                                        <b> @item.StoreItem.ItemMaster.Name </b>
+                                        <span class="text-muted">  @item.Remarks1 </span>
+                                    </span>
+                                </td>
+                                <td> @item.ItemQty </td>
+                                <td> Php @item.StoreItem.UnitPrice.ToString("0.00") </td>
+                                <td class="text-success"> <b> Php @subtotal.ToString("0.00")</b> </td>
+                                <td width="20">
+
+                                <td>
+                                    <!-- Remove Order -->
+                                    @if (cart.CartStatusId == 1)
+                                    {
+                                        <div class="cart-summary-remove-item" onclick="RemoveItem(this, '@item.StoreItemId', '@subtotal')"> &#10006 </div>
+                                    }
+                                    else
+                                    {
+
+                                    }
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="row panel-footer" style="margin:0px;">
+                <div class="col-lg-10">
+                    <h4> Amount: <b class="text-success"> Php @subtotalAmount.ToString("0.00") </b> </h4>
+                </div>
+                <div class="col-lg-2">
+                    @if (cart.CartStatusId == 1)
+                    {
+                        <button class="btn btn-primary" style="width:100%;" onclick="SubmitOrder(this, @cart.Id);" name="Checkout">
+                            Checkout
+                        </button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-default disabled" style="width:100%;">
+                            Cart Submitted
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+        totalAmount += subtotalAmount;
+    }
+
+    <!-- Error Message -->
+    <div class="alert alert-danger" role="alert" id="cart-alert-box-all" hidden>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <p><strong>Warning!</strong> Better check yourself, you're not looking too good.</p>
+    </div>
+    <!-- Error Message -->
+
+    <div class="panel bordered" style="margin:0px;">
+        <div class="panel-body">
+            <div class="col-lg-10">
+                <h3> Total Amount: <b class="text-success"> Php @totalAmount.ToString("0.00")</b> </h3>
+            </div>
+            <div class="col-lg-2" style="margin:10px 0px;">
+                @if (Model.Any(s => s.CartStatusId == 1))
+                {
+                    <button class="btn btn-primary" style="width:100%;" onclick="SubmitAllOrder()" name="Checkout">
+                        Checkout All
+                    </button>
+                }
+                else
+                {
+                    <button class="btn btn-default disabled" style="width:100%;">
+                        All Carts Submitted
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+
+}
+<br />
+
+
+
+@Html.Partial("_ModalPickupEdit")
+@Html.Partial("_ModalCheckoutSuccess")
+@Html.Partial("_ModalCartPayment", ViewBag.PaymentParties as IEnumerable<eCartModels.PaymentReceiver>)
+
+@section Scripts{
+    <script src="~/Scripts/Cart/cart.js"></script>
+    <script src="~/Areas/Shopper/Scripts/checkout.js"></script>
+    <script src="~/Areas/Shopper/Scripts/checkoutPickup.js"></script>
+    <script src="~/Areas/Shopper/Scripts/checkoutPayment.js"></script>
+    <script>
+
+        // Cart Checkout Date
+        $('input[name="pickup-date"]').daterangepicker({
+            singleDatePicker: true,
+            startDate: moment().add('hours', 4),
+            showDropdowns: true,
+            timePicker: true,
+            timePicker24Hour: false,
+            timePickerIncrement: 1,
+            autoUpdateInput: true,
+            locale: {
+                format: 'MMM DD,YYYY h:mm A'
+            },
+        });
+
+        function dateChanged(cartId) {
+            let paymentDate = $('input[name="pickup-date"]').val();
+            let now = moment();
+
+            let dateComparision = moment(paymentDate).diff(now, 'minutes');
+            //console.log(dateComparision);
+            if (dateComparision > 120) {    //at least 120 minutes or 2 hours from now
+
+                //update date on session
+                $.post('/Shopper/CartDetails/SetCartPickupDate', { cartId: cartId, date: paymentDate },
+                    (result) => {
+                        //console.log(result);
+                        if (result != 'True') {
+                            $('input[name="pickup-date"]').val(moment().add('hours', 4).format('MMM DD,YYYY h:mm A'));
+                            alert('Invalid Date, please input a valid date for the date and time pickup.');
+                        }
+                    }
+                );
+            } else {
+                $('input[name="pickup-date"]').val(moment().add('hours', 4).format('MMM DD,YYYY h:mm A'));
+                alert('Invalid Date, please input a valid date for the date and time pickup.');
+            }
+        }
+
+        //$('input[name="pickup-date"]').on('change', () => {
+        //    let paymentDate = $('input[name="pickup-date"]').val();
+        //    let cartId = $(this).val();
+        //    let now = moment();
+
+        //    console.log(cartId);
+
+        //    let dateComparision = moment(paymentDate).diff(now, 'minutes');
+        //    console.log(dateComparision);
+        //    if (dateComparision > 120) {    //at least 120 minutes or 2 hours from now
+        //        console.log('updating date time');
+        //        //update date on session
+        //      var res =  $.post('/Shopper/CartDetails/SetCartPickupDate', { cartId: cartId, date: paymentDate },
+        //            (result) => {
+        //                console.log(result);
+        //                if (result != 'True') {
+        //                    $('input[name="pickup-date"]').val(moment().add('hours', 4).format('MMM DD,YYYY h:mm A'));
+        //                    alert('Invalid Date, please input a valid date for the date and time pickup.');
+        //                } else {
+        //                    console.log('set pickup date failed.');
+        //                }
+        //            }
+        //        );
+
+        //        console.log(res);
+
+        //    } else {
+        //        $('input[name="pickup-date"]').val(moment().add('hours', 4).format('MMM DD,YYYY h:mm A'));
+        //        alert('Invalid Date, please input a valid date for the date and time pickup.');
+        //    }
+
+        //});
+
+
+    </script>
+}

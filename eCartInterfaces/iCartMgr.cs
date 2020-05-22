@@ -19,6 +19,7 @@ namespace eCartInterfaces
         List<PaymentReceiver> getPaymentRecievers();
         List<CartHistory> getCartHistory(int id);
         List<CartActivity> getCartDeliveryActivities(int id);
+        UserDetail GetUserDetails(string userId);
 
         bool addItemToCart(int id, int qty, decimal price);
         List<CartDetail> addItemToCart(int id, int qty, decimal price, List<CartDetail> cartSession);

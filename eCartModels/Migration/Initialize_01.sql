@@ -42,23 +42,3 @@ insert into CartActivityTypes("Name","SortOrder") values
 insert into StorePaymentTypes([Description],[Remarks]) values
 ('Cash',''), ('Bank',''), ('Remittance','');
 
-
---User--
-insert into Users([Username],[Password]) values
-('admin@gmail.com','12345');
-insert into Users([Username],[Password]) values
-('Admin@gmail.com','12345'),
-('StoreAdmin@gmail.com','12345'),
-('Merchandiser@gmail.com','12345'),
-('Shopper@gmail.com','12345'),
-('Rider@gmail.com','12345');
-
-
---User Roles--
-insert into AspNetRoles([Name]) values
-('Admin'),('Public');
-
-insert into UserRolesMappings([UserId],[RoleId]) values
-(1,1),(2,2),(3,3),(4,4),(5,5);
-
-

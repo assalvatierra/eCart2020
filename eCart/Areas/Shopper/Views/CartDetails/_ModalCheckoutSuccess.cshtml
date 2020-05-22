@@ -1,0 +1,33 @@
+﻿<!-- Change Pickup Location Modal -->
+<div id="CheckOutSuccessModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" onclick="OnModalClose();">&times;</button>
+                <h4 class="modal-title"> Order Submitted </h4>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <h3 class="text-success">
+                        Your Order have been submitted.
+                    </h3>
+                    <p> To view your current submitted orders  <a href="@Url.Action("PendingCarts", "CartDetails", new { area ="Shopper" })">click here</a>. </p>
+                    <p> or </p>
+                    <h4> <a href="@Url.Action("Index", "Home")"> Continue Shopping </a> </h4>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="OnModalClose();">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function OnModalClose() {
+        window.location.reload();
+    }
+</script>

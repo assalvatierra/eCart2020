@@ -1,5 +1,6 @@
 ﻿using eCartModels;
 using eCartInterfaces;
+using System.Linq;
 
 namespace eCartDbLayer
 {
@@ -100,6 +101,18 @@ namespace eCartDbLayer
             catch
             {
                 return false;
+            }
+        }
+
+        public UserDetail GetUserDetails(string userId)
+        {
+            try
+            {
+                return db.UserDetails.Where(u => u.UserId == userId).FirstOrDefault();
+            }
+            catch
+            {
+                return null;
             }
         }
     }

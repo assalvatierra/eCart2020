@@ -1,10 +1,10 @@
 ﻿-- sample data for testing
 
 insert into UserDetails([UserId], [Name], [Address], [Email], [Mobile], [Remarks], [UserStatusId], [MasterCityId], [MasterAreaId] )
-values ('c33996c3-a2ff-4c6c-b330-61ce70931d9b', 'Admin', 'Davao City', 'admin@gmail.com', '0912-345-6789', 'Admin User', 1, 1, 1);
+values ('97a5778d-4ef4-4a48-b920-eeac9aee9c50', 'Admin', 'Davao City', 'admin@gmail.com', '0912-345-6789', 'Admin User', 1, 1, 1);
 
 insert into UserDetails([UserId], [Name], [Address], [Email], [Mobile], [Remarks], [UserStatusId], [MasterCityId], [MasterAreaId] )
-values ('5d10bad0-0ac2-4746-b8ce-05d6128fc1c4', 'Shopper', 'Davao City', 'shopper@gmail.com', '0912-345-6789', 'Shopper User', 1, 1, 1);
+values ('c33996c3-a2ff-4c6c-b330-61ce70931d9b', 'Shopper', 'Davao City', 'shopper@gmail.com', '0912-345-6789', 'Shopper User', 1, 1, 1);
 
 -- create stores --
 insert into StoreDetails([LoginId],[Name],[Address],[Remarks],[StoreStatusId],[StoreCategoryId],[MasterCityId],[MasterAreaId]) 
@@ -88,12 +88,3 @@ insert into StorePayments([StoreDetailId],[dtPayment],[Amount],[StorePaymentType
 (1,'05/09/2020 3:00 PM', '2500', 1, 'Pending test', '05/09/2020 3:45 PM', 1),
 (2,'05/09/2020 3:00 PM', '2500', 1, 'Accepted test', '05/09/2020 3:45 PM', 2);
 
-
--- store admin login --
-insert into Users ([Username],[Password]) 
-values	('nccc.admin'	,'12345'),
-		('sm.admin'		,'12345'),
-		('gaisano.admin','12345');
-		
-insert into UserRolesMappings([UserId],[RoleId]) values
-(6,2),(7,2),(8,2);

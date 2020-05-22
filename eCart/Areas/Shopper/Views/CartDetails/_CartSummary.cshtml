@@ -19,25 +19,23 @@
             @if (Model.Count() != 0)
             {
 
-                <span> count: @Model.Count() </span><br />
                 foreach (var cart in cartSession)
                 {
-                    <p> @cart.StoreDetailId</p>
                     foreach (var item in cart.CartItems.ToList())
                     {
                         <div class='col-sm-2 cart-item'>
                             <div class="pull-left">
-                                @*@if (item.StoreItem.ItemMaster.ItemImages.FirstOrDefault() != null)
+                               @if (item.StoreItem.ItemMaster.ItemImages.FirstOrDefault() != null)
                                 {
-                                    var image = item.StoreItem.ItemMaster.ItemImages.FirstOrDefault();
+                                    var image = item.StoreItem.ItemMaster.ItemImages.FirstOrDefault().ImageUrl;
                                     <img src="@image" class="img-thumbnail" style='height:50px;width:50px;' />
                                 }
                                 else
                                 {
                                     <img src="~/img/placeholders/placeholder-product.png" class="img-thumbnail" style='height:50px;width:50px;' />
-                                }*@
+                                }
                             </div>
-                           @* <p class='col-sm-7'> <b>  @item.StoreItem.ItemMaster.Name  </b> <br> Qty: @item.ItemQty   &nbsp; &nbsp;&nbsp; <span class="text-success"> Price: @item.StoreItem.UnitPrice </span> </p>*@
+                            <p class='col-sm-7'> <b>  @item.StoreItem.ItemMaster.Name  </b> <br> Qty: @item.ItemQty   &nbsp; &nbsp;&nbsp; <span class="text-success"> Price: @item.StoreItem.UnitPrice </span> </p>
 
                             <div> <span class="cart-remove-item" onclick="RemoveItem(this,'@item.Id')"> x </span></div>
                         </div>

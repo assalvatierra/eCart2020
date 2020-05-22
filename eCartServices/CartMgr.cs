@@ -149,21 +149,28 @@ namespace eCartServices
         private CartDetail CreateCart( CartItem cartItem)
         {
             var storeItem = db.StoreItems.Find(cartItem.StoreItemId);
-
+            var store = db.StoreDetails.Find(cartItem.StoreItem.StoreDetailId);
+            var storePickupPointId = getDefaultPickupPointId(store.Id);
             return new CartDetail
             {
+                StoreDetail = store,
                 CartStatusId = 1,
+                StorePickupPoint = GetStorePickup(storePickupPointId),
                 DeliveryType = "Pickup",
                 DtPickup = DateTime.Now.AddHours(4),
-                CartItems = new List<CartItem> { cartItem }
+                CartItems = new List<CartItem> { cartItem },
+                PaymentDetails = null
             };
         }
 
         //create default cart item
         private CartItem CreateCartItem(int id, int qty)
         {
+            var storeItem = db.StoreItems.Find(id);
+
             return new CartItem
             {
+                StoreItem = storeItem,
                 ItemQty = qty,
                 StoreItemId = id,
                 CartItemStatusId = 1
@@ -821,6 +828,19 @@ namespace eCartServices
                 throw ex;
             }
 
+        }
+
+        public UserDetail GetUserDetails(string userId)
+        {
+            try
+            {
+               var user = cartdb.GetUserDetails(userId);
+               return user;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

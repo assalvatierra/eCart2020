@@ -81,5 +81,21 @@ namespace eCart.Areas.Shopper.Controllers
             return Json(cartSession, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult CartCheckout()
+        {
+            var cartMgr = store.CartMgr;
+            if (cartMgr.getUserId() != 0)
+            {
+                var cartDetails = GetCartDetails();
+                ViewBag.PaymentParties = cartMgr.getPaymentRecievers();
+                string userId = Session["USERID"].ToString();
+                ViewBag.UserDetails = cartMgr.GetUserDetails(userId);
+
+                return PartialView(cartDetails);
+            }
+
+            return RedirectToAction("Index", "Home", new { area = "" });
+        }
+
     }
 }

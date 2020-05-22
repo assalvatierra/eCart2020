@@ -11,6 +11,7 @@ namespace eCartDBLayer
 {
     public class UserDBLayer : iUserDb
     {
+
         public string GetUserId(string email)
         {
             try
@@ -24,5 +25,6 @@ namespace eCartDBLayer
                 return null;
             }
         }
+
     }
 }

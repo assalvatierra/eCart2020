@@ -15,6 +15,7 @@ namespace eCartInterfaces
         StoreDetail GetStoreDetail(int id);
         CartStatus GetCartStatus(int id);
         StorePickupPoint GetStorePickupPoint(int id);
+        UserDetail GetUserDetails(string userId);
 
         bool Save();
     }
