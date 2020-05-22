@@ -62,3 +62,7 @@ C:\Users\VILLOSA\source\repos\eCart2020\eCartServices\obj\Debug\eCartServices.cs
 C:\Users\VILLOSA\source\repos\eCart2020\eCartServices\obj\Debug\eCartServices.csproj.CopyComplete
 C:\Users\VILLOSA\source\repos\eCart2020\eCartServices\obj\Debug\eCartServices.dll
 C:\Users\VILLOSA\source\repos\eCart2020\eCartServices\obj\Debug\eCartServices.pdb
+D:\Projects\eCart2020\eCartServices\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\Projects\eCart2020\eCartServices\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+D:\Projects\eCart2020\eCartServices\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\Projects\eCart2020\eCartServices\bin\Debug\Microsoft.AspNet.Identity.Core.xml

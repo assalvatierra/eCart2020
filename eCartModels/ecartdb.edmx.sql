@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/22/2020 16:41:19
--- Generated from EDMX file: C:\Users\VILLOSA\source\repos\eCart2020\eCartModels\ecartdb.edmx
+-- Date Created: 05/22/2020 17:58:38
+-- Generated from EDMX file: D:\Projects\eCart2020\eCartModels\ecartdb.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [aspnet-eCart-20200518113945];
+--USE [ecartdb];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -291,7 +291,7 @@ GO
 -- Creating table 'UserDetails'
 CREATE TABLE [dbo].[UserDetails] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [UserId] nvarchar(30)  NOT NULL,
+    [UserId] nvarchar(50)  NOT NULL,
     [Name] nvarchar(50)  NOT NULL,
     [Address] nvarchar(150)  NULL,
     [Email] nvarchar(30)  NULL,
@@ -306,7 +306,7 @@ GO
 -- Creating table 'StoreDetails'
 CREATE TABLE [dbo].[StoreDetails] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [LoginId] nvarchar(20)  NOT NULL,
+    [LoginId] nvarchar(50)  NOT NULL,
     [Name] nvarchar(50)  NOT NULL,
     [Address] nvarchar(150)  NOT NULL,
     [Remarks] nvarchar(80)  NOT NULL,
@@ -483,7 +483,7 @@ GO
 -- Creating table 'RiderDetails'
 CREATE TABLE [dbo].[RiderDetails] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [UserId] nvarchar(max)  NOT NULL,
+    [UserId] nvarchar(50)  NOT NULL,
     [Name] nvarchar(150)  NOT NULL,
     [Address] nvarchar(180)  NOT NULL,
     [Mobile] nvarchar(20)  NOT NULL,
