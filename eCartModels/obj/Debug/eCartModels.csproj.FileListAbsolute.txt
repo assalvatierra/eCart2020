@@ -9,3 +9,15 @@ D:\Company\2020.RealSys\eCart\eCartModels\obj\Debug\eCartModels.csproj.CoreCompi
 D:\Company\2020.RealSys\eCart\eCartModels\obj\Debug\eCartModels.csproj.CopyComplete
 D:\Company\2020.RealSys\eCart\eCartModels\obj\Debug\eCartModels.dll
 D:\Company\2020.RealSys\eCart\eCartModels\obj\Debug\eCartModels.pdb
+D:\Projects\eCart2020\eCartModels\bin\Debug\eCartModels.dll.config
+D:\Projects\eCart2020\eCartModels\bin\Debug\eCartModels.dll
+D:\Projects\eCart2020\eCartModels\bin\Debug\eCartModels.pdb
+D:\Projects\eCart2020\eCartModels\bin\Debug\EntityFramework.dll
+D:\Projects\eCart2020\eCartModels\bin\Debug\EntityFramework.SqlServer.dll
+D:\Projects\eCart2020\eCartModels\bin\Debug\EntityFramework.xml
+D:\Projects\eCart2020\eCartModels\bin\Debug\EntityFramework.SqlServer.xml
+D:\Projects\eCart2020\eCartModels\obj\Debug\eCartModels.csproj.CoreCompileInputs.cache
+D:\Projects\eCart2020\eCartModels\obj\Debug\eCartModels.csproj.CopyComplete
+D:\Projects\eCart2020\eCartModels\obj\Debug\eCartModels.dll
+D:\Projects\eCart2020\eCartModels\obj\Debug\eCartModels.pdb
+D:\Projects\eCart2020\eCartModels\obj\Debug\eCartModels.csprojAssemblyReference.cache

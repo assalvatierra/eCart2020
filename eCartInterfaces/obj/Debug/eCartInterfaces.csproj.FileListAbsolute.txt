@@ -10,3 +10,15 @@ D:\Company\2020.RealSys\eCart\eCartInterfaces\obj\Debug\eCartInterfaces.csproj.C
 D:\Company\2020.RealSys\eCart\eCartInterfaces\obj\Debug\eCartInterfaces.csproj.CopyComplete
 D:\Company\2020.RealSys\eCart\eCartInterfaces\obj\Debug\eCartInterfaces.dll
 D:\Company\2020.RealSys\eCart\eCartInterfaces\obj\Debug\eCartInterfaces.pdb
+D:\Projects\eCart2020\eCartInterfaces\bin\Debug\eCartInterfaces.dll
+D:\Projects\eCart2020\eCartInterfaces\bin\Debug\eCartInterfaces.pdb
+D:\Projects\eCart2020\eCartInterfaces\bin\Debug\eCartModels.dll
+D:\Projects\eCart2020\eCartInterfaces\bin\Debug\EntityFramework.dll
+D:\Projects\eCart2020\eCartInterfaces\bin\Debug\eCartModels.pdb
+D:\Projects\eCart2020\eCartInterfaces\bin\Debug\eCartModels.dll.config
+D:\Projects\eCart2020\eCartInterfaces\bin\Debug\EntityFramework.xml
+D:\Projects\eCart2020\eCartInterfaces\obj\Debug\eCartInterfaces.csprojAssemblyReference.cache
+D:\Projects\eCart2020\eCartInterfaces\obj\Debug\eCartInterfaces.csproj.CoreCompileInputs.cache
+D:\Projects\eCart2020\eCartInterfaces\obj\Debug\eCartInterfaces.csproj.CopyComplete
+D:\Projects\eCart2020\eCartInterfaces\obj\Debug\eCartInterfaces.dll
+D:\Projects\eCart2020\eCartInterfaces\obj\Debug\eCartInterfaces.pdb
