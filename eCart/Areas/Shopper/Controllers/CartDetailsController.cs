@@ -29,6 +29,7 @@ namespace eCart.Areas.Shopper.Controllers
 
         public string GetUserId()
         {
+
             var userId = HttpContext.User.Identity.GetUserId();
             return userId;
         }
@@ -57,16 +58,16 @@ namespace eCart.Areas.Shopper.Controllers
         {
             try
             {
+                var UserId = GetUserId();
                 var cartSession = GetCartDetails();
-                if (cartSession == null)
+                if (cartSession != null )
                 {
-                    //prepare new cart
-                    cartSession = new List<CartDetail>();
-                }
+                    var cart = store.CartMgr.addItemToCart(id, qty, itemPrice, cartSession, UserId);
 
-                var cart = store.CartMgr.addItemToCart(id, qty, itemPrice, cartSession);
-                UpdateCartDetails(cart);
-                return true;
+                    UpdateCartDetails(cart);
+                    return true;
+                }
+                return false;
             }
             catch
             {
@@ -104,22 +105,24 @@ namespace eCart.Areas.Shopper.Controllers
 
         public ActionResult CartCheckout()
         {
-            if (HttpContext.User.Identity.IsAuthenticated)
-            {
-                var cartMgr = store.CartMgr;
-                var cartDetails = GetCartDetails();
-                ViewBag.PaymentParties = cartMgr.GetPaymentRecievers();
-                string userId = HttpContext.User.Identity.GetUserId();
-                ViewBag.UserDetails = cartMgr.GetUserDetails(userId);
+            var cartMgr = store.CartMgr;
 
-                return View(cartDetails);
-            }
-            else
+            if(Session["USERID"] == null)
             {
                 return RedirectToAction("Login", "Account", new { area = "" });
             }
 
-            //return RedirectToAction("Index", "Home", new { area = "" });
+            if (cartMgr.getUserId() != 0)
+            {
+                var cartDetails = GetCartDetails();
+                ViewBag.PaymentParties = cartMgr.GetPaymentRecievers();
+                string userId = Session["USERID"].ToString();
+                ViewBag.UserDetails = cartMgr.GetUserDetails(userId);
+
+                return PartialView(cartDetails);
+            }
+
+            return RedirectToAction("Index", "Home", new { area = "" });
         }
 
         [HttpGet]
@@ -225,8 +228,9 @@ namespace eCart.Areas.Shopper.Controllers
         {
             try
             {
+                var userId = GetUserId();
                 var cartSession = GetCartDetails();
-                return store.CartMgr.saveOrder(cartSession); //save to db
+                return store.CartMgr.saveOrder(cartSession, userId); //save to db
 
             }
             catch

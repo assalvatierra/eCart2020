@@ -22,7 +22,7 @@ namespace eCartInterfaces
         UserDetail GetUserDetails(string userId);
 
         bool addItemToCart(int id, int qty, decimal price);
-        List<CartDetail> addItemToCart(int id, int qty, decimal price, List<CartDetail> cartSession);
+        List<CartDetail> addItemToCart(int id, int qty, decimal price, List<CartDetail> cartSession,string userId);
         void addCartItemToDb(CartItem cartItem);
         bool addCartDetailToDb(CartDetail cartDetail);
         bool addCartHistory(CartDetail cart, int statusId, string userId);
@@ -42,7 +42,7 @@ namespace eCartInterfaces
         void removeCartdelivery(int id);
         bool removeCartSession(int storeId);
 
-        bool saveOrder(List<CartDetail> cartDetails);
+        bool saveOrder(List<CartDetail> cartDetails, string userId);
         bool SaveOrder(CartDetail cart, string userId);
 
     }
