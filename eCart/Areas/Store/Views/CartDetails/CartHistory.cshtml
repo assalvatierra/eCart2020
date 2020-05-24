@@ -1,0 +1,45 @@
+﻿@model IEnumerable<eCart.Models.CartHistory>
+
+@{
+    ViewBag.Title = "CartHistory";
+}
+
+<h2>CartHistory</h2>
+
+<p>
+    @Html.ActionLink("Back to List", "Details", "CartDetails", new { area = "Store", id = @ViewBag.StoreId }, null)
+</p>
+<div class="panel bordered">
+    
+        @*<h4> Cart History </h4>*@
+        <table class="table">
+            <tr>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Delivery Type
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.dtStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CartStatu.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CartDetail.DeliveryType)
+                    </td>
+                </tr>
+            }
+
+        </table>
+ 
+</div>

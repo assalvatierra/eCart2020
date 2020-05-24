@@ -1,0 +1,55 @@
+﻿@model IEnumerable<eCart.Models.StorePickupPoint>
+
+@{ 
+   var StoreId = ViewBag.StoreId;
+}
+
+<div id="AddPartnerModal" class="modal fade" role="dialog" >
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-body">
+                <h3> Add Pick-up Location Partner </h3>
+                <div class="panel list-group-item">
+
+                    @foreach ( var pickupPoint in Model )
+                    {
+                        <a class="list-group-item btn btn-default" style="text-align:left;" onclick="AddPartner(this, @pickupPoint.Id, @ViewBag.StoreId);">
+                            <b> @pickupPoint.StoreDetail.Name </b> - <span class="text-muted"> @pickupPoint.Address</span>
+                        </a>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function AddPartner(event, Id , StoreId) {
+        console.log("adding new partner");
+        //add to db
+        let data = $.get("/Store/StorePickupPartners/AddPartner",
+             { id: Id, storeId: StoreId },
+             (res) => {
+                 console.log(res);
+                 UpdateTable(res["Id"], res["PickupAddress"], res["StoreName"]);
+            });
+
+        
+    }
+
+    function UpdateTable(Id, Address, Store) {
+        var newPartner =
+            "<tr >  " +
+            "<td class='text-primary'> <b>" + Store + "</b> </td>" +
+            "<td> " + Address +" </td>"+
+            "<td> " +
+            "<a href='/Store/StorePickupPartners/Edit/" + Id + "'> Edit </a> |" +
+            "<a href='/Store/StorePickupPartners/Details/" + Id + "'> Details </a> |" +
+            "<a href='/Store/StorePickupPartners/Delete/" + Id + "'> Delete </a> " +
+            "</td>" +
+            "</tr>";
+        $("#partnerTable").append(newPartner);
+    }
+</script>

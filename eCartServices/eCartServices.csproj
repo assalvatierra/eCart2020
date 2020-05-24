@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="CartMgr.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RefMgr.cs" />
     <Compile Include="RiderMgr.cs" />
     <Compile Include="StoreFactory.cs" />
     <Compile Include="StoreMgr.cs" />

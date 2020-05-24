@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using eCart.Areas.Store.Models;
-using eCartInterfaces;
-using eCartModels;
+﻿using eCartInterfaces;
 using eCartDbLayer;
 
 namespace eCartServices
@@ -15,6 +9,8 @@ namespace eCartServices
         iCartMgr cartmgr;
         iRiderMgr riderMgr;
         iUserMgr userMgr;
+        iDBRefDBLayer DBRef;
+        public DBRefContext dbRef = new DBRefContext();
 
         public StoreFactory()
         {
@@ -28,7 +24,7 @@ namespace eCartServices
             this.userMgr = new UserMgr();
             this.riderMgr = new RiderMgr();
 
-         
+            this.DBRef = new DBRefDBLayer();
         }
 
         public iStoreMgr StoreMgr
@@ -52,6 +48,9 @@ namespace eCartServices
         {
             get { return this.riderMgr; }
         }
+
+        public iDBRefDBLayer RefDbLayer
+        { get { return this.DBRef; } }
 
         
     }

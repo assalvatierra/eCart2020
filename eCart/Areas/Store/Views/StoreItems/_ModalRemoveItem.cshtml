@@ -1,0 +1,61 @@
+﻿
+
+<div id="RemoveItem" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Do you want to remove this item? </h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <img src="~/img/placeholders/image-placeholder.png" style="width:100%;" class="img-thumbnail" id="removeItem-img" /> 
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="col-lg-12">
+                            <span class="text-muted"> Item #:</span>  <label id="removeItem-Id"> Item Name  </label><br />
+                            <span class="text-muted"> Item:</span>  <label id="removeItem-name"> Item Name  </label><br />
+                            <span class="text-muted"> Price:</span> <label id="removeItem-price"> Price </label><br />
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class=" col-lg-offset-8 col-lg-4">
+                    <button class="btn btn-default" onclick="RemoveItem()"> Remove </button>
+                    <button class="btn btn-default" data-dismiss="modal"> Cancel </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+    function SetRemoveItem(Id) {
+        $.get('/Store/StoreItems/GetStoreItem', { id: Id }, (result) => {
+            console.log(result);
+
+            $('#removeItem-Id').text(result['Id']);
+            $('#removeItem-name').text(result['ItemName']);
+            $('#removeItem-price').text(result['UnitPrice']);
+            $('#removeItem-img').attr("src", result['ImageUrl']);
+        });
+    }
+    
+    function RemoveItem() {
+        var itemId = $('#removeItem-Id').text();
+        $.post('/Store/StoreItems/RemoveStoreItem', { id: itemId }, (result) => {
+            if (result == 'True') {
+                window.location.reload();
+            } else {
+                alert('Unable to remove item. Please try again later.');
+            }
+        });
+    }
+</script>

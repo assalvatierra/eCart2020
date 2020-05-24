@@ -1,0 +1,119 @@
+﻿@model IEnumerable<eCartModels.StoreItem>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Store Items</h2>
+
+<p>
+    @Html.ActionLink("Back to Store", "Index", "Home", new { id = @ViewBag.StoreId }, null) |
+    @*@Html.ActionLink("Add Item", "Create", new { id = @ViewBag.StoreId }) |*@
+    <a data-target="#AddItem" data-toggle="modal" style="cursor:pointer;" onclick="PrepAddItemModal();"> Add Item </a> |
+    <a data-target="#CreateItem" data-toggle="modal" style="cursor:pointer;" onclick="prepCreateModal();"> Create Item </a>
+</p>
+<div class="panel panel-default">
+    <table class="table" id="StoreItemsTable">
+        <tr>
+            <td>
+            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemMaster.Name)
+            </th>
+            <td>
+                <b> Category</b>
+            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitPrice)
+            </th>
+            <th></th>
+        </tr>
+        <tbody class="StoreItemsTable-tbody">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td width="80">
+                        @if (item.ItemMaster.ItemImages.FirstOrDefault() != null)
+                        {
+                            var image = item.ItemMaster.ItemImages.FirstOrDefault();
+                            <img src="@image.ImageUrl" class="img-thumbnail" width="60" />
+                        }
+                        else
+                        {
+                            <img src="~/img/placeholders/placeholder-product.png" class="img-thumbnail" width="60" />
+                        }
+
+                    </td>
+                    <td>
+                        <div style="display:flex;">
+                            <b style="margin:auto 0;">
+                                @Html.DisplayFor(modelItem => item.ItemMaster.Name)
+                            </b>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="category-@item.Id">
+
+                            @foreach (var category in item.ItemMaster.ItemMasterCategories)
+                            {
+                                <div class="btn-group">
+                                    <button class='btn btn-default btn-xs'>
+                                        @category.ItemCategory.Name
+
+                                    </button>
+                                    <button class='btn btn-default btn-xs' style="color:gray;" onclick="RemoveItemCategory(this, @category.Id)">
+                                        &times;
+                                    </button>
+                                </div>
+                            }
+                        </div>
+
+                        <button class="btn btn-default btn-xs" href="" data-target="#AddCategory" data-toggle="modal" onclick="GetCategoryList(@item.Id)">
+                            Add Category
+                        </button>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UnitPrice)
+                    </td>
+                    <td>
+
+                        <a data-target="#EditItem" data-toggle="modal" onclick="getItem(@item.Id)"> Edit </a> |
+                        <a data-target="#RemoveItem" data-toggle="modal" onclick="SetRemoveItem(@item.Id)"> Remove </a> 
+                        @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |*@
+                        @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
+
+
+@{Html.RenderPartial("_ModalCreateItem", null, new ViewDataDictionary { { "StoreId", ViewBag.StoreId } }); }
+
+@{Html.RenderPartial("_ModalAddItem", null, new ViewDataDictionary { { "StoreId", ViewBag.StoreId } }); }
+
+@{Html.RenderPartial("_ModalEditItem", null, new ViewDataDictionary { { "StoreId", ViewBag.StoreId } }); }
+
+@{Html.RenderPartial("_ModalAddCategory", null, new ViewDataDictionary { { "StoreId", ViewBag.StoreId } }); }
+
+@{Html.RenderPartial("_ModalRemoveItem", null, new ViewDataDictionary { { "StoreId", ViewBag.StoreId } }); }
+
+
+@section Scripts {
+    <script src="~/Areas/Store/Scripts/StoreItems/CreateItem.js"></script>
+    <script src="~/Areas/Store/Scripts/StoreItems/AddItem.js"></script>
+    <script>
+        function RemoveItemCategory(e, categoryId) {
+            $.post("/Store/StoreItems/RemoveItemCategory", { Id: categoryId }).then(() => {
+                $(e).parent().remove(); //remove item from table
+            }).catch((err) => {
+                console.log(err);
+            });
+
+        }
+    </script>
+
+
+}

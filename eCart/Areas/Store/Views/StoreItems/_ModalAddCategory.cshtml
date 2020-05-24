@@ -1,0 +1,56 @@
+﻿
+
+<div id="AddCategory" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"> Select Item category </h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="list-group" id="category-list">
+                    <!-- Generated Category List Content Here -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<script>
+    function GetCategoryList(itemId) {
+
+        $.get("/Store/StoreItems/GetItemCategories")
+            .then((result) => {
+                //add categories to the category modal
+                GenerateCategoryList(result, itemId);
+            });
+    }
+
+    function GenerateCategoryList(categories, itemId) {
+        for (var i = 0; i < categories.length; i++) {
+            let category = "<button class='list-group-item' onclick='selectCategory(this," + itemId + ", " + categories[i]["Id"] + ")'> " + categories[i]["Name"] + " </button> ";
+
+            $("#category-list").append(category);
+        }
+    }
+
+    function selectCategory(e, itemId, categoryId) {
+        $.post("/Store/StoreItems/AddItemCategory", { itemId: itemId, categoryId: categoryId })
+            .then(() => {
+                console.log("category adde to the item");
+                $("#AddCategory").modal('hide');
+
+                var tempCategory = "<div class='btn-group'>" +
+                    "<button class='btn btn-default btn-xs'> " + $(e).text() + " </button>" +
+
+                    "</div>";
+                $("#category-" + itemId).append(tempCategory);
+            });
+    }
+</script>
+  @*//"<button class='btn btn-default btn-xs' style='color:gray;' onclick='RemoveItemCategory(this," + categoryId + ")'>  &times; </button>" +*@

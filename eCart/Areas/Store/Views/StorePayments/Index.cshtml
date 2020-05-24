@@ -1,0 +1,81 @@
+﻿@model IEnumerable<eCart.Models.StorePayment>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="panel bordered">
+    <div class="panel-body">
+        <h1> Store Subscription </h1>
+        <p>
+            @Html.ActionLink("Back to Store", "Index", "Home" , new { id = ViewBag.StoreId } , null)
+        </p>
+    </div>
+</div>
+
+<div class="panel bordered">
+    <div class="panel-body">
+        <h3>Store Payments</h3>
+
+        <p>
+            @Html.ActionLink("Create New", "Create", new { id = ViewBag.StoreId })
+        </p>
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.dtPosted)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StorePaymentType.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.dtPayment)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StorePaymentStatu.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Remarks)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.dtPosted)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StorePaymentType.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.dtPayment)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StorePaymentStatu.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Remarks)
+                    </td>
+                    <td>
+                        @if (item.StorePaymentStatusId == 1)
+                        {
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <text> | </text>
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        }
+                      
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

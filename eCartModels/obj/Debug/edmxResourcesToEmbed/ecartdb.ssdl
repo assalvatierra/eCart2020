@@ -238,7 +238,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="30" />
+    <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="50" />
     <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
     <Property Name="Address" Type="nvarchar" Nullable="true" MaxLength="150" />
     <Property Name="Email" Type="nvarchar" Nullable="true" MaxLength="30" />
@@ -253,7 +253,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="LoginId" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="LoginId" Type="nvarchar" Nullable="false" MaxLength="50" />
     <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
     <Property Name="Address" Type="nvarchar" Nullable="false" MaxLength="150" />
     <Property Name="Remarks" Type="nvarchar" Nullable="false" MaxLength="80" />
@@ -430,7 +430,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="UserId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="50" />
     <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="150" />
     <Property Name="Address" Type="nvarchar" Nullable="false" MaxLength="180" />
     <Property Name="Mobile" Type="nvarchar" Nullable="false" MaxLength="20" />

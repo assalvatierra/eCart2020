@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-//using System.Web;
-using eCart.Areas.Store.Models;
-//using Microsoft.Ajax.Utilities;
 using System.Data.Entity;
 using eCartInterfaces;
 using eCartModels;
+using eCartDbLayer;
 
 namespace eCartServices
 {
     public class StoreMgr : iStoreMgr
     {
 
-        private ecartdbContainer db = new ecartdbContainer();
-        private iStoreDb storeDb = new StoreDBLayer(); //utilizing interfaces
+       private ecartdbContainer db = new ecartdbContainer();
+        private iStoreDb storeDb = new StoreDBLayer(); 
 
         public void setDbLayer(iStoreDb storedblayer)
         {
@@ -60,6 +58,8 @@ namespace eCartServices
             {
                 //take latest all store items
                 var items = db.StoreItems.Where(i => i.StoreDetailId == id);
+//                .Include(s => s.ItemMaster).Include(s => s.StoreDetail).OrderByDescending(s => s.Id);
+  
                 items = items.OrderByDescending(s => s.Id).Take(18);
 
                 return items.ToList();

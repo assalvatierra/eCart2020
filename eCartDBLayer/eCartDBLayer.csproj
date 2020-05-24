@@ -59,6 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CartDbLayer.cs" />
+    <Compile Include="DBRefContext.cs" />
+    <Compile Include="DBRefDBLayer.cs" />
     <Compile Include="ShopperContext.cs" />
     <Compile Include="StoreContext.cs" />
     <Compile Include="StoreDBLayer.cs" />

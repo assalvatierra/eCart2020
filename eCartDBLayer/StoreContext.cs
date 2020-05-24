@@ -3,7 +3,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using eCartModels;
 
-namespace eCart.Areas.Store.Models
+namespace eCartDbLayer
 {
     public class StoreContext: DbContext
     {

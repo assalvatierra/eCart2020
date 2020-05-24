@@ -1,0 +1,93 @@
+﻿@model eCartModels.StoreDetail
+
+@{
+    ViewBag.Title = "Edit Store";
+    var storeImg = ViewBag.StoreImg as eCartModels.StoreImage;
+}
+
+<h2>
+    Store Details
+</h2>
+
+    <p>
+        @Html.ActionLink("Back to Store", "Index", "Home", new { id = @ViewBag.StoreId }, null)
+    </p>
+    <hr />
+    <div class="panel bordered">
+        <div class="panel-body" style="margin:10px 0px;">
+            <div class="col-lg-12"><h3> Edit Store </h3></div>
+            @using (Html.BeginForm())
+            {
+
+                @Html.AntiForgeryToken()
+                <div class="col-lg-3">
+                    <img src="@storeImg.ImageUrl" class="img-thumbnail img-responsive" style="width:100%;" />
+                    <div class="form-group col-lg-12" style="display:flex;padding:10px 0;align-items:baseline;">
+                        <label class="control-label"> Url&nbsp;:&nbsp; </label>
+                        @if (storeImg.Id == 0)
+                        {
+                            <input type="text" class="form-control col-lg-8" id="ImgUrl" name="ImgUrl" value="" />
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control col-lg-8" id="ImgUrl" name="ImgUrl" value="@storeImg.ImageUrl" />
+                        }
+
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group col-lg-6">
+                        <label class="control-label"> Store Name </label>
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group col-lg-6" hidden>
+                        @Html.LabelFor(model => model.LoginId, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.LoginId, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.LoginId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label class="control-label"> Address </label>
+                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label class="control-label"> Store Category </label>
+                        @Html.DropDownList("StoreCategoryId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.StoreCategoryId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label class="control-label"> Status </label>
+                        @Html.DropDownList("StoreStatusId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.StoreStatusId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label class="control-label"> City </label>
+                        @Html.DropDownList("MasterCityId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MasterCityId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label class="control-label"> Area </label>
+                        @Html.DropDownList("MasterAreaId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MasterAreaId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label class="control-label"> Remarks </label>
+                        @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class=" col-lg-12">
+                    <div class="col-lg-offset-9 col-lg-3">
+                        <button class="btn btn-primary">
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+

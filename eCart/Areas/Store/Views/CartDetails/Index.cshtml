@@ -1,0 +1,84 @@
+﻿@model IEnumerable<eCart.Models.CartDetail>
+
+@{
+    ViewBag.Title = "Cart Details";
+}
+<div class="col-lg-12">
+    <h2> Carts Details </h2>
+    @Html.ActionLink("Back to List", "Index", "Home", new { id = @ViewBag.StoreId })
+    <hr />
+</div>
+
+@foreach (var cart in Model)
+{
+    <div class="panel-carts col-lg-12">
+        <div class="store-cart">
+            <h3>
+                Cart # : @cart.Id  &nbsp;
+                <span class="pill-active pull-right">  @cart.CartStatu.Name </span>
+            </h3>
+            <h4> <b> Shopper Details </b> </h4>
+            <div class="col-lg-12">
+                <div class="col-lg-6">
+                    <p> <span class="text-muted"> Shopper:</span> @cart.UserDetail.Name </p>
+                    <p> <span class="text-muted"> Contact:</span> @cart.UserDetail.Mobile </p>
+                    <p> <span class="text-muted"> Email:</span> @cart.UserDetail.Email </p>
+
+                </div>
+
+                <div class="col-lg-6">
+                    <p> <span class="text-muted"> Delivery Type:</span>  @cart.DeliveryType</p>
+                    <p> <span class="text-muted"> Pickup Date:</span> @cart.DtPickup.ToString("MMM dd yyyy HH:mm ") </p>
+                    <p> <span class="text-muted"> Pickup Location:</span>  @cart.StorePickupPoint.StoreDetail.Name, @cart.StorePickupPoint.Address </p>
+                </div>
+
+            </div>
+            <hr />
+            <h4> <b> Shopper Items </b> </h4>
+            <div style="margin:0px -20px;">
+                <table class="table">
+
+                    <thead style="background-color:whitesmoke;color:gray;">
+                        <tr>
+                            <th style="padding-left:20px;"> Item </th>
+                            <th> Qty </th>
+                            <th> Item Price </th>
+                            <th> Total </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ decimal total = 0; }
+                        @foreach (var item in cart.CartItems)
+                        {
+                            <tr>
+                                <td style="padding-left:20px;">
+                                    <b>  @item.StoreItem.ItemMaster.Name </b>
+                                </td>
+                                <td>
+                                    @item.ItemQty
+                                </td>
+                                <td>
+                                    @item.StoreItem.UnitPrice.ToString("0.00")
+                                </td>
+                                <td>
+                                    @{
+                                        var subtotal = item.StoreItem.UnitPrice * item.ItemQty;
+                                        total += subtotal;
+                                    }
+
+                                    <b> @subtotal.ToString("0.00") </b>
+                                </td>
+                            </tr>
+                        }
+
+                        <tr>
+                            <td colspan="3" style="text-align:right;"> <span style="font-size:16px;"> Total Amount: </span> </td>
+                            <td><b style="font-size:20px;"> @total.ToString("0.00") </b></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+}

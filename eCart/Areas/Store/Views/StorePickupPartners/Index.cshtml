@@ -1,0 +1,49 @@
+﻿@model IEnumerable<eCart.Models.StorePickupPartner>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Store Pickup Partner</h2>
+
+
+<p>
+    @Html.ActionLink("Back to Store", "Index", "Home", new { id = @ViewBag.StoreId }, null) |
+    <a href="" data-toggle="modal" data-target="#AddPartnerModal">
+        Add Partner
+    </a>
+</p>
+
+<div class="panel bordered">
+    <table class="table" id="partnerTable">
+        <tr>
+            <th>
+                Store
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StorePickupPoint.Address)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="text-primary">
+                    <b> @Html.DisplayFor(modelItem => item.StorePickupPoint.StoreDetail.Name) </b>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StorePickupPoint.Address)
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |*@
+                    @Html.ActionLink("Remove", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+@{Html.RenderPartial("_ModalPartnerAdd", ViewBag.PickupPoints as IEnumerable<eCart.Models.StorePickupPoint>, new ViewDataDictionary { { "StoreId", ViewBag.StoreId } });}

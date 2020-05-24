@@ -1,0 +1,124 @@
+﻿<!-- Change Pickup Location Modal -->
+<div id="PaymentModal" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="max-width:380px;">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"> Payment Transaction </h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-lg-offset-1">
+
+                    <div class="form-group">
+                        <p class="control-label"> Date: </p>
+                        <input class="form-control" type="text" style="padding-top:5px;" id="payment-date" />
+                    </div>
+
+                    <div class="form-group">
+                        <p class="control-label"> Payment Party: </p>
+                        <div>
+                            <select class="form-control" id="payment-Party">
+                                @foreach (var party in ViewBag.PaymentPartyList as IEnumerable<eCart.Models.PaymentParty>)
+                                {
+                                    <option value="@party.Id"> @party.Name </option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <p class="control-label">  Payment Party Info: </p>
+                        <input class="form-control" type="text" id="payment-partyInfo" />
+                    </div>
+
+                    <div class="form-group">
+                        <p class="control-label"> Payment Receiver: </p>
+                        <select class="form-control" id="payment-Recievers">
+                            @foreach (var receiver in ViewBag.PaymentReceiverList as IEnumerable<eCart.Models.PaymentReceiver>)
+                            {
+                                <option value="@receiver.Id"> @receiver.Description </option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <p class="control-label"> Payment Receiver Info: </p>
+                        <input class="form-control" type="text" id="payment-receiverInfo" />
+                    </div>
+
+                    <div class="form-group">
+                        <p class="control-label"> Payment Status: </p>
+                        <select class="form-control" id="payment-status">
+                            @foreach (var status in ViewBag.PaymentStatusList as IEnumerable<eCart.Models.PaymentStatus>)
+                            {
+                                <option value="@status.Id"> @status.Name </option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <p class="control-label">  Amount: </p>
+                        <input class="form-control" type="text" id="payment-amount" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="AddPaymentDetails()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/DateRangePicker/moment.min.js"></script>
+<script src="~/Scripts/DateRangePicker/daterangepicker.js"></script>
+<link href="~/Content/daterangepicker.css" rel="stylesheet" />
+<script>
+
+    $('#payment-date').daterangepicker({
+        singleDatePicker: true,
+        startDate: moment(),
+        showDropdowns: true,
+        timePicker: true,
+        timePicker24Hour: false,
+        timePickerIncrement: 10,
+        autoUpdateInput: true,
+        locale: {
+            format: 'MMM DD,YYYY h:mm A'
+        },
+    });
+
+
+    function AddPaymentDetails() {
+        var data = {
+            date:$("#payment-date").val(),
+            partyId: parseInt($("#payment-Party option:selected").val()),
+            receiverInfo : $("#payment-receiverInfo").val(),
+            receiverId: parseInt($("#payment-Recievers option:selected").val()),
+            partyInfo : $("#payment-partyInfo").val(),
+            statusId: parseInt($("#payment-status option:selected").val()),
+            amount: parseFloat($("#payment-amount").val()),
+            cartDetailId: parseInt('@ViewBag.CartId')
+        }
+        var result = $.post("/Store/CartDetails/AddPayment/", data);
+
+        addtoTable(data);
+    }
+
+    function addtoTable(data) {
+        var payment = "<tr>" +
+            "<td>" + data.date.toString("M/d/yyyy h:mm:ss tt") + "</td>" +
+            "<td>" + $("#payment-Party option:selected").text() + "</td>" +
+            "<td>" + data.partyInfo + "</td>" +
+            "<td>" + $("#payment-Recievers option:selected").text() + "</td>" +
+            "<td>" + data.receiverInfo + "</td>" +
+            "<td>" + $("#payment-status option:selected").text() + "</td>" +
+            "<td>" + $("#payment-amount").val().toString("0.00") + "</td>" +
+            "</tr>"
+
+        $("#table-payments").append(payment);
+    }
+</script>

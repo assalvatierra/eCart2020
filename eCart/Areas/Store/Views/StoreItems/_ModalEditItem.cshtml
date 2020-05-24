@@ -1,0 +1,112 @@
+﻿
+
+<div id="EditItem" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit Item</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group" hidden>
+                        <label class="col-md-2 control-label"> Id</label>
+                        <div class="col-md-10">
+                            <input id="edit-Id" class="form-control" type="number" value="" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"> Item</label>
+                        <div class="col-md-10">
+                            <input id="edit-ItemMaster" class="form-control" type="text" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"> Price</label>
+                        <div class="col-md-10">
+                            <input id="edit-UnitPrice" class="form-control" type="text" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"> Image </label>
+                        <div class="col-md-10">
+                            <input id="edit-ItemImgUrl" class="form-control" type="text" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <p class="text-danger col-md-offset-2" id="edit-warning" hidden> Please do not leave any field blank </p>
+                        <p class="text-danger col-md-offset-2" id="edit-warning-price" hidden> Invalid input on Price Field </p>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" value="Update" class="btn btn-default" onclick="UpdateItem()"> Save </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+    function UpdateItem() {
+        var Id = parseInt($("#edit-Id").val());
+        var itemName = $("#edit-ItemMaster").val();
+        var price = parseFloat($("#edit-UnitPrice").val());
+        var imageUrl = $("#edit-ItemImgUrl").val();
+
+        $("#edit-warning").hide();
+        $("#edit-warning-price").hide();
+        if ((itemName != null && price.length != 0) && (itemName != "" && price != "")) {
+         
+            if (!isNaN(price)) {
+
+                var Item = {
+                    storeItemId: Id,
+                    itemName: itemName,
+                    price: price,
+                    imageUrl: imageUrl
+                }
+
+                var result = $.post("/Store/StoreItems/EditStoreItem", Item, (res) => {
+                    //console.log(res);
+                    if (res == 'True') {
+                        window.location.reload();
+                    } else {
+                        $("#edit-warning").show();
+                    }
+                });
+
+                //console.log(result);
+               
+            } else {
+                $("#edit-warning-price").show();
+            }
+        } else {
+            $("#edit-warning").show();
+        }
+    }
+    
+    function getItem(Id) {
+        //GetStoreItem
+        var result = $.get("/Store/StoreItems/GetStoreItem", { id : Id}, (data) => {
+            if (result.status == 200) {
+                $("#edit-Id").val(data["Id"]);
+                $("#edit-ItemMaster").val(data["ItemName"]);
+                $("#edit-UnitPrice").val(data["UnitPrice"]);
+                $("#edit-ItemImgUrl").val(data["ImageUrl"]);
+            } else {
+                console.log("error while getting item data.");
+            }
+        });
+
+    }
+</script>

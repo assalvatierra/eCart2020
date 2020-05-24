@@ -1,0 +1,82 @@
+﻿@model eCart.Models.PaymentDetail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PaymentDetail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dtPayment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dtPayment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReceiverInfo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReceiverInfo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PartyInfo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartyInfo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CartDetail.DeliveryType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CartDetail.DeliveryType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentReceiver.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentReceiver.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentStatu.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentStatu.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentParty.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentParty.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="iCartDb.cs" />
     <Compile Include="iCartMgr.cs" />
+    <Compile Include="iDBRefDBLayer.cs" />
     <Compile Include="iRiderMgr.cs" />
     <Compile Include="iStoreDb.cs" />
     <Compile Include="iStoreMgr.cs" />

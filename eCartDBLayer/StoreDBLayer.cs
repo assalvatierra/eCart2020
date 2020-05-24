@@ -4,7 +4,7 @@ using System.Data.Entity;
 using eCartModels;
 using eCartInterfaces;
 
-namespace eCart.Areas.Store.Models
+namespace eCartDbLayer
 {
     public class StoreDBLayer : iStoreDb
     {
