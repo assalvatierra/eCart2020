@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using eCartServices;
 using eCartModels;
+using Microsoft.AspNet.Identity;
 
 namespace eCart.Areas.Shopper.Controllers
 {
@@ -29,7 +30,7 @@ namespace eCart.Areas.Shopper.Controllers
         public string GetUserId()
         {
 
-            var userId = Session["USERID"].ToString();
+            var userId = HttpContext.User.Identity.GetUserId();
             return userId;
         }
 
@@ -57,10 +58,11 @@ namespace eCart.Areas.Shopper.Controllers
         {
             try
             {
+                var UserId = GetUserId();
                 var cartSession = GetCartDetails();
                 if (cartSession != null )
                 {
-                    var cart = store.CartMgr.addItemToCart(id, qty, itemPrice, cartSession);
+                    var cart = store.CartMgr.addItemToCart(id, qty, itemPrice, cartSession, UserId);
 
                     UpdateCartDetails(cart);
                     return true;
@@ -226,8 +228,9 @@ namespace eCart.Areas.Shopper.Controllers
         {
             try
             {
+                var userId = GetUserId();
                 var cartSession = GetCartDetails();
-                return store.CartMgr.saveOrder(cartSession); //save to db
+                return store.CartMgr.saveOrder(cartSession, userId); //save to db
 
             }
             catch

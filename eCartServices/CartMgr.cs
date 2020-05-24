@@ -84,7 +84,7 @@ namespace eCartServices
             return false;
         }
 
-        public List<CartDetail> addItemToCart(int id, int qty, decimal price, List<CartDetail> cartSession)
+        public List<CartDetail> addItemToCart(int id, int qty, decimal price, List<CartDetail> cartSession, string userId)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace eCartServices
                 var newItem = CreateCartItem(id, qty);
 
                 //create cartDetails
-                var newCart = CreateCart(newItem);
+                var newCart = CreateCart(newItem, userId);
 
                 //get current cart from session
                 var cartList = cartSession;
@@ -146,7 +146,7 @@ namespace eCartServices
         }
 
         //create default cart
-        private CartDetail CreateCart( CartItem cartItem)
+        private CartDetail CreateCart( CartItem cartItem,string userId)
         {
             var storeItem = db.StoreItems.Find(cartItem.StoreItemId);
             var store = db.StoreDetails.Find(cartItem.StoreItem.StoreDetailId);
@@ -160,7 +160,8 @@ namespace eCartServices
                 DeliveryType = "Pickup",
                 DtPickup = DateTime.Now.AddHours(4),
                 CartItems = new List<CartItem> { cartItem },
-                PaymentDetails = null
+                PaymentDetails = null,
+                UserDetailId = cartdb.GetUserDetails(userId).Id
             };
         }
 
@@ -470,11 +471,11 @@ namespace eCartServices
             }
         }
 
-        public bool saveOrder(List<CartDetail> cartDetails)
+        public bool saveOrder(List<CartDetail> cartDetails, string userId)
         {
             try
             {
-                var userID = getUserAccID();
+                var userID = userId;
                 var isValid = false;
 
                 foreach (var cart in cartDetails)
