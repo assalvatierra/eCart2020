@@ -21,7 +21,7 @@ namespace eCartServices
 
         public int getDefaultPickupPointId(int storeId)
         {
-            var pickupPoint = db.StorePickupPoints.Where(s => s.StoreDetailId == storeId).FirstOrDefault();
+            var pickupPoint = cartdb.GetStorePickupPoints(storeId).FirstOrDefault();
 
             return pickupPoint.Id;
         }
@@ -153,6 +153,7 @@ namespace eCartServices
             var storePickupPointId = getDefaultPickupPointId(store.Id);
             return new CartDetail
             {
+                StoreDetailId = store.Id,
                 StoreDetail = store,
                 CartStatusId = 1,
                 StorePickupPoint = GetStorePickup(storePickupPointId),
@@ -293,11 +294,11 @@ namespace eCartServices
         }
 
 
-        public List<PaymentReceiver> getPaymentRecievers()
+        public List<PaymentReceiver> GetPaymentRecievers()
         {
             try
             {
-                return db.PaymentReceivers.ToList();
+                return cartdb.GetPaymentRecievers();
             }
             catch(Exception ex)
             {
@@ -400,13 +401,13 @@ namespace eCartServices
             return null;
         }
 
-        public bool updateCartPickupPoint(int cartId, int pickupPointId)
+        public bool UpdateCartPickupPoint(int cartId, int pickupPointId, List<CartDetail> cart)
         {
             try
             {
-                var cart = getCartDetails().Find(s => s.Id == cartId);
-                cart.PickupPointId = pickupPointId;
-                cart.DeliveryType = "Pickup";
+                var cartDetail = cart.Find(s => s.Id == cartId);
+                cartDetail.StorePickupPoint = cartdb.GetStorePickupPoint(pickupPointId);
+                cartDetail.DeliveryType = "Pickup";
                 return true;
             }
             catch 
@@ -416,13 +417,14 @@ namespace eCartServices
 
         }
 
-        public bool updateCartAsDelivery(int cartId)
+        public bool UpdateCartAsDelivery(int cartId, List<CartDetail> cart)
         {
             try
             {
-                var cart = getCartDetails().Where(s => s.Id == cartId).FirstOrDefault();
-                cart.PickupPointId = getDefaultPickupPointId(cart.StoreId);
-                cart.DeliveryType = "Delivery";
+                var cartDetail = cart.Find(s => s.Id == cartId);
+                var defaultPickupPointId = getDefaultPickupPointId(cartDetail.StoreDetailId);
+                cartDetail.StorePickupPoint = cartdb.GetStorePickupPoint(defaultPickupPointId);
+                cartDetail.DeliveryType = "Delivery";
                 return true;
             }
             catch (Exception ex)
@@ -433,23 +435,23 @@ namespace eCartServices
         }
 
 
-        public bool removeCartItem(int id)
+        public bool RemoveCartItem(List<CartDetail> carts, int id)
         {
             try
             {
-                var cartList = getCartDetails();
+                var cartList = carts;
 
                 foreach(var cart in cartList)
                 {
-                    foreach (var item in cart.cartItems)
+                    foreach (var item in cart.CartItems)
                     {
-                        if (item.Id == id)
+                        if (item.StoreItemId == id)
                         {
                             //find the item and remove from the cart list
-                            cart.cartItems.Remove(item);
+                            cart.CartItems.Remove(item);
 
                             //check if cart is empty, delete cart
-                            if (cart.cartItems.Count == 0)
+                            if (cart.CartItems.Count == 0)
                             {
                                 cartList.Remove(cart);
                             }
@@ -462,7 +464,7 @@ namespace eCartServices
                 //no item found
                 return false;
             }
-            catch (Exception)
+            catch 
             {
                 return false;
             }
@@ -520,11 +522,11 @@ namespace eCartServices
             }
         }
 
-        public bool saveOrder(CartDetail cart)
+        public bool SaveOrder(CartDetail cart, string userId)
         {
             try
             {
-                var userID = getUserAccID();
+                var userID = userId;
                 var ACTIVE = 2;
                 var storeID = cart.StoreDetailId;
                 //check if cart is active, then change status to submitted 
@@ -532,6 +534,18 @@ namespace eCartServices
                 if (cart.CartStatusId == 1)
                 {
                     cart.CartStatusId = 2;  //Submitted
+                    cart.StoreDetailId = cart.StoreDetailId;
+                    cart.StoreDetail = null;
+                    cart.StorePickupPointId = cart.StorePickupPoint.Id;
+                    cart.StorePickupPoint = null;
+                    foreach (var item in cart.CartItems)
+                    {
+                        item.CartDetail = cart;
+                        item.CartDetailId = cart.Id;
+                        item.ItemOrder = "1";
+
+                    }
+
 
                     var addRes = cartdb.AddCartDetails(cart);
                     if (addRes)
@@ -554,8 +568,9 @@ namespace eCartServices
                 }
                 return false;
             }
-            catch 
+            catch (Exception ex)
             {
+                throw ex;
                 return false;
             }
         }
@@ -570,15 +585,15 @@ namespace eCartServices
         }
 
 
-        public bool setCartPaymentReceiver(int cartId, int recieverId)
+        public bool SetCartPaymentReceiver(int cartId, int recieverId, List<CartDetail> cart)
         {
             try
             {
-                var cartList = getCartDetails();
-                var cartpayment = new cCartPayment()
+                var cartList = cart;
+                var cartpayment = new PaymentDetail()
                 {
                     Id = 1,
-                    PaymentRecieverId = recieverId,
+                    PaymentReceiverId = recieverId,
                     Amount = 0,
                     dtPayment = DateTime.Now,
                     PaymentStatusId = 1, //pending
@@ -590,19 +605,19 @@ namespace eCartServices
                 cartList.ForEach((c) => {
                     if (c.Id == cartId)
                     {
-                        c.PaymentMode = db.PaymentReceivers.Find(recieverId).Description;
+                        //c.pay = db.PaymentReceivers.Find(recieverId).Description;
 
-                        if (c.cartPayments == null )
+                        if (c.PaymentDetails == null )
                         {
-                            c.cartPayments = new List<cCartPayment>();
+                            c.PaymentDetails = new List<PaymentDetail>();
 
                             //create new cartPayment
-                            c.cartPayments.Add(cartpayment);
+                            c.PaymentDetails.Add(cartpayment);
                         }
                         else
                         {
                             //add to the current list
-                            c.cartPayments.Add(cartpayment);
+                            c.PaymentDetails.Add(cartpayment);
                         }
                     }
                 });
@@ -615,18 +630,14 @@ namespace eCartServices
             }
         }
 
-        public bool setCartPickupDate(int cartId, DateTime pickupdate)
+        public bool SetCartPickupDate(int cartId, DateTime pickupdate, List<CartDetail> cart)
         {
             try
             {
-                if(getCartDetails() == null)
-                {
-                    return false;
-                }
-
+              
                 //get session cart
-                var cart = getCartDetails().Find(c=>c.Id == cartId);
-                cart.DtPickup = pickupdate;
+                var cartDetails = cart.Find(c=>c.Id == cartId);
+                cartDetails.DtPickup = pickupdate;
                 return true;
             }
             catch
@@ -657,7 +668,7 @@ namespace eCartServices
         {
             try
             {
-                return db.StoreDetails.Find(storeId).StorePickupPoints.ToList();
+                return cartdb.GetStorePickupPoints(storeId);
             }
             catch (Exception e)
             {

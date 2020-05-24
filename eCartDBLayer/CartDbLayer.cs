@@ -1,6 +1,8 @@
 ﻿using eCartModels;
 using eCartInterfaces;
 using System.Linq;
+using System.Collections.Generic;
+using System;
 
 namespace eCartDbLayer
 {
@@ -14,12 +16,13 @@ namespace eCartDbLayer
             try
             {
                 db.CartDetails.Add(cartDetail);
-                //db.SaveChanges();
+                db.SaveChanges();
 
                 return true;
             }
-            catch 
+            catch (Exception ex)
             {
+                throw ex;
                 return false;
 
             }
@@ -31,7 +34,7 @@ namespace eCartDbLayer
             {
 
                 db.CartHistories.Add(cartHistory);
-                //db.SaveChanges();
+                db.SaveChanges();
 
                 return true;
             }
@@ -40,7 +43,6 @@ namespace eCartDbLayer
                 return false;
             }
         }
-
 
         public StoreDetail GetStoreDetail(int id)
         {
@@ -109,6 +111,30 @@ namespace eCartDbLayer
             try
             {
                 return db.UserDetails.Where(u => u.UserId == userId).FirstOrDefault();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public List<StorePickupPoint> GetStorePickupPoints(int storeId)
+        {
+            try
+            {
+                return db.StorePickupPoints.Where(s=>s.StoreDetailId == storeId).ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public List<PaymentReceiver> GetPaymentRecievers()
+        {
+            try
+            {
+                return db.PaymentReceivers.ToList();
             }
             catch
             {

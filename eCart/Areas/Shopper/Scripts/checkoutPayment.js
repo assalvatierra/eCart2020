@@ -7,7 +7,7 @@ function getPaymentReceivers(cartId) {
 
     //update payment list with the cartId
     $.get("/Shopper/CartDetails/GetPaymentRecievers", null, (result) => {
-
+        console.log(result);
         if (result.length > 0) {
             //add payment list
             for (var i = 0; i < result.length; i++) {

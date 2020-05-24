@@ -17,6 +17,9 @@ namespace eCartInterfaces
         StorePickupPoint GetStorePickupPoint(int id);
         UserDetail GetUserDetails(string userId);
 
+        List<StorePickupPoint> GetStorePickupPoints(int storeId);
+        List<PaymentReceiver> GetPaymentRecievers();
+
         bool Save();
     }
 }

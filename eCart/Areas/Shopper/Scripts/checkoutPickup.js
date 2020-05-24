@@ -3,7 +3,7 @@
  */
 
 function getPickupPoints(cartId, StoreId) {
-    $.getJSON("/Shopper/CartDetails/GetStorePickups", { storeId: StoreId }, (result) => {
+    $.getJSON("/Shopper/CartDetails/GetStorePickupPoints", { storeId: StoreId }, (result) => {
         //clear store pickup list
         $("#pickupLocList").children().remove();
 
@@ -11,7 +11,7 @@ function getPickupPoints(cartId, StoreId) {
         if (result.length > 0) {
             for (var i = 0; i < result.length; i++) {
                 var location = "<li type='button' class='list-group-item btn btn-default' value='" + result[i]['Id'] + "'" +
-                    " onclick='UpdateLocation(" + cartId + "," + result[i]['Id'] + ")' >" + result[i]['Address'] + "</li>";
+                    " onclick='UpdatePickupLocation(" + cartId + "," + result[i]['Id'] + ")' >" + result[i]['Address'] + "</li>";
                 $("#pickupLocList").append(location);
             }
         } else {
@@ -24,9 +24,10 @@ function getPickupPoints(cartId, StoreId) {
     });
 }
 
-function UpdateLocation(cartId, pickupPointId) {
+function UpdatePickupLocation(cartId, pickupPointId) {
     $.post('/Shopper/CartDetails/UpdatePickupPoint', { cartId: cartId, pickupPointId: pickupPointId },
         (response) => {
+            console.log(response);
             if (response == 'True') {
                 updateLocationText(cartId, pickupPointId);
             } else {

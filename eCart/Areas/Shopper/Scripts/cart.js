@@ -63,7 +63,7 @@ function RemoveItem(e, Id) {
 
     $.post('/Shopper/CartDetails/RemoveCartItem', { id: Id }, (response) => {
         console.log(response);
-        if (response == 'Removed') {  //remove element 
+        if (response == 'True') {  //remove element 
             $(e).parent().parent().remove();
         } else {
             alert("Item cannot be removed from the cart.");

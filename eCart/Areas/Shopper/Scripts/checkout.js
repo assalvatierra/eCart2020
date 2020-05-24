@@ -28,7 +28,7 @@ function SubmitOrder(e, cartId) {
             //on success, disable button and show success modal
             $(e).attr("disabled", true);
             $("#CheckOutSuccessModal").modal('show');
-        } else if (result == "Order NOT Submitted") {
+        } else {
             //on error : order not submitted, error on saving on db
             $("#cart-alert-box-" + cartId).children('p').text("We cannot process you cart. Please try again later.");
             $("#cart-alert-box-" + cartId).show();
