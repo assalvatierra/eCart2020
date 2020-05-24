@@ -13,8 +13,7 @@ namespace eCart.Controllers
         StoreFactory store = new StoreFactory();
 
         public ActionResult Index()
-        {
-            
+        {            
             return View();
         }
 

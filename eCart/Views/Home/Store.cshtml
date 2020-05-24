@@ -80,7 +80,7 @@
     <script>
         //On Add to Cart Button Click
         function AddtoCart(e) {
-            if ('@Session["USER"]' != '') {
+            if ('@HttpContext.Current.User.Identity.IsAuthenticated') {
                 $(e).addClass('hidden');                //hide
                 $(e).siblings().removeClass('hidden');  //show
             } else {

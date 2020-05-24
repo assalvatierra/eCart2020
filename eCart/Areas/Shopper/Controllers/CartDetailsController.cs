@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using eCartServices;
 using eCartModels;
+using Microsoft.AspNet.Identity;
 
 namespace eCart.Areas.Shopper.Controllers
 {
@@ -28,8 +29,7 @@ namespace eCart.Areas.Shopper.Controllers
 
         public string GetUserId()
         {
-
-            var userId = Session["USERID"].ToString();
+            var userId = HttpContext.User.Identity.GetUserId();
             return userId;
         }
 
@@ -58,14 +58,15 @@ namespace eCart.Areas.Shopper.Controllers
             try
             {
                 var cartSession = GetCartDetails();
-                if (cartSession != null )
+                if (cartSession == null)
                 {
-                    var cart = store.CartMgr.addItemToCart(id, qty, itemPrice, cartSession);
-
-                    UpdateCartDetails(cart);
-                    return true;
+                    //prepare new cart
+                    cartSession = new List<CartDetail>();
                 }
-                return false;
+
+                var cart = store.CartMgr.addItemToCart(id, qty, itemPrice, cartSession);
+                UpdateCartDetails(cart);
+                return true;
             }
             catch
             {
@@ -103,24 +104,22 @@ namespace eCart.Areas.Shopper.Controllers
 
         public ActionResult CartCheckout()
         {
-            var cartMgr = store.CartMgr;
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                var cartMgr = store.CartMgr;
+                var cartDetails = GetCartDetails();
+                ViewBag.PaymentParties = cartMgr.GetPaymentRecievers();
+                string userId = HttpContext.User.Identity.GetUserId();
+                ViewBag.UserDetails = cartMgr.GetUserDetails(userId);
 
-            if(Session["USERID"] == null)
+                return View(cartDetails);
+            }
+            else
             {
                 return RedirectToAction("Login", "Account", new { area = "" });
             }
 
-            if (cartMgr.getUserId() != 0)
-            {
-                var cartDetails = GetCartDetails();
-                ViewBag.PaymentParties = cartMgr.GetPaymentRecievers();
-                string userId = Session["USERID"].ToString();
-                ViewBag.UserDetails = cartMgr.GetUserDetails(userId);
-
-                return PartialView(cartDetails);
-            }
-
-            return RedirectToAction("Index", "Home", new { area = "" });
+            //return RedirectToAction("Index", "Home", new { area = "" });
         }
 
         [HttpGet]

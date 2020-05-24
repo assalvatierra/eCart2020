@@ -57,6 +57,7 @@ function AddtoCart_Submit(e, itemId, itemName, price) {
     //Show buttons for adding new item
     $(e).parent().siblings().removeClass('hidden');   //show Add Cart Button
     $(e).parent().addClass('hidden');      //hide add cart button
+    
 }
 
 function RemoveItem(e, Id) {
