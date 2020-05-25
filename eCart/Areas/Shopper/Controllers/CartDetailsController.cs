@@ -60,16 +60,16 @@ namespace eCart.Areas.Shopper.Controllers
             {
                 var UserId = GetUserId();
                 var cartSession = GetCartDetails();
-                if (cartSession != null )
+                if (cartSession == null)
                 {
-                    var cart = store.CartMgr.addItemToCart(id, qty, itemPrice, cartSession, UserId);
-
-                    UpdateCartDetails(cart);
-                    return true;
+                    cartSession = new List<CartDetail>();
                 }
-                return false;
+                var cart = store.CartMgr.addItemToCart(id, qty, itemPrice, cartSession, UserId);
+
+                UpdateCartDetails(cart);
+                return true;
             }
-            catch
+            catch(Exception e)
             {
                 return false;
             }
@@ -107,22 +107,20 @@ namespace eCart.Areas.Shopper.Controllers
         {
             var cartMgr = store.CartMgr;
 
-            if(Session["USERID"] == null)
+            if(HttpContext.User.Identity.IsAuthenticated)
+            { 
+                var cartDetails = GetCartDetails();
+                ViewBag.PaymentParties = cartMgr.GetPaymentRecievers();
+                    string userId = HttpContext.User.Identity.GetUserId();
+                ViewBag.UserDetails = cartMgr.GetUserDetails(userId);
+
+                return View(cartDetails);
+            }
+            else
             {
                 return RedirectToAction("Login", "Account", new { area = "" });
             }
 
-            if (cartMgr.getUserId() != 0)
-            {
-                var cartDetails = GetCartDetails();
-                ViewBag.PaymentParties = cartMgr.GetPaymentRecievers();
-                string userId = Session["USERID"].ToString();
-                ViewBag.UserDetails = cartMgr.GetUserDetails(userId);
-
-                return PartialView(cartDetails);
-            }
-
-            return RedirectToAction("Index", "Home", new { area = "" });
         }
 
         [HttpGet]
@@ -218,7 +216,7 @@ namespace eCart.Areas.Shopper.Controllers
                 return store.CartMgr.SaveOrder(cartSession, userId);  //save to db
 
             }
-            catch
+            catch(Exception e)
             {
                 return false;
             }
