@@ -11,7 +11,7 @@
 </h1>
 
 <p>
-    @Html.ActionLink("Back to Store", "Index", "Home", new { id = @ViewBag.StoreId }, null) 
+    @Html.ActionLink("Back to Store", "Index", "Store", new { id = @ViewBag.StoreId }, null) 
 </p>
 <hr />
 <div class="panel bordered">
@@ -42,7 +42,7 @@
             <div class="form-group col-lg-6">
                 <label class="control-label"> Status </label>
                 <select class="form-control">
-                    @foreach (var item in ViewBag.Status as IEnumerable<eCart.Models.StoreStatus>)
+                    @foreach (var item in ViewBag.Status as IEnumerable<eCartModels.StoreStatus>)
                     {
                         if (item.Id == Model.StoreStatusId)
                         {
@@ -63,7 +63,7 @@
             <div class="form-group col-lg-6" id="City">
                 <label class="control-label"> Area </label>
                 <select class="form-control">
-                    @foreach (var item in ViewBag.Cities as IEnumerable<eCart.Models.MasterCity>)
+                    @foreach (var item in ViewBag.Cities as IEnumerable<eCartModels.MasterCity>)
                     {
                         if (item.Id == Model.MasterCityId)
                         {
@@ -83,7 +83,7 @@
             <div class="form-group col-lg-6">
                 <label class="control-label"> Area </label>
                 <select class="form-control" id="Area">
-                    @foreach (var item in ViewBag.Areas as IEnumerable<eCart.Models.MasterArea>)
+                    @foreach (var item in ViewBag.Areas as IEnumerable<eCartModels.MasterArea>)
                     {
                         if (item.Id == Model.MasterAreaId)
                         {

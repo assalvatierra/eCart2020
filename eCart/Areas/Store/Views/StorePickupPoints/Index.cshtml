@@ -1,4 +1,4 @@
-﻿@model IEnumerable<eCart.Models.StorePickupPoint>
+﻿@model IEnumerable<eCartModels.StorePickupPoint>
 
 @{
     ViewBag.Title = "Store Pickup Locations";
@@ -7,7 +7,7 @@
 <h2>Store Pickup Locations</h2>
 
 <p>
-    @Html.ActionLink("Back to Store", "Index", "Home", new { id = @ViewBag.StoreId }, null) |
+    @Html.ActionLink("Back to Store", "Index", "Store", new { id = @ViewBag.StoreId }, null) |
     @Html.ActionLink("Create New", "Create", new { id = @ViewBag.StoreId })
 </p>
 <div class="panel bordered">
@@ -31,7 +31,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Address)
                 </td>
-                <td>
+                <td>br
                     @Html.DisplayFor(modelItem => item.Remarks)
                 </td>
                 <td>

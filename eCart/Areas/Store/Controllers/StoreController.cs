@@ -21,8 +21,7 @@ namespace eCart.Areas.Store.Controllers
             if (HttpContext.User.Identity.IsAuthenticated)
             {
                 var storeMgr = storeFactory.StoreMgr;
-                //                string STOREID = Session["STOREID"] != null ? Session["STOREID"].ToString() : id.ToString();
-
+                // string STOREID = Session["STOREID"] != null ? Session["STOREID"].ToString() : id.ToString();
 
                 var userid = HttpContext.User.Identity.GetUserId();
                 var store = storeMgr.GetStoreDetailByLoginId(userid);

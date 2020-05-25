@@ -54,10 +54,10 @@ function AddItemToTable(item, price, Id, imgUrl) {
         "<td><button class='btn btn-default btn-xs' href='' data-target='#AddCategory' data-toggle='modal' onclick='GetCategoryList(" + Id + ")'>Add Category</button> </td>" +
         "<td> " + price + " <b></td>" +
         "<td><a href='/Store/StoreItems/Edit/" + Id + "'> Edit </a> |" +
-        "<a href='/Store/StoreItems/Delete/" + Id + "'> Delete </a> " +
+        "<a href='/Store/StoreItems/Delete/" + Id + "'> Remove </a> " +
         " </td>"
     " </tr>";
 
-    $("tbody").append(item);
+    $("#StoreItems-content").prepend(item);
     $("#CreateItem").modal('hide');
 }

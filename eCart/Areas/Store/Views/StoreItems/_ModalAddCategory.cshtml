@@ -10,7 +10,11 @@
             </div>
 
             <div class="modal-body">
-                <div class="list-group" id="category-list">
+                <div class="list-group" id="AddCat-CategoryGroup">
+                    <!-- Generated Category List Content Here -->
+                </div>
+
+                <div class="list-group" id="AddCat-CategoryList">
                     <!-- Generated Category List Content Here -->
                 </div>
             </div>
@@ -24,22 +28,52 @@
 <script>
     function GetCategoryList(itemId) {
 
-        $.get("/Store/StoreItems/GetItemCategories")
+       // $('#AddCat-CategoryList').hide();
+        $('#AddCat-CategoryGroup').show();
+
+        $.get("/Store/StoreItems/GetItemCategoryGroups")
             .then((result) => {
                 //add categories to the category modal
-                GenerateCategoryList(result, itemId);
+                GenerateCategoryGroupList(result, itemId);
             });
     }
 
-    function GenerateCategoryList(categories, itemId) {
-        for (var i = 0; i < categories.length; i++) {
-            let category = "<button class='list-group-item' onclick='selectCategory(this," + itemId + ", " + categories[i]["Id"] + ")'> " + categories[i]["Name"] + " </button> ";
+    function GenerateCategoryGroupList(categories, itemId) {
+        $("#AddCat-CategoryGroup").remove();
 
-            $("#category-list").append(category);
+        for (var i = 0; i < categories.length; i++) {
+            let category = "<button class='list-group-item' onclick='SelectCategoryGroup(this," + itemId + ", " + categories[i]["Id"] + ")'> " + categories[i]["Name"] + " </button> ";
+
+            $("#AddCat-CategoryGroup").append(category);
+        }
+    }
+    function GenerateCategoryList(categories, itemId) {
+        $("#AddCat-CategoryList").remove();
+
+        for (var i = 0; i < categories.length; i++) {
+            let category = "<button class='list-group-item' onclick='SelectCategory(this," + itemId + ", " + categories[i]["Id"] + ")'> " + categories[i]["Name"] + " </button> ";
+
+            $("#AddCat-CategoryList").append(category);
         }
     }
 
-    function selectCategory(e, itemId, categoryId) {
+    function SelectCategoryGroup(e, itemId, categoryId) {
+
+        console.log("loading categories");
+
+        var res = $.get("/Store/StoreItems/GetItemCategoriesById", { id: categoryId })
+            .then((result) => {
+                console.log(result);
+                //add categories to the category modal
+                GenerateCategoryList(result, itemId);
+
+                $('#AddCat-CategoryGroup').hide();
+                $('#AddCat-CategoryList').show();
+            });
+       
+    }
+
+    function SelectCategory(e, itemId, categoryId) {
         $.post("/Store/StoreItems/AddItemCategory", { itemId: itemId, categoryId: categoryId })
             .then(() => {
                 console.log("category adde to the item");
@@ -47,7 +81,6 @@
 
                 var tempCategory = "<div class='btn-group'>" +
                     "<button class='btn btn-default btn-xs'> " + $(e).text() + " </button>" +
-
                     "</div>";
                 $("#category-" + itemId).append(tempCategory);
             });

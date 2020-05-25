@@ -32,5 +32,27 @@ namespace eCartDbLayer
         {
             return db.ItemMasters;
         }
+
+        public IQueryable<StoreDetail> GetStoreDetails()
+        {
+            return db.StoreDetails;
+        }
+
+        public IQueryable<ItemCategory> GetItemCategories()
+        {
+            return db.ItemCategories;
+        }
+
+        public IQueryable<ItemMasterCategory> GetItemMasterCategories()
+        {
+            try
+            {
+                return db.ItemMasterCategories;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

@@ -13,6 +13,9 @@ namespace eCartInterfaces
         IQueryable<MasterArea> GetMasterAreas();
         IQueryable<StoreStatus> GetStoreStatus();
         IQueryable<ItemMaster> GetItemMaster();
+        IQueryable<StoreDetail> GetStoreDetails();
+        IQueryable<ItemCategory> GetItemCategories();
+        IQueryable<ItemMasterCategory> GetItemMasterCategories();
 
     }
 }
