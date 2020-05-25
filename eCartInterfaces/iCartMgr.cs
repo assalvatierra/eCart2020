@@ -20,6 +20,7 @@ namespace eCartInterfaces
         List<CartHistory> getCartHistory(int id);
         List<CartActivity> getCartDeliveryActivities(int id);
         UserDetail GetUserDetails(string userId);
+        CartDetail GetCartDetail(int id);
 
         bool addItemToCart(int id, int qty, decimal price);
         List<CartDetail> addItemToCart(int id, int qty, decimal price, List<CartDetail> cartSession,string userId);
@@ -34,16 +35,17 @@ namespace eCartInterfaces
         void updateCartDelivery(CartDelivery cartDelivery);
         bool SetCartPickupDate(int cartId, DateTime pickupdate, List<CartDetail> cart);
         bool SetCartPaymentReceiver(int cartId, int recieverId, List<CartDetail> cart);
-        string setDBCartStatus(int cartId, int cartStatusId, string userId);
+        bool SetDBCartStatus(int cartId, int cartStatusId, string userId);
         string setCartStatusCancelled(int cartId, string userId);
 
         bool RemoveCartItem(List<CartDetail> carts,int id);
         void removeDBCartItem(int id, int statusId);
         void removeCartdelivery(int id);
-        bool removeCartSession(int storeId);
+        bool RemoveCartSession(int storeId, List<CartDetail> cart);
+        bool RemoveCartSession(CartDetail cat, List<CartDetail> cartList);
 
         bool saveOrder(List<CartDetail> cartDetails, string userId);
-        bool SaveOrder(CartDetail cart, string userId);
+        bool SaveOrder(List<CartDetail> cartDetails, string userId, int cartId);
 
     }
 }

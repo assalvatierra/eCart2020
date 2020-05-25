@@ -298,6 +298,7 @@
     <Content Include="Areas\Shopper\Views\CartDetails\_ModalPickupEdit.cshtml" />
     <Content Include="Areas\Store\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Store\Views\Store\NoUserStore.cshtml" />
+    <Content Include="Areas\Shopper\Views\CartDetails\PendingCarts.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />
     <Content Include="Scripts\DateRangePicker\moment.min.js" />

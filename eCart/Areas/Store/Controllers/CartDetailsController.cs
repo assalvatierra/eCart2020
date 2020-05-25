@@ -180,7 +180,7 @@ namespace eCart.Areas.Store.Controllers
         {
             var cartMgr = storeFactory.CartMgr;
             var userid = cartMgr.getUserId();
-            var response = cartMgr.setDBCartStatus(id,statusId, userid.ToString()); 
+            var response = cartMgr.SetDBCartStatus(id,statusId, userid.ToString()); 
 
             return Json(response, JsonRequestBehavior.AllowGet);
         }

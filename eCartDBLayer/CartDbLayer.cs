@@ -3,6 +3,7 @@ using eCartInterfaces;
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using System.Data.Entity;
 
 namespace eCartDbLayer
 {
@@ -20,9 +21,8 @@ namespace eCartDbLayer
 
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
-                throw ex;
                 return false;
 
             }
@@ -41,6 +41,40 @@ namespace eCartDbLayer
             catch
             {
                 return false;
+
+            }
+        }
+
+        public bool AddCartItem(CartItem cartItem)
+        {
+            try
+            {
+                db.CartItems.Add(cartItem);
+                db.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+
+            }
+        }
+
+
+        public bool AddPaymentDetails(PaymentDetail paymentDetail)
+        {
+            try
+            {
+                db.PaymentDetails.Add(paymentDetail);
+                db.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+
             }
         }
 
@@ -140,6 +174,27 @@ namespace eCartDbLayer
             {
                 return null;
             }
+        }
+
+        public bool EditCartDetails(CartDetail cartDetail)
+        {
+            try
+            {
+
+                db.Entry(cartDetail).State = EntityState.Modified;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+           
+        }
+
+        public CartDetail GetCartDetail(int id)
+        {
+            return db.CartDetails.Find(id);
         }
     }
 }

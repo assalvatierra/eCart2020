@@ -28,60 +28,8 @@ namespace eCartServices
 
         public bool addItemToCart(int id, int qty, decimal price)
         {
-            //try
-            //{
-            //    //create cartItem
-            //    var newItem = CreateCartItem(id, qty);
 
-            //    //create cartDetails
-            //    var newCart = CreateCart(newItem);
-
-            //    //get current cart from session
-            //    var cartList = getCartDetails();
-            //    var isAssigned = false;
-
-            //    if (cartList != null)
-            //    {
-            //        return false;
-            //    }
-
-            //    foreach (var cart in cartList)
-            //        {
-            //            //if (cart.StoreId == newItem.StoreId)
-            //            //{
-            //            //    if (cart.CartStatus == 1)
-            //            //    {
-            //            //        //add new item to the current active cart
-            //            //        newCart.Id = cartList.LastOrDefault().Id;
-            //            //        cart.cartItems.Add(newItem);
-            //            //        isAssigned = true;
-            //            //    }
-            //            //    else
-            //            //    {
-            //            //        newCart.Id = cartList.LastOrDefault().Id + 1;
-            //            //        cartList.Add(newCart);
-            //            //        isAssigned = true;
-            //            //    }
-            //            //}
-            //        }
-
-            //    if (isAssigned == false)
-            //    {
-            //        newCart.Id = cartList.Count() + 1;
-            //        cartList.Add(newCart);
-            //        isAssigned = true;
-            //    }
-
-            //    return isAssigned;
-
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw ex;
-            //    return false;
-            //}
-
-            return false;
+            throw new NotImplementedException();
         }
 
         public List<CartDetail> addItemToCart(int id, int qty, decimal price, List<CartDetail> cartSession, string userId)
@@ -97,11 +45,6 @@ namespace eCartServices
                 //get current cart from session
                 var cartList = cartSession;
                 var isAssigned = false;
-
-                if (cartList != null)
-                {
-                    //return false;
-                }
 
                 foreach (var cart in cartList)
                 {
@@ -141,7 +84,6 @@ namespace eCartServices
             catch (Exception ex)
             {
                 throw ex;
-                return null;
             }
         }
 
@@ -157,6 +99,7 @@ namespace eCartServices
                 StoreDetail = store,
                 CartStatusId = 1,
                 StorePickupPoint = GetStorePickup(storePickupPointId),
+                StorePickupPointId = storePickupPointId,
                 DeliveryType = "Pickup",
                 DtPickup = DateTime.Now.AddHours(4),
                 CartItems = new List<CartItem> { cartItem },
@@ -175,7 +118,8 @@ namespace eCartServices
                 StoreItem = storeItem,
                 ItemQty = qty,
                 StoreItemId = id,
-                CartItemStatusId = 1
+                CartItemStatusId = 1,
+                ItemOrder = storeItem.Id.ToString(),
             };
         }
 
@@ -476,6 +420,7 @@ namespace eCartServices
             try
             {
                 var userID = userId;
+                var ACTIVE = 2;
                 var isValid = false;
 
                 foreach (var cart in cartDetails)
@@ -485,48 +430,56 @@ namespace eCartServices
                     //and save to the db
                     if (cart.CartStatusId == 1 )
                     {
-                        //update cart status to Submitted
-                        //var cartStatus = db.CartStatus.Find(2);  //Submitted
-                        cart.CartStatu = cartdb.GetCartStatus(2);
-
-                        var addResult = cartdb.AddCartDetails(cart);
-                        if (addResult) {
-
-                            if (addCartHistory(cart, 2, userID))
+                        var tempCartId = AddCartDetails(cart);
+                        if (tempCartId > 0)
+                        {
+                            //add cart items
+                            var AddCartItemsRes = AddCartItems(cart.CartItems.ToList(), tempCartId);
+                            if (!AddCartItemsRes)
                             {
-                                if (removeCartSession(storeID))
-                                {
-                                    isValid = true;
-                                }
+                                return false;
                             }
 
-                        }
-                        else
-                        {
-                            return false;
+                            //addPaymentDetails
+                            if (cart.PaymentDetails != null)
+                            {
+                                var AddCartPayments = AddPaymentDetails(cart.PaymentDetails.ToList(), tempCartId);
+                                if (!AddCartPayments)
+                                {
+                                    return false;
+                                }
+
+                            }
+                            //add cart history
+                            var addHistory = addCartHistory(cart, ACTIVE, userID);
+                            if (addHistory)
+                            {
+                                isValid = true;
+                            }
+
                         }
                     }
                 }
 
                 if (isValid)
                 {
-                    if (cartdb.Save())
-                    {
-                        return true;
-                    }
+                    cartDetails.RemoveAll(c => c.CartItems.Count() > 0);
+                    return true;
                 }
                 return false;
             }
-            catch 
+            catch (Exception ex)
             {
-                return false;
+                throw ex;
             }
         }
 
-        public bool SaveOrder(CartDetail cart, string userId)
+        public bool SaveOrder(List<CartDetail> cartDetails, string userId, int cartId)
         {
             try
             {
+                var cart = cartDetails.Find(s => s.Id == cartId);
+
                 var userID = userId;
                 var ACTIVE = 2;
                 var storeID = cart.StoreDetailId;
@@ -534,46 +487,121 @@ namespace eCartServices
                 //and save to the db
                 if (cart.CartStatusId == 1)
                 {
-                    cart.CartStatusId = 2;  //Submitted
-                    cart.StoreDetailId = cart.StoreDetailId;
-                    cart.StoreDetail = null;
-                    cart.StorePickupPointId = cart.StorePickupPoint.Id;
-                    cart.StorePickupPoint = null;
-                    foreach (var item in cart.CartItems)
+                    var tempCartId = AddCartDetails(cart);
+                    if (tempCartId > 0)
                     {
-                        item.CartDetail = cart;
-                        item.CartDetailId = cart.Id;
-                        item.ItemOrder = "1";
+                        //add cart items
+                        var AddCartItemsRes = AddCartItems(cart.CartItems.ToList(), tempCartId);
+                        if (!AddCartItemsRes)
+                        {
+                            return false;
+                        }
 
-                    }
+                        //addPaymentDetails
+                        if (cart.PaymentDetails != null )
+                        {
+                            var AddCartPayments = AddPaymentDetails(cart.PaymentDetails.ToList(), tempCartId);
+                            if (!AddCartPayments)
+                            {
+                                return false;
+                            }
 
+                        }
 
-                    var addRes = cartdb.AddCartDetails(cart);
-                    if (addRes)
-                    {
                         //add cart history
                         var addHistory = addCartHistory(cart, ACTIVE, userID);
                         if (addHistory)
                         {
                             //remove cart from session
-                            var remResult = removeCartSession(storeID);
+                            var remResult = RemoveCartSession(cart, cartDetails);
                             if (remResult)
                             {
-                                if (cartdb.Save())
-                                {
-                                    return true;
-                                }
+                                return true;
                             }
                         }
                     }
                 }
                 return false;
             }
-            catch (Exception ex)
+            catch
             {
-                throw ex;
                 return false;
             }
+        }
+
+        public int AddCartDetails(CartDetail cart)
+        {
+            CartDetail tempCart = new CartDetail()
+            {
+                Id = cart.Id,
+                CartStatusId = 2,  //Submitted
+                DeliveryType = cart.DeliveryType,
+                DtPickup = cart.DtPickup,
+                StoreDetailId = cart.StoreDetailId,
+                StorePickupPointId = cart.StorePickupPointId,
+                UserDetailId = cart.UserDetailId
+            };
+
+            var addResult = cartdb.AddCartDetails(tempCart);
+            if (addResult)
+            {
+                return tempCart.Id;
+            }
+
+            return 0;
+        }
+
+        public bool AddCartItems(List<CartItem> cartItems, int cartId)
+        {
+            //add cart items
+            foreach (var item in cartItems)
+            {
+                CartItem tempItem = new CartItem()
+                {
+                    CartDetailId = cartId,
+                    CartItemStatusId = item.CartItemStatusId,
+                    ItemOrder = item.ItemOrder,
+                    ItemQty = item.ItemQty,
+                    Remarks1 = item.Remarks1,
+                    Remarks2 = item.Remarks2,
+                    StoreItemId = item.StoreItemId
+                };
+
+                var result = cartdb.AddCartItem(tempItem);
+                if (result == false)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public bool AddPaymentDetails(List<PaymentDetail> paymentDetails, int cartId)
+        {
+            //add cart items
+            foreach (var item in paymentDetails)
+            {
+                PaymentDetail tempPayment = new PaymentDetail()
+                {
+                    CartDetailId = cartId,
+                    Amount = item.Amount,
+                    dtPayment = item.dtPayment,
+                    PaymentPartyId = item.PaymentPartyId,
+                    PaymentReceiverId = item.PaymentReceiverId,
+                    PartyInfo = item.PartyInfo,
+                    PaymentStatusId = item.PaymentStatusId,
+                    ReceiverInfo = item.ReceiverInfo
+                };
+
+                var result = cartdb.AddPaymentDetails(tempPayment);
+                if (result == false)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         public void updateCartDetailsStatus(int cartId, string status)
@@ -584,7 +612,6 @@ namespace eCartServices
             cart.CartStatus = statusId;
 
         }
-
 
         public bool SetCartPaymentReceiver(int cartId, int recieverId, List<CartDetail> cart)
         {
@@ -649,14 +676,13 @@ namespace eCartServices
         }
 
 
-        public bool removeCartSession(int storeId)
+        public bool RemoveCartSession(int storeId, List<CartDetail> cartList)
         {
             try
             {
-                var cartlist = getCartDetails();
-                var cart = cartlist.Find(c=>c.StoreId == storeId);
-            
-                cartlist.Remove(cart);
+                var cartDetail = cartList.Find(c=>c.StoreDetailId == storeId);
+
+                cartList.Remove(cartDetail);
                 return true;
             }
             catch 
@@ -664,6 +690,20 @@ namespace eCartServices
                 return false;
             }
         }
+
+        public bool RemoveCartSession(CartDetail cart, List<CartDetail> cartList)
+        {
+            try
+            {
+                cartList.Remove(cart);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
 
         public List<StorePickupPoint> GetStorePickupPoints(int storeId)
         {
@@ -691,7 +731,7 @@ namespace eCartServices
 
         public List<CartDetail> getShopperCarts(int userId)
         {
-            var cartList = db.CartDetails.Where(s => s.UserDetailId == userId).ToList();
+            var cartList = db.CartDetails.Where(s => s.UserDetailId == userId).OrderByDescending(s => s.Id).ToList();
             return cartList;
         }
 
@@ -712,59 +752,65 @@ namespace eCartServices
             {
                 var cartHistory = new CartHistory
                 {
-                    CartDetail = cart,
+                    CartDetailId = cart.Id,
                     CartStatusId = statusId,
                     dtStatus = DateTime.Now,
-                    UserId = userId,
+                    UserId = GetUserDetails(userId).Id.ToString(), //TODO : increase UserId max length to 40
+
                 };
+
+                cartdb.AddCartHistory(cartHistory);
+               
 
                 return true;
             }
-            catch
+            catch 
             {
                 return false;
             }
         }
 
-        public string setDBCartStatus(int cartId, int cartStatusId, string userId)
+        public bool SetDBCartStatus(int cartId, int cartStatusId, string userId)
         {
             try
             {
-                CartDetail cart = db.CartDetails.Find(cartId);
-                CartStatus cartStatus = db.CartStatus.Find(cartStatusId);
+                CartDetail cart = cartdb.GetCartDetail(cartId);
+                cart.CartStatusId = cartStatusId;
+                if (cartdb.EditCartDetails(cart))
+                {
+                    if (addCartHistory(cart, cartStatusId, userId))
+                    {
+                        return true;
+                    }
+                }
 
-                var userID = getUserAccID();
+                return false;
 
-                cart.CartStatu = cartStatus;
-                db.Entry(cart).State = EntityState.Modified;
-                db.SaveChanges();
-
-                addCartHistory(cart, cartStatus.Id, userID);
-                return "cart status updated";
             }
             catch (Exception ex)
             {
 
-                return ex.Message;
+                throw ex;
             }
         }
 
         public string setCartStatusCancelled(int cartId, string userId)
         {
 
-            var cartstatusId = db.CartDetails.Find(cartId).CartStatusId;
+            var cartstatusId = cartdb.GetCartDetail(cartId).CartStatusId;
             if (cartstatusId < 3) 
             {
                 // if cart is still on Pending or Active, 
                 // user is allowed to cancel the cart
-                setDBCartStatus(cartId, 6, userId);
-                return "Order Cancelled";
-            }
-            else
-            {
-                return "Order is now being processed";
-            }
 
+
+                if (SetDBCartStatus(cartId, 6, userId))
+                {
+                    return "Order Cancelled";
+                }
+              
+            }
+            return "Order is now being processed";
         }
 
         public void removeDBCartItem(int id, int statusId)
@@ -852,6 +898,18 @@ namespace eCartServices
             catch
             {
                 return null;
+            }
+        }
+
+        public CartDetail GetCartDetail(int id)
+        {
+            try
+            {
+                return cartdb.GetCartDetail(id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }

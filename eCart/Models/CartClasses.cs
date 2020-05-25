@@ -65,7 +65,6 @@ namespace eCart
     public class CartClass
     {
         private CartDetail cartDetails;
-        private List<CartItem> cartItems;
 
         public CartClass()
         {

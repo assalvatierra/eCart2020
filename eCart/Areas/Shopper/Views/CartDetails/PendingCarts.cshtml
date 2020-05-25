@@ -1,0 +1,153 @@
+﻿@model IEnumerable<eCartModels.CartDetail>
+
+@{
+    ViewBag.Title = "PendingCarts";
+    eCartModels.UserDetail user = ViewBag.UserDetails as eCartModels.UserDetail;
+}
+
+<h2>Pending Carts</h2>
+
+<div class="panel bordered">
+    <div class="panel-body">
+        <h3> Shopper Details </h3>
+        <p> Name: <b> @user.Name  </b> </p>
+        <p> Address: <b>@user.Address </b> </p>
+        <p> Contact No.:  <b>@user.Mobile </b> </p>
+    </div>
+</div>
+
+@{ decimal totalAmount = 0; }
+@foreach (var cart in Model)
+{
+    decimal subtotalAmount = 0;
+    <div class="panel bordered">
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col-lg-12 cart-ID-div">
+                    <p> Cart #: <span class="Cart-ID"> @cart.Id.ToString("0000")  </span></p>
+                </div>
+            </div>
+
+            <div class="cart-summary-store">
+                <div class="pull-left" style="display:flex;flex-direction:row;">
+                    <img src="@cart.StoreDetail.StoreImages.FirstOrDefault().ImageUrl" style="width:60px;" />
+                    <h3 style="flex:1;" class="pull-right"> @cart.StoreDetail.Name </h3>
+                </div>
+                <div class="cart-summary-pickup">
+                    <p>
+                        <span> Delivery Type </span>
+                        <a href=""> @cart.DeliveryType </a>
+                    </p>
+                    <span> Pickup Point: </span>
+                    <a href="" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetail.Id')" id="pickupAddress-@cart.Id" value="@cart.StorePickupPoint.Id">
+                        @cart.StorePickupPoint.Address
+                    </a>
+                </div>
+                <div class="cart-summary-pickup">
+                    <span> DateTime Pickup: </span>
+                    <p>
+                        <a href=""> @cart.DtPickup.ToString("MMM dd yyyy h:mm tt") </a>
+                    </p>
+                </div>
+                <div class="cart-summary-pickup">
+                    <span> Payment:</span>
+                    <a href="" id="paymentMode-@cart.StoreDetail.Id">
+                        @if (cart.PaymentDetails.FirstOrDefault() != null)
+                        {
+                            @cart.PaymentDetails.LastOrDefault().PaymentReceiver.Description
+                        }
+                        else
+                        {
+                            <p>On Pickup </p>
+                        }
+                    </a>
+                </div>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td> <b>Item Description</b> </td>
+                        <td> Qty </td>
+                        <td> Price per Item</td>
+                        <td> Total </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in cart.CartItems)
+                    {
+                        var qty = item.ItemQty;
+                        var unitprice = item.StoreItem.UnitPrice;
+                        var subtotal = qty * unitprice;
+                        subtotalAmount += subtotal;
+                        <tr>
+                            <td style="display:flex;flex-direction:row;">
+                                @if (item.StoreItem.ItemMaster.ItemImages.FirstOrDefault() != null)
+                                {
+                                    var image = item.StoreItem.ItemMaster.ItemImages.FirstOrDefault();
+                                    <img src="@image.ImageUrl" class="img-thumbnail" width="50" />
+                                }
+                                else
+                                {
+                                    <img src="~/img/placeholders/placeholder-product.png" class="img-thumbnail" width="50" />
+                                }
+
+                                <span style="display:flex;flex-direction:column;padding-left:5px;">
+                                    <span class="item-ID"> Item #:  @item.StoreItemId </span>
+                                    <b> @item.StoreItem.ItemMaster.Name </b>
+                                    <span class="text-muted">  @item.Remarks1 </span>
+                                </span>
+                            </td>
+                            <td> @item.ItemQty </td>
+                            <td> Php @item.StoreItem.UnitPrice.ToString("0.00") </td>
+                            <td class="text-success"> <b> Php @subtotal.ToString("0.00")</b> </td>
+                            <td width="20">
+
+                            <td>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="row panel-footer" style="margin:0px;">
+            <div class="col-lg-8">
+                <h4> Amount: <b class="text-success"> Php @subtotalAmount.ToString("0.00") </b> </h4>
+            </div>
+            <div class="col-lg-2">
+
+                <h4 style="width:100%;" class="cart-status-text">
+                    Status:  @cart.CartStatu.Name
+                </h4>
+
+            </div>
+            <div class="col-lg-2">
+                @if (cart.CartStatusId < 3)
+                {
+                    <button class="btn btn-warning" style="width:100%;" onclick="CancelOrder(this,@cart.Id)">
+                        Cancel Order
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+    totalAmount += subtotalAmount;
+}
+
+
+<script>
+    function CancelOrder(e,cartId) {
+        $.get("/Shopper/CartDetails/CancelCart", { cartId: cartId }, (response) => {
+            console.log(response);
+            if (response == "Order Cancelled") {
+                $(e).attr("disabled", "disabled");
+                $(e).parent().siblings('.col-lg-2').children('.cart-status-text').text("Cancelled");
+            } else {
+                alert(response);
+            }
+        });
+
+
+    }
+</script>

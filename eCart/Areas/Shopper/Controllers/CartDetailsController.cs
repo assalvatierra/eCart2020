@@ -69,7 +69,7 @@ namespace eCart.Areas.Shopper.Controllers
                 UpdateCartDetails(cart);
                 return true;
             }
-            catch(Exception e)
+            catch
             {
                 return false;
             }
@@ -205,18 +205,24 @@ namespace eCart.Areas.Shopper.Controllers
         {
             try
             {
-                var cartSession = GetCartDetails().Find(s => s.Id == id);
-                var userId = GetUserId();
+                var cartSession = GetCartDetails();
 
                 if (cartSession == null)
                 {
                     return false;
                 }
 
-                return store.CartMgr.SaveOrder(cartSession, userId);  //save to db
+                var userId = GetUserId();
 
+                if (store.CartMgr.SaveOrder(cartSession, userId, id)) {  //save to db
+                  
+                    return true;
+                 
+                }
+
+                return false;
             }
-            catch(Exception e)
+            catch
             {
                 return false;
             }
@@ -237,5 +243,33 @@ namespace eCart.Areas.Shopper.Controllers
             }
 
         }
+
+
+        public ActionResult PendingCarts()
+        {
+            var userId = GetUserId();
+            var userDetails = store.CartMgr.GetUserDetails(userId);
+            var myCarts = store.CartMgr.getShopperCarts(userDetails.Id);
+
+            ViewBag.UserDetails = userDetails;
+
+            return View(myCarts);
+        }
+
+        [HttpGet]
+        public string CancelCart(int cartId)
+        {
+            var userId = GetUserId();
+            var result = store.CartMgr.setCartStatusCancelled(cartId, userId.ToString());
+            return result;
+        }
+
+        public ActionResult CancelCartStatus(int cartId)
+        {
+            var userId = GetUserId();
+            
+            return RedirectToAction("PendingCarts", "CartDetails" , new { area = "Shopper" });
+        }
+
     }
 }
