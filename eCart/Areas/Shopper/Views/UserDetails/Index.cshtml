@@ -1,0 +1,78 @@
+﻿@model eCartModels.UserDetail
+
+@{
+    ViewBag.Title = "User Details";
+}
+
+<style>
+    .User-Account label {
+        color: gray;
+    }
+
+    .User-Account p {
+        font-size: 25px;
+    }
+</style>
+
+<div class="panel bordered">
+    <div class="panel-body">
+        <div class="col-lg-12">
+            <h2 class="col-lg-3">
+                Account Details
+            </h2>
+            <div class="col-lg-offset-6 col-lg-3 btn-group" style="top:15px;">
+                <a href="@Url.Action("PendingCarts","CartDetails", new { area="Shopper", id = Model.Id })" class="btn btn-default"> View myCarts </a>
+                <a href="@Url.Action("Edit","UserDetails", new { area="Shopper", id = Model.Id })" class="btn btn-default"> Edit </a>
+            </div>
+            <hr class="row col-lg-12" />
+        </div>
+        <div class="col-lg-5 User-Account">
+            <label> Name </label>
+            <p>
+                @Model.Name
+            </p>
+        </div>
+        <div class="col-lg-6 User-Account">
+            <label> Address </label>
+            <p>
+                @Model.Address
+            </p>
+        </div>
+        <div class="col-lg-5 User-Account">
+            <label> Email </label>
+            <p>
+                @Model.Email
+            </p>
+        </div>
+        <div class="col-lg-6 User-Account">
+            <label> Mobile </label>
+            <p>
+                @Model.Mobile
+            </p>
+        </div>
+        <div class="col-lg-5 User-Account">
+            <label> Status </label>
+            <p>
+                @Model.UserStatu.Name
+            </p>
+        </div>
+        <div class="col-lg-6 User-Account">
+            <label> City </label>
+            <p>
+                @Model.MasterCity.Name
+            </p>
+        </div>
+        <div class="col-lg-5 User-Account">
+            <label> Area </label>
+            <p>
+                @Model.MasterArea.Name
+            </p>
+        </div>
+        <div class="col-lg-6 User-Account">
+            <label> Remarks </label>
+            <p>
+                @Model.Remarks
+            </p>
+        </div>
+    </div>
+</div>
