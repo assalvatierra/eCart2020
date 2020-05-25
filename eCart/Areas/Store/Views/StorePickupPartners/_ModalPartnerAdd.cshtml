@@ -1,4 +1,4 @@
-﻿@model IEnumerable<eCart.Models.StorePickupPoint>
+﻿@model IEnumerable<eCartModels.StorePickupPoint>
 
 @{ 
    var StoreId = ViewBag.StoreId;
@@ -14,9 +14,9 @@
 
                     @foreach ( var pickupPoint in Model )
                     {
-                        <a class="list-group-item btn btn-default" style="text-align:left;" onclick="AddPartner(this, @pickupPoint.Id, @ViewBag.StoreId);">
+                        @*<a class="list-group-item btn btn-default" style="text-align:left;" onclick="AddPartner(this, @pickupPoint.Id, @ViewBag.StoreId);">
                             <b> @pickupPoint.StoreDetail.Name </b> - <span class="text-muted"> @pickupPoint.Address</span>
-                        </a>
+                        </a>*@
                     }
 
                 </div>

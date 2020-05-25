@@ -23,6 +23,9 @@ namespace eCartDbLayer
         public virtual DbSet<StoreCategory> StoreCategories { get; set; }
 
         public virtual DbSet<ItemMaster> ItemMasters { get; set; }
+        public virtual DbSet<StoreDetail> StoreDetails { get; set; }
+        public virtual DbSet<ItemCategory> ItemCategories { get; set; }
+        public virtual DbSet<ItemMasterCategory> ItemMasterCategories { get; set; }
 
 
     }

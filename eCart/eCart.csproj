@@ -171,9 +171,16 @@
     <Compile Include="Areas\Rider\RiderAreaRegistration.cs" />
     <Compile Include="Areas\Shopper\Controllers\CartDetailsController.cs" />
     <Compile Include="Areas\Shopper\ShopperAreaRegistration.cs" />
+    <Compile Include="Areas\Store\Controllers\CartDetailsController.cs" />
+    <Compile Include="Areas\Store\Controllers\HomeController1.cs" />
+    <Compile Include="Areas\Store\Controllers\ItemMastersController.cs" />
+    <Compile Include="Areas\Store\Controllers\PaymentDetailsController.cs" />
     <Compile Include="Areas\Store\Controllers\StoreController.cs" />
     <Compile Include="Areas\Store\Controllers\StoreDetailsController.cs" />
     <Compile Include="Areas\Store\Controllers\StoreItemsController.cs" />
+    <Compile Include="Areas\Store\Controllers\StorePaymentsController.cs" />
+    <Compile Include="Areas\Store\Controllers\StorePickupPartnersController.cs" />
+    <Compile Include="Areas\Store\Controllers\StorePickupPointsController.cs" />
     <Compile Include="Areas\Store\StoreAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -199,6 +206,7 @@
     <Content Include="Areas\Shopper\Scripts\checkoutPickup.js" />
     <Content Include="Areas\Store\Scripts\StoreItems\AddItem.js" />
     <Content Include="Areas\Store\Scripts\StoreItems\CreateItem.js" />
+    <Content Include="Areas\Store\Scripts\StoreItems\RemoveItem.js" />
     <Content Include="Areas\Store\Scripts\StorePayment.js" />
     <Content Include="Areas\Store\Views\CartDetails\CartHistory.cshtml" />
     <Content Include="Areas\Store\Views\CartDetails\Create.cshtml" />

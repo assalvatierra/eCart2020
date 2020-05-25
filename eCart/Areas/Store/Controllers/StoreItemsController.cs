@@ -14,7 +14,6 @@ namespace eCart.Areas.Store.Controllers
 {
     public class StoreItemsController : Controller
     {
-        //private StoreContext db = new StoreContext();
         private StoreFactory storeFactory = new StoreFactory();
 
         // GET: Store/StoreItems
@@ -22,7 +21,6 @@ namespace eCart.Areas.Store.Controllers
         {
             if (id != null)
             {
-                //var storeItems = db.StoreItems.Where(s=>s.StoreDetailId == id).Include(s => s.ItemMaster).Include(s => s.StoreDetail).OrderByDescending(s=>s.Id);
                 var storeItems = storeFactory.StoreMgr.getStoreItems((int)id);
                 ViewBag.StoreId = id;
 
@@ -92,7 +90,7 @@ namespace eCart.Areas.Store.Controllers
         }
 
 
-        /*
+        
         // GET: Store/StoreItems/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -105,7 +103,7 @@ namespace eCart.Areas.Store.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ItemMasterId = new SelectList(db.ItemMasters, "Id", "Name", storeItem.ItemMasterId);
+            ViewBag.ItemMasterId = new SelectList(storeFactory.RefDbLayer.GetItemMaster(), "Id", "Name", storeItem.ItemMasterId);
             ViewBag.StoreDetailId = new SelectList(new List<SelectListItem>
             { new SelectListItem{ Text = id.ToString(), Value = "test" } },
             "Id", "LoginId", id);
@@ -122,12 +120,12 @@ namespace eCart.Areas.Store.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(storeItem).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
+                //db.Entry(storeItem).State = System.Data.Entity.EntityState.Modified;
+                //db.SaveChanges();
                 return RedirectToAction("Index", new { id = storeItem.StoreDetailId });
             }
-            ViewBag.ItemMasterId = new SelectList(db.ItemMasters, "Id", "Name", storeItem.ItemMasterId);
-            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", storeItem.StoreDetailId);
+            ViewBag.ItemMasterId = new SelectList(storeFactory.RefDbLayer.GetItemMaster(), "Id", "Name", storeItem.ItemMasterId);
+            ViewBag.StoreDetailId = new SelectList(storeFactory.RefDbLayer.GetStoreDetails() , "Id", "LoginId", storeItem.StoreDetailId);
             return View(storeItem);
         }
 
@@ -152,8 +150,8 @@ namespace eCart.Areas.Store.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             StoreItem storeItem = storeFactory.StoreMgr.getStoreItem((int)id);
-            db.StoreItems.Remove(storeItem);
-            db.SaveChanges();
+            //db.StoreItems.Remove(storeItem);
+            //db.SaveChanges();
             return RedirectToAction("Index", new { id = storeItem.StoreDetailId });
         }
 
@@ -167,14 +165,14 @@ namespace eCart.Areas.Store.Controllers
         }
 
 
-        //public PartialViewResult _ModalCreateItem()
-        //{
-        //    StoreItem item = new StoreItem();
-        //    ViewBag.ItemMasterId = new SelectList(db.ItemMasters, "Id", "Name");
-        //    ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId");
-           
-        //    return PartialView(item);
-        //}
+        public PartialViewResult _ModalCreateItem()
+        {
+            StoreItem item = new StoreItem();
+            ViewBag.ItemMasterId = new SelectList(storeFactory.RefDbLayer.GetItemMaster(), "Id", "Name");
+            ViewBag.StoreDetailId = new SelectList(storeFactory.RefDbLayer.GetStoreDetails(), "Id", "LoginId");
+
+            return PartialView(item);
+        }
 
 
         [HttpPost]
@@ -229,7 +227,7 @@ namespace eCart.Areas.Store.Controllers
         public JsonResult GetItemMasters(int id)
         {
             var storeMgr = storeFactory.StoreMgr;
-            var itemList = db.ItemMasterCategories.Where(s=>s.ItemCategoryId == id).ToList().Select(s => new { s.ItemMasterId, s.ItemMaster.Name });
+            var itemList = storeFactory.RefDbLayer.GetItemMasterCategories().Where(s=>s.ItemCategoryId == id).ToList().Select(s => new { s.ItemMasterId, s.ItemMaster.Name });
 
             return Json(itemList, JsonRequestBehavior.AllowGet);
         }
@@ -289,36 +287,10 @@ namespace eCart.Areas.Store.Controllers
         [HttpGet]
         public JsonResult GetItemCategories()
         {
-            var categories = db.ItemCategories.Select(c => new { c.Id, c.Name }).ToList();
+            var categories = storeFactory.RefDbLayer.GetItemCategories().Select(c => new { c.Id, c.Name }).ToList();
             return Json(categories, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        public bool AddItemCategory(int itemId, int categoryId)
-        {
-            try
-            {
-                var item = storeFactory.StoreMgr.getStoreItem((int)id);
-                var masterItem = item.ItemMaster;
-                var category = db.ItemCategories.Find(categoryId);
-
-                var mastercategory = new ItemMasterCategory
-                {
-                    ItemCategory = category,
-                    ItemMaster = masterItem
-                };
-
-                db.ItemMasterCategories.Add(mastercategory);
-                db.SaveChanges();
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-
-        }
 
         [HttpPost]
         public bool RemoveStoreItem(int Id)
@@ -339,33 +311,5 @@ namespace eCart.Areas.Store.Controllers
 
         }
 
-        [HttpPost]
-        public void RemoveItemCategory(int Id)
-        {
-            try
-            {
-                var itemMasterCategory = db.ItemMasterCategories.Find(Id);
-                db.ItemMasterCategories.Remove(itemMasterCategory);
-                db.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-        }*/
     }
-}
-
-public class jsonStoreItem {
-    public int Id { get; set; }
-    public string ItemName { get; set; }
-    public decimal UnitPrice { get; set; }
-    public string ImageUrl { get; set; }
-}
-
-public class AnonymousType
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
 }

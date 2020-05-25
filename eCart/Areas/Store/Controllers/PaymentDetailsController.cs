@@ -6,8 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using eCart.Areas.Store.Models;
+using eCartModels;
 using eCart.Models;
+using eCartDbLayer;
 
 namespace eCart.Areas.Store.Controllers
 {

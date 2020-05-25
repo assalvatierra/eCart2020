@@ -1,17 +1,13 @@
-﻿@model IEnumerable<eCart.Models.StorePayment>
+﻿@model IEnumerable<eCartModels.StorePayment>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<div class="panel bordered">
-    <div class="panel-body">
         <h1> Store Subscription </h1>
         <p>
-            @Html.ActionLink("Back to Store", "Index", "Home" , new { id = ViewBag.StoreId } , null)
+            @Html.ActionLink("Back to Store", "Index", "Store" , new { id = ViewBag.StoreId } , null)
         </p>
-    </div>
-</div>
 
 <div class="panel bordered">
     <div class="panel-body">

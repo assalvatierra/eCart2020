@@ -372,3 +372,11 @@ textarea {
     .badge-categories:hover {
         background-color: dodgerblue;
     }
+
+.hand-cursor {
+    cursor: pointer;
+}
+
+.normal-cursor {
+    cursor: default;
+}
