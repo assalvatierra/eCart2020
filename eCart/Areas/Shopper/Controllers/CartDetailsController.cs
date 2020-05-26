@@ -19,9 +19,16 @@ namespace eCart.Areas.Shopper.Controllers
             return View();
         }
 
-
         public PartialViewResult _CartSummary()
         {
+            if (GetUserId() != null && GetCartDetails() == null)
+            {
+                 List<CartDetail> cartDetails = new List<CartDetail>();
+                 Session["CARTDETAILS"] = cartDetails;
+                 //assign user to session
+                 Session["USERID"] = GetUserId();
+            }
+
             var cartItems = GetCartDetails();
 
             return PartialView(cartItems);
@@ -29,7 +36,6 @@ namespace eCart.Areas.Shopper.Controllers
 
         public string GetUserId()
         {
-
             var userId = HttpContext.User.Identity.GetUserId();
             return userId;
         }
@@ -64,7 +70,7 @@ namespace eCart.Areas.Shopper.Controllers
                 {
                     cartSession = new List<CartDetail>();
                 }
-                var cart = store.CartMgr.addItemToCart(id, qty, itemPrice, cartSession, UserId);
+                var cart = store.CartMgr.AddItemToCart(id, qty, itemPrice, cartSession, UserId);
 
                 UpdateCartDetails(cart);
                 return true;

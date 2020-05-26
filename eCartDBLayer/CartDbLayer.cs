@@ -196,5 +196,100 @@ namespace eCartDbLayer
         {
             return db.CartDetails.Find(id);
         }
+
+        public IQueryable<StoreItem> GetStoreItems()
+        {
+            return db.StoreItems;
+        }
+
+        public IQueryable<StoreDetail> GetStoreDetails()
+        {
+            return db.StoreDetails;
+        }
+
+        public IQueryable<CartDetail> GetCartDetails()
+        {
+            return db.CartDetails;
+        }
+
+        public IQueryable<CartHistory> GetCartHistories()
+        {
+            return db.CartHistories;
+        }
+
+        public IQueryable<CartActivity> GetCartActivities()
+        {
+            return db.CartActivities;
+        }
+
+        public IQueryable<CartItem> GetCartItems()
+        {
+            return db.CartItems;
+        }
+
+        public bool EditCartItem(CartItem cartItem)
+        {
+            try
+            {
+                db.Entry(cartItem).State = EntityState.Modified;
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool AddCartDelivery(CartDelivery cartDelivery)
+        {
+            try
+            {
+                db.CartDeliveries.Add(cartDelivery);
+                db.SaveChanges();
+                return true;
+
+            }
+            catch
+            {
+                return false;
+
+            }
+        }
+
+        public IQueryable<CartDelivery> GetCartDeliveries()
+        {
+            return db.CartDeliveries;
+        }
+
+        public bool EditCartDelivery(CartDelivery cartDelivery)
+        {
+
+            try
+            {
+                db.Entry(cartDelivery).State = EntityState.Modified;
+                db.SaveChanges();
+                return true;
+
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool RemoveCartDelivery(CartDelivery cartDelivery)
+        {
+            try
+            {
+                db.CartDeliveries.Remove(cartDelivery);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

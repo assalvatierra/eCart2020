@@ -501,17 +501,16 @@ namespace eCart.Controllers
         {
             StoreFactory store = new StoreFactory();
 
-            var userId = store.UserMgr.GetUserId(email);
+            var userId = HttpContext.User.Identity.GetUserId();
 
             if (userId != null)
             {
                 //create cart 
                 List<CartDetail> cartDetails = new List<CartDetail>();
-                Session["CARTDETAILS"] = (List<CartDetail>)cartDetails;
+                Session["CARTDETAILS"] = cartDetails;
 
                 //assign user to session
                 Session["USERID"] = userId;
-                Session["USER"] = email;
                 return true;
 
             }

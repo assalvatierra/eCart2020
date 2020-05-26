@@ -11,7 +11,6 @@ namespace eCartServices
 {
     public class CartMgr: iCartMgr
     {
-        protected ecartdbContainer db = new ecartdbContainer();
         private iCartDb cartdb = new CartDbLayer();
 
         public void setDbLayer(iCartDb cartdblayer)
@@ -26,13 +25,7 @@ namespace eCartServices
             return pickupPoint.Id;
         }
 
-        public bool addItemToCart(int id, int qty, decimal price)
-        {
-
-            throw new NotImplementedException();
-        }
-
-        public List<CartDetail> addItemToCart(int id, int qty, decimal price, List<CartDetail> cartSession, string userId)
+        public List<CartDetail> AddItemToCart(int id, int qty, decimal price, List<CartDetail> cartSession, string userId)
         {
             try
             {
@@ -90,8 +83,8 @@ namespace eCartServices
         //create default cart
         private CartDetail CreateCart( CartItem cartItem,string userId)
         {
-            var storeItem = db.StoreItems.Find(cartItem.StoreItemId);
-            var store = db.StoreDetails.Find(cartItem.StoreItem.StoreDetailId);
+            var storeItem = cartdb.GetStoreItems().Where(c => c.Id == cartItem.StoreItemId).FirstOrDefault();
+            var store = cartdb.GetStoreDetails().Where(s=>s.Id == cartItem.StoreItem.StoreDetailId).FirstOrDefault();
             var storePickupPointId = getDefaultPickupPointId(store.Id);
             return new CartDetail
             {
@@ -111,7 +104,7 @@ namespace eCartServices
         //create default cart item
         private CartItem CreateCartItem(int id, int qty)
         {
-            var storeItem = db.StoreItems.Find(id);
+            var storeItem = cartdb.GetStoreItems().Where(c => c.Id == id).FirstOrDefault();
 
             return new CartItem
             {
@@ -121,121 +114,6 @@ namespace eCartServices
                 CartItemStatusId = 1,
                 ItemOrder = storeItem.Id.ToString(),
             };
-        }
-
-        public void addCartItemToDb(CartItem cartItem)
-        {
-            try
-            {
-                db.CartItems.Add(cartItem);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public bool addCartDetailToDb(CartDetail cartDetail)
-        {
-            try
-            {
-                db.CartDetails.Add(cartDetail);
-                db.SaveChanges();
-                return true;
-            }
-            catch (Exception)
-            {
-                //throw ex;
-                return false;
-            }
-        }
-
-        public int getCartInfo(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<cCart> getCartItems()
-        {
-            var cartDetails = getCartDetails();
-            var cartItems = new List<cCart>();
-
-            if (cartDetails == null)
-            {
-                return null;
-            }
-
-            foreach(var cart in cartDetails)
-            {
-                foreach (var item in cart.cartItems)
-                {
-                    cartItems.Add(item);
-                }
-            }
-
-
-            return cartItems;
-        }
-
-
-        public List<cCartDetails> getCartDetails()
-        {
-            return null;
-            //move this code to web
-            //return (List<cCartDetails>)HttpContext.Current.Session["CARTDETAILS"] ?? null;
-        }
-
-
-        public List<CartItem> getCartSummary()
-        {
-            var carts = getCartItems();
-
-            //transfer cCart to cartItems 
-            List<CartItem> cartItems = new List<CartItem>();
-
-            var order = 1;
-            foreach (var item in carts)
-            {
-                var storeItem = db.StoreItems.Find(item.Id);
-
-                cartItems.Add(new CartItem
-                {
-                    CartDetailId = 1,
-                    StoreItemId = item.Id,
-                    StoreItem = storeItem,
-                    ItemQty = item.Qty,
-                    ItemOrder = order.ToString(),
-                    CartItemStatusId = 1,
-                    Remarks1 = "",
-                    Remarks2 = ""
-                });
-
-                order++;
-            }
-
-            return cartItems;
-        }
-
-        public List<CartDetail> getCartDetailsSummary()
-        {
-            List<CartDetail> cartDetail = new List<CartDetail>();
-
-            var cartList = getCartDetails();
-
-            if(cartList == null)
-            {
-                return null;
-            }
-
-            foreach (var cart in cartList)
-            {
-                //create CartDetails for current group
-                var tempCartDetail = CreateCartDetail(cart); //KEY = StoredDetail.Id
-                cartDetail.Add(tempCartDetail);
-
-            }
-
-            return cartDetail;
         }
 
 
@@ -251,100 +129,7 @@ namespace eCartServices
             }
         }
 
-        //create a new cart per store
-        public CartDetail CreateCartDetail(cCartDetails cart)
-        {
-            //StoreDetail tempStore = db.StoreDetails.Find(cart.StoreId);
-            //StorePickupPoint pickup = db.StorePickupPoints.Find(cart.PickupPointId);
-            CartDetail cartDetails = new CartDetail
-            {
-                Id = cart.Id,
-                UserDetailId = getUserId(),  
-                StoreDetailId = cart.StoreId,
-                StoreDetail = cartdb.GetStoreDetail(cart.StoreId),
-                CartStatusId = cart.CartStatus,               //default: active
-                CartStatu = cartdb.GetCartStatus(cart.CartStatus),
-                StorePickupPoint = cartdb.GetStorePickupPoint(cart.PickupPointId),
-                StorePickupPointId = cart.PickupPointId,
-                DeliveryType = cart.DeliveryType,
-                DtPickup = cart.DtPickup,
-                CartItems = getCartItems(cart),
-                PaymentDetails = getPaymentDetails(cart)
-            };
 
-            return cartDetails;
-        }
-
-        public int getUserId()
-        {
-            return -1;
-            //move to web part            
-            //return HttpContext.Current.Session["USERID"] != null ? (int)HttpContext.Current.Session["USERID"] : 0;
-        }
-
-        public string getUserAccID()
-        {
-
-            var UserDetailID = getUserId();
-            var userDetail = db.UserDetails.Find(UserDetailID);
-            return userDetail.UserId;
-        }
-
-
-        //transfer to db cartItem object
-        public List<CartItem> getCartItems(cCartDetails cart)
-        {
-            var items = new List<CartItem>();
-            var cItems = cart.cartItems;
-            int order = 1;
-
-            foreach (var item in cart.cartItems)
-            {
-                items.Add(new CartItem
-                {
-                    CartDetailId = cart.Id,
-                    CartItemStatusId = cart.CartStatus,
-                    ItemOrder = order.ToString(),
-                    ItemQty = item.Qty,
-                    StoreItemId = item.Id,
-                    StoreItem = cartdb.GetStoreItem(item.Id),
-                    Remarks1 = item.remarks1,
-                    Remarks2 = item.remarks2
-                });
-                order++;
-            }
-
-            return items;
-        }
-
-
-        //transfer to db cartItem object
-        public List<PaymentDetail> getPaymentDetails(cCartDetails cart)
-        {
-
-            if (cart.cartPayments != null)
-            {
-
-                var paymentDetails = new List<PaymentDetail>();
-
-                foreach (var item in cart.cartPayments)
-                {
-                    paymentDetails.Add(new PaymentDetail
-                    {
-                      Amount = 0,
-                      CartDetailId = cart.Id,
-                      dtPayment = DateTime.Now,
-                      PaymentPartyId = item.PaymentPartyId,
-                      PartyInfo = "",
-                      PaymentReceiverId = item.PaymentRecieverId,
-                      PaymentStatusId = 1,  //pending
-                      ReceiverInfo = ""
-                    });
-                }
-                return paymentDetails;
-            }
-            return null;
-        }
 
         public bool UpdateCartPickupPoint(int cartId, int pickupPointId, List<CartDetail> cart)
         {
@@ -428,7 +213,7 @@ namespace eCartServices
                 {
                     var storeID = cart.StoreDetailId;
                     //check if cart is active, then change status to submitted 
-                    //and save to the db
+                    //and save to the database
                     if (cart.CartStatusId == 1 )
                     {
                         var tempCartId = AddCartDetails(cart);
@@ -485,7 +270,7 @@ namespace eCartServices
                 var ACTIVE = 2;
                 var storeID = cart.StoreDetailId;
                 //check if cart is active, then change status to submitted 
-                //and save to the db
+                //and save to the database
                 if (cart.CartStatusId == 1)
                 {
                     var tempCartId = AddCartDetails(cart);
@@ -605,14 +390,6 @@ namespace eCartServices
             return true;
         }
 
-        public void updateCartDetailsStatus(int cartId, string status)
-        {
-            var cart = getCartDetails().Find(s=> s.Id == cartId);
-            int statusId = db.CartStatus.Where(s=>s.Name.ToLower() == status.ToLower()).FirstOrDefault() != null ?
-                db.CartStatus.Where(s => s.Name.ToLower() == status.ToLower()).FirstOrDefault().Id : 1;
-            cart.CartStatus = statusId;
-
-        }
 
         public bool SetCartPaymentReceiver(int cartId, int recieverId, List<CartDetail> cart)
         {
@@ -634,8 +411,7 @@ namespace eCartServices
                 cartList.ForEach((c) => {
                     if (c.Id == cartId)
                     {
-                        //c.pay = db.PaymentReceivers.Find(recieverId).Description;
-
+                      
                         if (c.PaymentDetails == null )
                         {
                             c.PaymentDetails = new List<PaymentDetail>();
@@ -722,7 +498,7 @@ namespace eCartServices
         {
             try
             {
-                return db.StorePickupPoints.Find(id);
+                return cartdb.GetStorePickupPoint(id);
             }
             catch (Exception ex)
             {
@@ -732,18 +508,18 @@ namespace eCartServices
 
         public List<CartDetail> getShopperCarts(int userId)
         {
-            var cartList = db.CartDetails.Where(s => s.UserDetailId == userId).OrderByDescending(s => s.Id).ToList();
+            var cartList =  cartdb.GetCartDetails().Where(s => s.UserDetailId == userId).OrderByDescending(s => s.Id).ToList();
             return cartList;
         }
 
         public List<CartHistory> getCartHistory(int id)
         {
-            return db.CartHistories.Where(s => s.CartDetailId == id).ToList();
+            return cartdb.GetCartHistories().Where(s => s.CartDetailId == id).ToList();
         }
 
         public List<CartActivity> getCartDeliveryActivities(int id)
         {
-            return db.CartActivities.Where(c => c.CartDeliveryId == id).OrderByDescending(s=>s.Id).ToList();
+            return cartdb.GetCartActivities().Where(c => c.CartDeliveryId == id).OrderByDescending(s=>s.Id).ToList();
         }
 
 
@@ -756,13 +532,12 @@ namespace eCartServices
                     CartDetailId = cartId,
                     CartStatusId = statusId,
                     dtStatus = DateTime.Now,
-                    UserId = GetUserDetails(userId).Id.ToString(), //TODO : increase UserId max length to 40
+                    UserId = userId, 
 
                 };
 
                 cartdb.AddCartHistory(cartHistory);
                
-
                 return true;
             }
             catch 
@@ -777,9 +552,12 @@ namespace eCartServices
             {
                 CartDetail cart = cartdb.GetCartDetail(cartId);
                 cart.CartStatusId = cartStatusId;
-                if (cartdb.EditCartDetails(cart))
+
+                var editResult = cartdb.EditCartDetails(cart);
+                if (editResult)
                 {
-                    if (addCartHistory(cartId, cartStatusId, userId))
+                    var addRecord = addCartHistory(cartId, cartStatusId, userId);
+                    if (addRecord)
                     {
                         return true;
                     }
@@ -819,11 +597,9 @@ namespace eCartServices
 
             try
             {
-                CartItem cartItem = db.CartItems.Find(id);
+                CartItem cartItem = cartdb.GetCartItems().Where(c=>c.Id == id).FirstOrDefault();
                 cartItem.CartItemStatusId = 2;
-
-                db.Entry(cartItem).State = EntityState.Modified;
-                db.SaveChanges();
+                cartdb.EditCartItem(cartItem);
             }
             catch (Exception ex)
             {
@@ -832,7 +608,7 @@ namespace eCartServices
             }
         }
 
-        public void addDeliveryDetails(int id, DateTime date, string address, int riderId, string remarks)
+        public bool AddDeliveryDetails(int id, DateTime date, string address, int riderId, string remarks)
         {
             try
             {
@@ -845,12 +621,12 @@ namespace eCartServices
                     Remarks = remarks
                 };
 
-                db.CartDeliveries.Add(deliveryDetails);
-                db.SaveChanges();
+                return cartdb.AddCartDelivery(deliveryDetails);
+             
             }
-            catch (Exception ex)
+            catch
             {
-                throw ex;
+                return false;
             }
         }
 
@@ -858,14 +634,13 @@ namespace eCartServices
         {
             try
             {
-                var deliveryDetails = db.CartDeliveries.Find(cartDelivery.Id);
+                var deliveryDetails = cartdb.GetCartDeliveries().Where(c => c.Id == cartDelivery.Id).FirstOrDefault();
                 deliveryDetails.RiderDetailId = cartDelivery.RiderDetailId;
                 deliveryDetails.dtDelivery = cartDelivery.dtDelivery;
                 deliveryDetails.Address = cartDelivery.Address;
                 deliveryDetails.Remarks = cartDelivery.Remarks;
 
-                db.Entry(deliveryDetails).State = EntityState.Modified;
-                db.SaveChanges();
+               
             }
             catch (Exception ex)
             {
@@ -877,10 +652,7 @@ namespace eCartServices
         {
             try
             {
-            var deliveryDetails = db.CartDeliveries.Find(id);
-
-            db.CartDeliveries.Remove(deliveryDetails);
-            db.SaveChanges();
+                var deliveryDetails = cartdb.GetCartDeliveries().Where(c => c.Id == id).FirstOrDefault();
             }
             catch (Exception ex)
             {
