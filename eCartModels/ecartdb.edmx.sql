@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/22/2020 17:58:38
--- Generated from EDMX file: D:\Projects\eCart2020\eCartModels\ecartdb.edmx
+-- Date Created: 05/26/2020 15:28:24
+-- Generated from EDMX file: C:\Users\VILLOSA\source\repos\eCart2020\eCartModels\ecartdb.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
---USE [ecartdb];
+USE [ecartdb];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -423,7 +423,7 @@ GO
 CREATE TABLE [dbo].[CartHistories] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [CartStatusId] int  NOT NULL,
-    [UserId] nvarchar(20)  NOT NULL,
+    [UserId] nvarchar(40)  NOT NULL,
     [dtStatus] datetime  NOT NULL,
     [CartDetailId] int  NOT NULL
 );

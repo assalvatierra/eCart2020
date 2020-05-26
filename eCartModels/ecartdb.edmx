@@ -375,7 +375,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CartStatusId" Type="int" Nullable="false" />
-    <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="40" />
     <Property Name="dtStatus" Type="datetime" Nullable="false" />
     <Property Name="CartDetailId" Type="int" Nullable="false" />
   </EntityType>
@@ -1592,7 +1592,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CartStatusId" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
           <Property Name="dtStatus" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="CartStatu" Relationship="ecartdb.CartStatusCartHistory" FromRole="CartHistory" ToRole="CartStatus" />
           <NavigationProperty Name="CartDetail" Relationship="ecartdb.CartDetailCartHistory" FromRole="CartHistory" ToRole="CartDetail" />

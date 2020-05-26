@@ -32,6 +32,12 @@ D:\Projects\eCart2020\eCartDBLayer\obj\Debug\eCartDBLayer.csproj.CoreCompileInpu
 D:\Projects\eCart2020\eCartDBLayer\obj\Debug\eCartDBLayer.csproj.CopyComplete
 D:\Projects\eCart2020\eCartDBLayer\obj\Debug\eCartDBLayer.dll
 D:\Projects\eCart2020\eCartDBLayer\obj\Debug\eCartDBLayer.pdb
+D:\Projects\eCart2020\eCartDBLayer\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+D:\Projects\eCart2020\eCartDBLayer\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\Projects\eCart2020\eCartDBLayer\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+D:\Projects\eCart2020\eCartDBLayer\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\obj\Debug\eCartDBLayer.csprojAssemblyReference.cache
+C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\obj\Debug\eCartDBLayer.csproj.CoreCompileInputs.cache
 C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\bin\Debug\eCartDBLayer.dll.config
 C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\bin\Debug\eCartDBLayer.dll
 C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\bin\Debug\eCartDBLayer.pdb
@@ -48,12 +54,6 @@ C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\bin\Debug\EntityFramework.x
 C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
-C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\obj\Debug\eCartDBLayer.csprojAssemblyReference.cache
-C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\obj\Debug\eCartDBLayer.csproj.CoreCompileInputs.cache
 C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\obj\Debug\eCartDBLayer.csproj.CopyComplete
 C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\obj\Debug\eCartDBLayer.dll
 C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\obj\Debug\eCartDBLayer.pdb
-D:\Projects\eCart2020\eCartDBLayer\bin\Debug\Microsoft.AspNet.Identity.Core.dll
-D:\Projects\eCart2020\eCartDBLayer\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
-D:\Projects\eCart2020\eCartDBLayer\bin\Debug\Microsoft.AspNet.Identity.Core.xml
-D:\Projects\eCart2020\eCartDBLayer\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml

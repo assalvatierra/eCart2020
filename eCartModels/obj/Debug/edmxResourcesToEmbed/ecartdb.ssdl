@@ -370,7 +370,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CartStatusId" Type="int" Nullable="false" />
-    <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="40" />
     <Property Name="dtStatus" Type="datetime" Nullable="false" />
     <Property Name="CartDetailId" Type="int" Nullable="false" />
   </EntityType>
