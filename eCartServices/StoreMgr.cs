@@ -11,7 +11,7 @@ namespace eCartServices
     public class StoreMgr : iStoreMgr
     {
 
-       private ecartdbContainer db = new ecartdbContainer();
+        private ecartdbContainer db = new ecartdbContainer();
         private iStoreDb storeDb = new StoreDBLayer(); 
 
         public void setDbLayer(iStoreDb storedblayer)
@@ -258,11 +258,11 @@ namespace eCartServices
             try
             {
                 //get store img ref
-                var storeImg = db.StoreImages.Where(s => s.StoreDetailId == storeId && s.StoreImgTypeId == imgTypeId).FirstOrDefault();
+                var storeImg = storeDb.GetStoreImages().Where(s => s.StoreDetailId == storeId && s.StoreImgTypeId == imgTypeId).FirstOrDefault();
 
                 storeImg.ImageUrl = imgUrl;
-                db.Entry(storeImg).State = EntityState.Modified;
-                db.SaveChanges();
+
+                storeDb.EditStoreImage(storeImg);
 
                 return true;
             }
@@ -285,12 +285,12 @@ namespace eCartServices
         {
             int IMAGEFRONT = 1;
 
-            if (storeDb.IsStoreImgExist(storeId))
+            if (storeDb.GetStoreImages().Any(s => s.StoreDetailId == storeId))
             {
-                return storeDb.GetStoreImg(storeId, IMAGEFRONT);
+                return storeDb.GetStoreImages().Where(s => s.StoreDetailId == storeId && s.StoreImgTypeId == IMAGEFRONT).FirstOrDefault();
             }
 
-            //return placeholder
+            //if no images found, return placeholder
             return new StoreImage() { 
                 Id = 0,
                 StoreDetailId = storeId,
@@ -302,7 +302,7 @@ namespace eCartServices
 
         public bool IsStoreImgExist(int storeId)
         {
-            return storeDb.IsStoreImgExist(storeId);
+            return storeDb.GetStoreImages().Any(s => s.StoreDetailId == storeId);
         }
 
         public bool CreatStoreImg(int storeId, string imgUrl, int ImgTypeId)
@@ -314,7 +314,7 @@ namespace eCartServices
                 StoreDetailId = storeId,
             };
 
-            storeDb.CreateStoreImg(storeImage);
+            storeDb.AddStoreImage(storeImage);
 
             return true;
         }

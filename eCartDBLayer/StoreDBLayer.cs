@@ -9,13 +9,12 @@ namespace eCartDbLayer
     public class StoreDBLayer : iStoreDb
     {
         StoreContext sdb = new StoreContext();
-        ecartdbContainer db = new ecartdbContainer();
 
         public bool SaveChanges()
         {
             try
             {
-                db.SaveChanges();
+                sdb.SaveChanges();
                 return true;
             }
             catch
@@ -35,8 +34,8 @@ namespace eCartDbLayer
         {
             try
             {
-                db.StoreDetails.Add(storeDetail);
-                db.SaveChanges();
+                sdb.StoreDetails.Add(storeDetail);
+                sdb.SaveChanges();
 
                 return true;
             }
@@ -75,22 +74,13 @@ namespace eCartDbLayer
         #endregion
         
         #region Store Edit
-        public bool IsStoreImgExist(int storeId)
-        {
-            return db.StoreImages.Any(s => s.StoreDetailId == storeId);
-        }
 
-        public StoreImage GetStoreImg(int storeId, int imgTypeId)
-        {
-            return db.StoreImages.Where(s => s.StoreDetailId == storeId && s.StoreImgTypeId == imgTypeId).FirstOrDefault();
-        }
-
-        public bool CreateStoreImg(StoreImage storeImage)
+        public bool AddStoreImage(StoreImage storeImage)
         {
             try
             {
-                db.StoreImages.Add(storeImage);
-                db.SaveChanges();
+                sdb.StoreImages.Add(storeImage);
+                sdb.SaveChanges();
 
                 return true;
             }
@@ -100,6 +90,24 @@ namespace eCartDbLayer
             }
         }
 
+        public IQueryable<StoreImage> GetStoreImages()
+        {
+            return sdb.StoreImages;
+        }
+
+        public bool EditStoreImage(StoreImage storeImage)
+        {
+            try
+            {
+                sdb.Entry(storeImage).State = EntityState.Modified;
+                sdb.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
         #endregion
 
@@ -109,7 +117,7 @@ namespace eCartDbLayer
         {
             try
             {
-                db.StoreItems.Add(storeItem);
+                sdb.StoreItems.Add(storeItem);
                 return true;
             }
             catch
@@ -122,7 +130,7 @@ namespace eCartDbLayer
         {
             try
             {
-                db.ItemMasters.Add(itemMaster);
+                sdb.ItemMasters.Add(itemMaster);
                 return true;
             }
             catch
@@ -135,7 +143,7 @@ namespace eCartDbLayer
         {
             try
             {
-                db.ItemImages.Add(itemImage);
+                sdb.ItemImages.Add(itemImage);
                 return true;
             }
             catch
@@ -153,7 +161,7 @@ namespace eCartDbLayer
         {
             try
             {
-                return db.StoreItems.Find(id);
+                return sdb.StoreItems.Find(id);
             }
             catch
             {
@@ -165,7 +173,7 @@ namespace eCartDbLayer
         {
             try
             {
-                return db.ItemMasters.Find(id);
+                return sdb.ItemMasters.Find(id);
             }
             catch
             {
@@ -177,7 +185,7 @@ namespace eCartDbLayer
         {
             try
             {
-                return db.ItemCatGroups;
+                return sdb.ItemCatGroups;
             }
             catch
             {
@@ -189,7 +197,7 @@ namespace eCartDbLayer
         {
             try
             {
-                return db.ItemCategories;
+                return sdb.ItemCategories;
             }
             catch
             {
@@ -201,8 +209,8 @@ namespace eCartDbLayer
         {
             try
             {
-                db.Entry(storeItem).State = EntityState.Modified;
-                db.SaveChanges();
+                sdb.Entry(storeItem).State = EntityState.Modified;
+                sdb.SaveChanges();
                 return true;
             }
             catch
@@ -215,8 +223,8 @@ namespace eCartDbLayer
         {
             try
             {
-                db.Entry(itemImage).State = EntityState.Modified;
-                db.SaveChanges();
+                sdb.Entry(itemImage).State = EntityState.Modified;
+                sdb.SaveChanges();
                 return true;
             }
             catch
@@ -229,7 +237,7 @@ namespace eCartDbLayer
         {
             try
             {
-                return db.ItemImages.Where(s => s.ItemMasterId == itemMasterId).FirstOrDefault();
+                return sdb.ItemImages.Where(s => s.ItemMasterId == itemMasterId).FirstOrDefault();
             }
             catch
             {
@@ -241,8 +249,8 @@ namespace eCartDbLayer
         {
             try
             {
-                db.StoreItems.Remove(storeItem);
-                db.SaveChanges();
+                sdb.StoreItems.Remove(storeItem);
+                sdb.SaveChanges();
 
                 return true;
             }

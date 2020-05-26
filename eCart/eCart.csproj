@@ -206,6 +206,11 @@
     <Content Include="Areas\Shopper\Scripts\checkout.js" />
     <Content Include="Areas\Shopper\Scripts\checkoutPayment.js" />
     <Content Include="Areas\Shopper\Scripts\checkoutPickup.js" />
+    <Content Include="Areas\Store\Scripts\CartDetails\CartStatus.js" />
+    <Content Include="Areas\Store\Scripts\CartDetails\ModalCartDeliveryAdd.js" />
+    <Content Include="Areas\Store\Scripts\CartDetails\ModalCartDeliveryEdit.js" />
+    <Content Include="Areas\Store\Scripts\CartDetails\ModalPayment.js" />
+    <Content Include="Areas\Store\Scripts\CartDetails\PartialCartDelivery.js" />
     <Content Include="Areas\Store\Scripts\StoreItems\AddItem.js" />
     <Content Include="Areas\Store\Scripts\StoreItems\CreateItem.js" />
     <Content Include="Areas\Store\Scripts\StoreItems\RemoveItem.js" />

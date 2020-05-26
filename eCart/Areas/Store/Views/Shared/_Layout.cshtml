@@ -21,25 +21,11 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "AboutHow", "Home")</li>
+                    <li>@Html.ActionLink("Store", "Index", "Store", new { area = "store" }, null)</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    @if (Session["STOREID"] != null)
-                    {
-                        <li>@Html.ActionLink(" Hi " + Session["USER"], "Index", "Home", new { area = "Store", id = Session["STOREID"] }, null)</li>
-                        <li>@Html.ActionLink("Store" , "Index", "Home", new { area = "Store" }, null)</li>
-                        <li>@Html.ActionLink("Logout", "Logout", "Accounts", new { area = "Store" }, null)</li>
-
-                    }
-                    else
-                    {
-                        <li>@Html.ActionLink(" Hi Guest! ", "Login", "Accounts", new { area = "Shopper" }, null)</li>
-                        <li>@Html.ActionLink("Shopper", "Login", "Accounts", new { area = "Shopper" }, null)</li>
-                        <li>@Html.ActionLink("Store", "Login", "Accounts", new { area = "Store" }, null)</li>
-                        <li>@Html.ActionLink("Rider", "Login", "Accounts", new { area = "Rider" }, null)</li>
-                    }
-                </ul>
+                @Html.Partial("_LoginPartial", new { area = "" })
             </div>
         </div>
     </div>

@@ -45,14 +45,17 @@ namespace eCartDbLayer
 
         public IQueryable<ItemMasterCategory> GetItemMasterCategories()
         {
-            try
-            {
-                return db.ItemMasterCategories;
-            }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
+            return db.ItemMasterCategories;
+        }
+
+        public IQueryable<PaymentReceiver> GetPaymentReceivers()
+        {
+            return db.PaymentReceivers;
+        }
+
+        public IQueryable<PaymentParty> GetPaymentParties()
+        {
+            return db.PaymentParties;
         }
     }
 }

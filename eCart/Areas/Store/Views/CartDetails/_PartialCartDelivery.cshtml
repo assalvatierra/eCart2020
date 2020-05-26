@@ -3,7 +3,7 @@
 <br />
 <h4> <b>Cart Delivery</b> </h4>
 <p>
-    <a href="" data-target="#CartDeliveryAdd" data-toggle="modal"> Assign Cart Delivery </a> 
+    <a href="" data-target="#CartDeliveryAdd" data-toggle="modal" onclick="SetCartDeliveryDate('@ViewBag.DtPickup')"> Assign Cart Delivery </a> 
 </p>
 <table class="table bordered">
     <tr>
@@ -55,7 +55,7 @@
                 </td>
                 <td>
                     <a data-target="#CartDeliveryEdit" data-toggle="modal" onclick="EditDelivery(@item.Id)"> Edit </a>|
-                    <a onclick="DeleteCartDelivery(@item.Id)"> Delete </a> |
+                    <a onclick="DeleteCartDelivery(this, @item.Id)"> Delete </a> |
                     <a href="" data-target="#CartDeliveryHistory" data-toggle="modal" onclick="GetDeliveryHistory(@item.Id)"> History </a>
                 </td>
             </tr>
@@ -74,29 +74,3 @@
 
 @Html.Partial("_ModalCartDeliveryHistory", null, new ViewDataDictionary { { "CartId", ViewBag.CartId }})
 
-<script>
-    function DeleteCartDelivery(id) {
-        $.post("/Store/CartDetails/DeleteCartDelivery", { id: id });
-        $(e).parent().parent().remove();
-    }
-
-    function EditDelivery(id) {
-        $("#Edit-delivery-id").val(id);
-    }
-
-    function GetDeliveryHistory(deliveryId) {
-       
-        $.get("/Store/CartDetails/GetCartDeliveryActivities/", { id: deliveryId }, (result) => {
-            console.log(result);
-            PopulateDeliveryHistory(result);
-        });
-
-    }
-
-    function PopulateDeliveryHistory(data) {
-        for (var i = 0; i < data.length; i++) {
-            let list = "<button class='list-group-item' > " + data[i]["Date"] + " - " + data[i]["Activity"] + " </button>";
-            $("#delivery-history").append(list)
-        }
-    }
-</script>

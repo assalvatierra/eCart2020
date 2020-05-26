@@ -10,18 +10,19 @@ using System.Web.Mvc;
 using eCartDbLayer;
 using eCartModels;
 using eCartServices;
+using Microsoft.AspNet.Identity;
 
 namespace eCart.Areas.Store.Controllers
 {
     public class CartDetailsController : Controller
     {
         private StoreContext db = new StoreContext();
-        StoreFactory storeFactory = new StoreFactory();
+        StoreFactory store = new StoreFactory();
        
         // GET: Store/CartDetails/{cartId}
         public ActionResult Index(int id)
         {
-            var storeMgr = storeFactory.StoreMgr;
+            var storeMgr = store.StoreMgr;
             var cartDetails = db.CartDetails.Include(c => c.CartStatu).Include(c => c.StoreDetail).Include(c => c.StorePickupPoint).Include(c => c.UserDetail).Where(c=>c.Id == id);
             ViewBag.StoreId = id;
             ViewBag.StoreCarts = storeMgr.getStoreActiveCarts(id);
@@ -36,11 +37,12 @@ namespace eCart.Areas.Store.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            CartDetail cartDetail = db.CartDetails.Find(id);
+            CartDetail cartDetail = store.CartMgr.GetCartDetail((int)id);
+
             ViewBag.StoreId = cartDetail.StoreDetailId;
             ViewBag.Store = cartDetail.StoreDetail.Name;
-            ViewBag.PaymentReceiverList = db.PaymentReceivers.ToList();
-            ViewBag.PaymentPartyList = db.PaymentParties.ToList();
+            ViewBag.PaymentReceiverList = store.RefDbLayer.GetPaymentReceivers().ToList();
+            ViewBag.PaymentPartyList = store.RefDbLayer.GetPaymentParties().ToList();
             ViewBag.PaymentStatusList = db.PaymentStatus.ToList();
             ViewBag.PaymentDetails = db.PaymentDetails.Where(s => s.CartDetailId == id).ToList();
             ViewBag.CartDelivery = db.CartDeliveries.Where(s => s.CartDetailId == id).ToList();
@@ -160,42 +162,49 @@ namespace eCart.Areas.Store.Controllers
         }
 
         [HttpPost]
-        public string AddPayment(string date, int partyId, string partyInfo, int receiverId, string receiverInfo, int statusId, decimal amount, int cartDetailId)
+        public bool AddPayment(string date, int partyId, string partyInfo, int receiverId, string receiverInfo, int statusId, decimal amount, int cartDetailId)
         {
             try
             {
-                var storeMgr = storeFactory.StoreMgr;
+                var storeMgr = store.StoreMgr;
                 storeMgr.addPaymentDetails(date, partyId, partyInfo, receiverId, receiverInfo, statusId, amount, cartDetailId);
-
-                return "OK";
+                return true;
             }
-            catch (Exception ex)
+            catch
             {
-                return ex.Message.ToString();
+                return false;
             }
         }
 
         [HttpGet]
         public JsonResult SetCartStatus(int id, int statusId)
         {
-            var cartMgr = storeFactory.CartMgr;
-            var userid = cartMgr.getUserId();
+            var cartMgr = store.CartMgr;
+            var userid =  HttpContext.User.Identity.GetUserId();
             var response = cartMgr.SetDBCartStatus(id,statusId, userid.ToString()); 
 
             return Json(response, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public void AddDeliveryRider(int cartDetailId, DateTime date, string address, int riderId, string remarks)
+        public bool AddDeliveryRider(int cartDetailId, DateTime date, string address, int riderId, string remarks)
         {
-            var cartMgr = storeFactory.CartMgr;
-            cartMgr.addDeliveryDetails(cartDetailId, date, address, riderId, remarks);
+            try
+            {
+                var cartMgr = store.CartMgr;
+                cartMgr.AddDeliveryDetails(cartDetailId, date, address, riderId, remarks);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         [HttpPost]
         public void UpdateDeliveryRider(int id, int cartDetailId, DateTime date, string address, int riderId, string remarks)
         {
-            var cartMgr = storeFactory.CartMgr;
+            var cartMgr = store.CartMgr;
 
             var cartDelivery = new CartDelivery
             {
@@ -212,7 +221,7 @@ namespace eCart.Areas.Store.Controllers
 
         public void DeleteCartDelivery(int id)
         {
-            var cartMgr = storeFactory.CartMgr;
+            var cartMgr = store.CartMgr;
             cartMgr.removeCartdelivery(id);
         }
 
@@ -221,7 +230,7 @@ namespace eCart.Areas.Store.Controllers
         {
             if (id != null)
             {
-                var cartMgr = storeFactory.CartMgr;
+                var cartMgr = store.CartMgr;
                 var cartHistory = cartMgr.getCartHistory((int)id);
                 ViewBag.StoreId = id;
                 return View(cartHistory);
@@ -233,7 +242,7 @@ namespace eCart.Areas.Store.Controllers
         [HttpGet]
         public JsonResult GetCartDeliveryActivities(int id)
         {
-            var cartMgr = storeFactory.CartMgr;
+            var cartMgr = store.CartMgr;
             var cartDeliveryActivity = cartMgr.getCartDeliveryActivities(id).Select(c => new { Date = c.dtActivity.ToString(), Activity = c.CartActivityType.Name });
 
             return Json(cartDeliveryActivity, JsonRequestBehavior.AllowGet);

@@ -6,7 +6,7 @@
 
 <div class="row">
     <h1>@ViewBag.Store - Carts Details</h1>
-    @Html.ActionLink("Back to List", "Index", "Home", new { area = "Store", id = @ViewBag.StoreId }, null)
+    @Html.ActionLink("Back to List", "Index", "Store", new { area = "Store" }, null)
 </div>
 
 <div class="panel row" style="padding:15px;">
@@ -27,7 +27,7 @@
                 </div>
                 <div class="btn-group  pull-right">
                     <button class="btn btn-default" data-target="#PaymentModal" data-toggle="modal"> Payment </button>
-                    @Html.ActionLink("History", "CartHistory", new { id = Model.Id }, new { @class="btn btn-default" })
+                    @Html.ActionLink("History", "CartHistory", new { id = Model.Id }, new { @class = "btn btn-default" })
                 </div>
             </div>
         </div>
@@ -77,9 +77,8 @@
         </div>
         <hr />
         <h4> <b> Shopper Items </b> </h4>
-        <div style="margin:0px -15px;">
+        <div>
             <table class="table bordered">
-
                 <thead style="font-weight:bold;background-color:whitesmoke;">
                     <tr>
                         <th style="padding-left:20px;"> Item </th>
@@ -120,44 +119,43 @@
                 </tbody>
             </table>
         </div>
-    </div>
 
-    <h4> <b> Payments</b> </h4>
-    <div class="panel ">
-        <table class="table bordered">
-            <thead>
-                <tr style="font-weight:bold;background-color:whitesmoke;">
-                    <th> Date </th>
-                    <th> Party </th>
-                    <th> Party Info </th>
-                    <th> Receiver </th>
-                    <th> Receiver Info </th>
-                    <th> status </th>
-                    <th> Amount </th>
-                </tr>
-            </thead>
-            <tbody id="table-payments">
-                @foreach (var payment in ViewBag.PaymentDetails as IEnumerable<eCartModels.PaymentDetail>)
-                {
-                    <tr>
-                        <td> @payment.dtPayment </td>
-                        <td> @payment.PaymentParty.Name </td>
-                        <td> @payment.PartyInfo </td>
-                        <td> @payment.PaymentReceiver.Description </td>
-                        <td> @payment.ReceiverInfo </td>
-                        <td> @payment.PaymentStatu.Name </td>
-                        <td> @payment.Amount.ToString("0.00") </td>
+        <h4> <b> Payments</b> </h4>
+        <div class="panel ">
+            <table class="table bordered">
+                <thead>
+                    <tr style="font-weight:bold;background-color:whitesmoke;">
+                        <th> Date </th>
+                        <th> Party </th>
+                        <th> Party Info </th>
+                        <th> Receiver </th>
+                        <th> Receiver Info </th>
+                        <th> status </th>
+                        <th> Amount </th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody id="table-payments">
+                    @foreach (var payment in ViewBag.PaymentDetails as IEnumerable<eCartModels.PaymentDetail>)
+                    {
+                        <tr>
+                            <td> @payment.dtPayment.ToString("MMMM dd yyyy hh:mm tt") </td>
+                            <td> @payment.PaymentParty.Name </td>
+                            <td> @payment.PartyInfo </td>
+                            <td> @payment.PaymentReceiver.Description </td>
+                            <td> @payment.ReceiverInfo </td>
+                            <td> @payment.PaymentStatu.Name </td>
+                            <td> @payment.Amount.ToString("0.00") </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+        @Html.Partial("_PartialCartDelivery", ViewBag.CartDelivery as IEnumerable<eCartModels.CartDelivery>,
+            new ViewDataDictionary { { "PaymentReceiverList", ViewBag.PaymentReceiverList }, { "RiderList", ViewBag.RiderList }, { "DtPickup", Model.DtPickup },
+                { "CartId", Model.Id }, { "Address", Model.StorePickupPoint.Address } })
 
     </div>
-
-    @Html.Partial("_PartialCartDelivery", ViewBag.CartDelivery as IEnumerable<eCartModels.CartDelivery>,
-        new ViewDataDictionary { { "PaymentReceiverList", ViewBag.PaymentReceiverList }, { "RiderList", ViewBag.RiderList },
-            { "CartId", Model.Id }, { "Address", Model.StorePickupPoint.Address } })
-
 </div>
 
 
@@ -165,38 +163,56 @@
     { "PaymentPartyList", ViewBag.PaymentPartyList }, { "PaymentStatusList", ViewBag.PaymentStatusList }, { "CartId", Model.Id } })
 
 
-<script>
+@section Scripts{
+    <script src="~/Areas/Store/Scripts/CartDetails/ModalPayment.js"></script>
+    <script src="~/Areas/Store/Scripts/CartDetails/PartialCartDelivery.js"></script>
+    <script src="~/Areas/Store/Scripts/CartDetails/ModalCartDeliveryAdd.js"></script>
+    <script src="~/Areas/Store/Scripts/CartDetails/ModalCartDeliveryEdit.js"></script>
+    <script>
     //on document ready
-    $(function(){
-        //set status
-        var statusId = '@Model.CartStatu.Id';
-        switch (statusId) {
-            case '3':
-                //processing
-                $("#status-processing").addClass("btn-primary");
-                break;
-            case '4':
-                //processing
-                $("#status-ready").addClass("btn-primary");
-                break;
-            case '5':
-                //processing
-                $("#status-delivered").addClass("btn-primary");
-                break;
-            case '6':
-                //processing
-                $("#status-cancel").addClass("btn-primary");
-                break;
-            default:
-                break;
-        }
-    });
-
-    function SetCartStatus(cartId, statusId, status) {
-        let response = $.get("/Store/CartDetails/SetCartStatus", { id: cartId, statusId, statusId }, (res) => {
-                $("#cart-status-text").text(status);
-                console.log(res);
+        $(function () {
+            var statusId = '@Model.CartStatu.Id';
+            UpdateCartStatusBtn(statusId);
         });
 
+        function UpdateCartStatusBtn(statusId) {
+            //set status
+            switch (statusId) {
+                case '3':
+                    //processing
+                    $("#status-processing").addClass("btn-primary");
+                    $("#status-processing").siblings().removeClass("btn-primary");
+                    break;
+                case '4':
+                    //ready
+                    $("#status-ready").addClass("btn-primary");
+                    $("#status-ready").siblings().removeClass("btn-primary");
+                    break;
+                case '5':
+                    //delivered
+                    $("#status-delivered").addClass("btn-primary");
+                    $("#status-delivered").siblings().removeClass("btn-primary");
+                    break;
+                case '6':
+                    //cancel
+                    $("#status-cancel").addClass("btn-primary");
+                    $("#status-cancel").siblings().removeClass("btn-primary");
+                    break;
+                default:
+                    break;
+            }
+            
+        }
+
+    function SetCartStatus(cartId, statusId, status) {
+        $.get("/Store/CartDetails/SetCartStatus", { id: cartId, statusId, statusId }, (result) => {
+            console.log(result);
+            if (result) { //if res = true
+                $("#cart-status-text").text(status);
+                var statusID = statusId.toString(); // convert to string
+                UpdateCartStatusBtn(statusID);
+            }
+        });
     }
-</script>
+    </script>
+}

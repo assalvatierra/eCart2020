@@ -17,7 +17,7 @@
                     </div>
 
                     <div class="form-group">
-                        <p class="control-label">  Address: </p>
+                        <p class="control-label"> Pickup Address: </p>
                         <input class="form-control" type="text" id="delivery-address" value="@ViewBag.Address" />
                     </div>
 
@@ -41,60 +41,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="AddDeliveryRider()">Submit</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="AddDeliveryRider(@ViewBag.CartId)">Submit</button>
             </div>
         </div>
     </div>
 </div>
-
-
-
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-<script src="~/Scripts/DateRangePicker/moment.min.js"></script>
-<script src="~/Scripts/DateRangePicker/daterangepicker.js"></script>
-<link href="~/Content/daterangepicker.css" rel="stylesheet" />
-<script>
-
-    $('#delivery-date').daterangepicker({
-        singleDatePicker: true,
-        startDate: moment(),
-        showDropdowns: true,
-        timePicker: true,
-        timePicker24Hour: false,
-        timePickerIncrement: 10,
-        autoUpdateInput: true,
-        locale: {
-            format: 'MMM DD,YYYY h:mm A'
-        },
-    });
-
-    function AddDeliveryRider() {
-        var data = {
-            date: $("#delivery-date").val(),
-            address: $("#delivery-address").val(),
-            riderId: parseInt($("#delivery-riderId option:selected").val()),
-            cartDetailId: parseInt('@ViewBag.CartId'),
-            remarks: $("#delivery-remarks").val()
-        }
-
-        var result = $.post("/Store/CartDetails/AddDeliveryRider/", data, (res) => {
-            console.log(res);
-            addtoDeliveryTable(data);
-        });
-
-        console.log(result);
-    }
-
-    function addtoDeliveryTable(data) {
-        var delivery = "<tr>" +
-            "<td>" + $("#delivery-riderId option:selected").text() + "</td>" +
-            "<td>" + data.date.toString("M/d/yyyy h:mm:ss tt") + "</td>" +
-            "<td>" + data.address + "</td>" +
-            "<td>" + data.remarks + "</td>" +
-            "<td> Pending </td>" +
-            "<td> <a href=''> Edit </a> | <a href=''> Delete </a> </td>" +
-            "</tr>"
-
-        $("#table-delivery").append(delivery);
-    }
-</script>

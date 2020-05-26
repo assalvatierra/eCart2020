@@ -68,5 +68,7 @@ namespace eCartDbLayer
         public System.Data.Entity.DbSet<RiderDetail> RiderDetails { get; set; }
 
         public System.Data.Entity.DbSet<CartHistory> CartHistories { get; set; }
+
+        public System.Data.Entity.DbSet<ItemImage> ItemImages { get; set; }
     }
 }

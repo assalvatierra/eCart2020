@@ -8,8 +8,8 @@ values ('c33996c3-a2ff-4c6c-b330-61ce70931d9b', 'Shopper', 'Davao City', 'shoppe
 
 -- create stores --
 insert into StoreDetails([LoginId],[Name],[Address],[Remarks],[StoreStatusId],[StoreCategoryId],[MasterCityId],[MasterAreaId]) 
-values	(6, 'NCCC Mall', 'Matina Crossing, Davao City','', 1, 3, 1, 1),
-		(7, 'SM Mall', 'Ecoland, Davao City','', 1, 3, 1, 1),
+values	('c33996c3-a2ff-4c6c-b330-61ce70931d9b', 'NCCC Mall', 'Matina Crossing, Davao City','', 1, 3, 1, 1),
+		('97a5778d-4ef4-4a48-b920-eeac9aee9c50', 'SM Mall', 'Ecoland, Davao City','', 1, 3, 1, 1),
 		(8, 'Gaisano Mall', 'Sta Ana, Davao City','', 1, 3, 2, 1);
 
 -- store images --

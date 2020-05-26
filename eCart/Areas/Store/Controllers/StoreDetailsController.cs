@@ -16,11 +16,8 @@ namespace eCart.Areas.Store.Controllers
 {
     public class StoreDetailsController : Controller
     {
-        //private StoreContext db = new StoreContext();
-        //private ecartdbContainer edb = new ecartdbContainer();
-        
-
         private StoreFactory storeFactory = new StoreFactory();
+
         // GET: Store/StoreDetails
         public ActionResult Index(int id)
         {
@@ -69,10 +66,8 @@ namespace eCart.Areas.Store.Controllers
         {
             if (ModelState.IsValid)
             {
-                //db.StoreDetails.Add(storeDetail);
-                //db.SaveChanges();
-
-                storeFactory.StoreMgr.CreateStore(storeDetail);
+                //disable creation 
+                //storeFactory.StoreMgr.CreateStore(storeDetail);
 
                 return RedirectToAction("Index");
             }
@@ -131,11 +126,11 @@ namespace eCart.Areas.Store.Controllers
                 {
                     if(storeMgr.ValidateStoreImg(storeDetail.Id, ImgUrl))
                     {
-                        //var editResult = storeMgr.EditStore(storeDetail);
-                        //if (editResult)
-                        //{
+                        var editResult = storeMgr.EditStore(storeDetail);
+                        if (editResult)
+                        {
                             return RedirectToAction("Index", "Store", new { area = "Store", id = storeDetail.Id });
-                        //}
+                        }
                     }
                     else
                     {
