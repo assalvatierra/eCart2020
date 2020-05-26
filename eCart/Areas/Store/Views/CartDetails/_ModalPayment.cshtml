@@ -20,7 +20,7 @@
                         <p class="control-label"> Payment Party: </p>
                         <div>
                             <select class="form-control" id="payment-Party">
-                                @foreach (var party in ViewBag.PaymentPartyList as IEnumerable<eCart.Models.PaymentParty>)
+                                @foreach (var party in ViewBag.PaymentPartyList as IEnumerable<eCartModels.PaymentParty>)
                                 {
                                     <option value="@party.Id"> @party.Name </option>
                                 }
@@ -36,7 +36,7 @@
                     <div class="form-group">
                         <p class="control-label"> Payment Receiver: </p>
                         <select class="form-control" id="payment-Recievers">
-                            @foreach (var receiver in ViewBag.PaymentReceiverList as IEnumerable<eCart.Models.PaymentReceiver>)
+                            @foreach (var receiver in ViewBag.PaymentReceiverList as IEnumerable<eCartModels.PaymentReceiver>)
                             {
                                 <option value="@receiver.Id"> @receiver.Description </option>
                             }
@@ -51,7 +51,7 @@
                     <div class="form-group">
                         <p class="control-label"> Payment Status: </p>
                         <select class="form-control" id="payment-status">
-                            @foreach (var status in ViewBag.PaymentStatusList as IEnumerable<eCart.Models.PaymentStatus>)
+                            @foreach (var status in ViewBag.PaymentStatusList as IEnumerable<eCartModels.PaymentStatus>)
                             {
                                 <option value="@status.Id"> @status.Name </option>
                             }

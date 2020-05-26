@@ -40,11 +40,11 @@
                 </div>
                 <!-- Error Message -->
 
-                <div class="row">
+                @*<div class="row">
                     <div class="col-lg-12 cart-ID-div">
                         <p> Cart #: <span class="Cart-ID" id="cartID"> @cart.Id.ToString("0000")  </span></p>
                     </div>
-                </div>
+                </div>*@
 
                 <div class="cart-summary-store ">
                     <div class="col-lg-2 col-md-4 col-sm-12">
@@ -78,23 +78,22 @@
                             {
                                 switch (cart.PaymentDetails.LastOrDefault().PaymentReceiverId)
                                 {
-                                    case 1:<text> Store </text> break;
-                                case 2: <text> Bank  </text> break;
-                            case 3: <text> Paypal </text> break;
-                        case 4: <text> Padala </text> break;
-                    case 0: <text> Cash On Delivery </text> break;
-            }
-        }
-        else
-        {
-            <span> On Pickup </span>
-        }
+                                    case 1: <text> Store </text> break;
+                                    case 2: <text> Bank  </text> break;
+                                    case 3: <text> Paypal </text> break;
+                                    case 4: <text> Padala </text> break;
+                                    case 0: <text> Cash On Delivery </text> break;
+                                    }
+                                }
+                                else
+                                {
+                                    <span> On Pickup </span>
+                                }
 
                         </a>
                     </div>
                 </div>
 
-                @*<span  id="cartID"> CARTID:  @cart.Id </span>*@
                 <table class="table">
                     <thead>
                         <tr>

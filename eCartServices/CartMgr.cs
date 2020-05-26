@@ -352,6 +352,7 @@ namespace eCartServices
             {
                 var cartDetail = cart.Find(s => s.Id == cartId);
                 cartDetail.StorePickupPoint = cartdb.GetStorePickupPoint(pickupPointId);
+                cartDetail.StorePickupPointId = pickupPointId;
                 cartDetail.DeliveryType = "Pickup";
                 return true;
             }
@@ -451,7 +452,7 @@ namespace eCartServices
 
                             }
                             //add cart history
-                            var addHistory = addCartHistory(cart, ACTIVE, userID);
+                            var addHistory = addCartHistory(tempCartId, ACTIVE, userID);
                             if (addHistory)
                             {
                                 isValid = true;
@@ -509,7 +510,7 @@ namespace eCartServices
                         }
 
                         //add cart history
-                        var addHistory = addCartHistory(cart, ACTIVE, userID);
+                        var addHistory = addCartHistory(tempCartId, ACTIVE, userID);
                         if (addHistory)
                         {
                             //remove cart from session
@@ -746,13 +747,13 @@ namespace eCartServices
         }
 
 
-        public bool addCartHistory(CartDetail cart , int statusId, string userId)
+        public bool addCartHistory(int cartId , int statusId, string userId)
         {
             try
             {
                 var cartHistory = new CartHistory
                 {
-                    CartDetailId = cart.Id,
+                    CartDetailId = cartId,
                     CartStatusId = statusId,
                     dtStatus = DateTime.Now,
                     UserId = GetUserDetails(userId).Id.ToString(), //TODO : increase UserId max length to 40
@@ -778,7 +779,7 @@ namespace eCartServices
                 cart.CartStatusId = cartStatusId;
                 if (cartdb.EditCartDetails(cart))
                 {
-                    if (addCartHistory(cart, cartStatusId, userId))
+                    if (addCartHistory(cartId, cartStatusId, userId))
                     {
                         return true;
                     }

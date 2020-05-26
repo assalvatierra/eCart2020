@@ -29,7 +29,7 @@
                     <div class="form-group">
                         <p class="control-label"> Assigned Rider </p>
                         <select class="form-control list-group" id="Edit-delivery-riderId">
-                            @foreach (var rider in ViewBag.RiderList as IEnumerable<eCart.Models.RiderDetail>)
+                            @foreach (var rider in ViewBag.RiderList as IEnumerable<eCartModels.RiderDetail>)
                             {
                                 <option class="list-group-item" value="@rider.Id">
                                     @rider.Name

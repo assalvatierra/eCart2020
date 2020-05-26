@@ -1,4 +1,4 @@
-﻿@model eCart.Models.CartDetail
+﻿@model eCartModels.CartDetail
 
 @{
     ViewBag.Title = "Cart Details";
@@ -137,7 +137,7 @@
                 </tr>
             </thead>
             <tbody id="table-payments">
-                @foreach (var payment in ViewBag.PaymentDetails as IEnumerable<eCart.Models.PaymentDetail>)
+                @foreach (var payment in ViewBag.PaymentDetails as IEnumerable<eCartModels.PaymentDetail>)
                 {
                     <tr>
                         <td> @payment.dtPayment </td>
@@ -154,7 +154,7 @@
 
     </div>
 
-    @Html.Partial("_PartialCartDelivery", ViewBag.CartDelivery as IEnumerable<eCart.Models.CartDelivery>,
+    @Html.Partial("_PartialCartDelivery", ViewBag.CartDelivery as IEnumerable<eCartModels.CartDelivery>,
         new ViewDataDictionary { { "PaymentReceiverList", ViewBag.PaymentReceiverList }, { "RiderList", ViewBag.RiderList },
             { "CartId", Model.Id }, { "Address", Model.StorePickupPoint.Address } })
 

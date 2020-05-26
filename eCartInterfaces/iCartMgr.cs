@@ -26,7 +26,7 @@ namespace eCartInterfaces
         List<CartDetail> addItemToCart(int id, int qty, decimal price, List<CartDetail> cartSession,string userId);
         void addCartItemToDb(CartItem cartItem);
         bool addCartDetailToDb(CartDetail cartDetail);
-        bool addCartHistory(CartDetail cart, int statusId, string userId);
+        bool addCartHistory(int cartId, int statusId, string userId);
         void addDeliveryDetails(int id, DateTime date, string address, int riderId, string remarks);
 
         bool UpdateCartPickupPoint(int storeId, int pickupPoint, List<CartDetail> cart);
