@@ -8,69 +8,80 @@ namespace eCart
 {
     public interface iCartManager
     {
-        CartDetail RequestNewCart();
-        int AddItemtoCart(int StoreId, int ItemId, int Qty, decimal price);
+        int AddItem(int stireitemid, decimal qty);
+        int RemoveItem(int storeitemid);
     }
 
 
     public class CartManager
     {
-        List<CartDetail> cartlist;
+        List<mvCartItem> cartlist;
         public CartManager()
         {
-            this.cartlist = new List<CartDetail>();
+            this.cartlist = new List<mvCartItem>();
         }
 
-
-        public CartDetail RequestNewCart(int StoreId)
-        {
-            CartDetail cart = new CartDetail();
-            cart.StoreDetailId = StoreId;
-            this.cartlist.Add(cart);
-            return cart;
-        }
-
-        private CartDetail _findcart(int storeid)
-        {
-            CartDetail cart = this.cartlist.Where(c => c.StoreDetailId == storeid).FirstOrDefault();
-            if(cart==null)
-            {
-                cart = this.RequestNewCart(storeid);
-            }
-
-            return cart;
-        }
-        public int AddItemtoCart(int storeId, int ItemId, int Qty, decimal price)
+        public int AddItem(int storeid, int storeitemid, decimal Qty)
         {
             int iret = 0;
-            //CartItem item = new CartItem
-            //{
-            // Store   
-            //    StoreItem = ItemId,
-            //    ItemQty = qty,
-            //    StoreItemId = id,
-            //    CartItemStatusId = 1
-            //};
 
+            try
+            {
+                mvCartItem item = cartlist.Find(c => c.StoreItemId == storeitemid);
+                if (item != null)
+                {
+                    item.ItemQuantity = item.ItemQuantity + Qty;
+                    iret = 1;
+                }
+                else
+                {
+                    item = new mvCartItem
+                    {
+                        StoreId = storeid,
+                        StoreItemId = storeitemid,
+                        ItemQuantity = Qty
+                    };
 
-            //CartDetail cart = this._findcart(storeId);
-            //cart.CartItems.Add
+                    iret = 1;
+
+                }
+            }
+            catch(Exception e)
+            {
+                iret = -1;
+            }
 
             return iret;
         }
 
+        public int RemoveItem(int storeitemid)
+        {
+            int iret = 0;
+            try
+            {
+                mvCartItem item = cartlist.Find(c => c.StoreItemId == storeitemid);
+                if (item != null)
+                {
+                    cartlist.Remove(item);
+                    iret = 1;
+                }
+            }
+            catch (Exception e)
+            {
+                iret = -1;
+            }
 
+            return iret;
+
+        }
     }
 
-    public class CartClass
-    {
-        private CartDetail cartDetails; 
-        private List<CartItem> cartItems;
 
-        public CartClass()
-        {
-            this.cartDetails = new CartDetail();
-            return;
-        }
+
+    public class mvCartItem
+    {
+        public int StoreId;
+        public int StoreItemId;
+        public Decimal ItemQuantity;
     }
 }
