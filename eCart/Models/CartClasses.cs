@@ -15,9 +15,8 @@ namespace eCart
     }
 
 
-    public class CartManager : iCartManager
+    public class CartManager 
     {
-        int Id;
         List<mvCartDetail> cartlist;
 
         public CartManager()
@@ -66,9 +65,10 @@ namespace eCart
                     };
 
                     cart.itemList.Add(item);
-
+                    
                     iret = 1;
 
+                    cartlist.Add(cart);
                 }
             }
             catch(Exception e)
@@ -128,3 +128,181 @@ namespace eCart
         public List<mvCartItem> itemList; 
     }
 }
+
+
+
+/*
+ 
+        public PartialViewResult _CartSummary()
+        {
+            var userId = GetUserId();
+            if (userId != null && GetCartSession() == null)
+            {
+                CartManager cartManager = new CartManager();
+                Session["CARTDETAILS"] = cartManager;
+
+                //assign user to session
+                Session["USERID"] = GetUserId();
+            }
+
+            var cartMgr = GetCartSession();
+            if (userId == null || cartMgr.GetCartList() == null)
+            {
+                return PartialView(new List<CartDetail>());
+            }
+
+
+            var cartList = GetCartSession().GetCartList();
+          
+            var cartDetails = ConvertCartDetails(cartList);
+            return PartialView(cartDetails);
+        }
+
+        public List<CartDetail> ConvertCartDetails(List<mvCartDetail> cartList)
+        {
+            List<CartDetail> cartDetails = new List<CartDetail>();
+            foreach (var cart in cartList)
+            {
+
+                //cartItems 
+                List<CartItem> cartItems = new List<CartItem>();
+
+                foreach (var item in cart.itemList)
+                {
+                    cartItems.Add(new CartItem()
+                    {
+                        StoreItemId = item.StoreItemId,
+                        StoreItem = store.CartMgr.GetStoreItem(item.StoreItemId),
+                        ItemQty = item.StoreId,
+                        CartItemStatusId = 1,
+                        Remarks1 = "",
+                        Remarks2 = "",
+                        ItemOrder = "1",
+                    });
+                }
+                
+                cartDetails.Add(new CartDetail()
+                {
+                    StoreDetail = store.StoreMgr.getStoreDetails(cart.StoreId),
+                    StoreDetailId = cart.StoreId,
+                    CartStatusId = cart.StatusId,
+                    CartItems = cartItems,
+                    DeliveryType = "Pickup",
+                    DtPickup = DateTime.Now,
+                    StorePickupPointId = 1,
+                });
+
+            }
+
+            return cartDetails;
+        }
+
+    
+        public CartManager GetCartSession()
+        {
+
+            return (CartManager)Session["CARTDETAILS"];
+        }
+
+        
+        public void UpdateCartSession(CartManager cart)
+        {
+
+            if (cart != null)
+            {
+                Session["CARTDETAILS"] = cart;
+            }
+
+        }
+
+        [HttpPost]
+        public bool AddToCart(int id, int qty, int storeId)
+        {
+            try
+            {
+                var UserId = GetUserId();
+                var cartMgr = GetCartSession();
+                cartMgr.SetCartList(cartMgr.GetCartList());
+                //if (cartSession == null)
+                //{
+                //    cartSession = new List<CartDetail>();
+                //}
+                //var cart = store.CartMgr.AddItemToCart(id, qty, itemPrice, cartSession, UserId);
+                //UpdateCartDetails(cart);
+
+                var response = cartMgr.AddItem(storeId, id, qty);
+                if (response == 1)
+                {
+                    var carlist = cartMgr.GetCartList();
+                    UpdateCartSession(cartMgr);
+                    return true;
+                }
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+    
+    
+        [HttpPost]
+        public bool RemoveCartItem(int id)
+        {
+            try
+            {
+                var cart = GetCartDetails();
+
+                //if (store.CartMgr.RemoveCartItem(cart, id))
+                //{
+                //    return true;
+                //}
+
+                //var response = cartManager.RemoveItem(id);
+                //if (response == 1)
+                //{
+                //    return true;
+                //}
+
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
+        [HttpGet]
+        public JsonResult getSession()
+        {
+            var cartSession = GetCartSession();
+            return Json(cartSession, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult CartCheckout()
+        {
+            var cartMgr = store.CartMgr;
+
+            if(HttpContext.User.Identity.IsAuthenticated)
+            {
+                //var cartDetails = GetCartDetails();
+
+                var cartList = GetCartSession().GetCartList();
+                var cartDetails = ConvertCartDetails(cartList);
+
+                ViewBag.PaymentParties = cartMgr.GetPaymentRecievers();
+                    string userId = HttpContext.User.Identity.GetUserId();
+                ViewBag.UserDetails = cartMgr.GetUserDetails(userId);
+
+                return View(cartDetails);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account", new { area = "" });
+            }
+
+        }
+
+
+ */

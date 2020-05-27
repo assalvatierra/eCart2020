@@ -21,12 +21,13 @@ function SubtractQty(e) {
     $(e).siblings('.item-qty').text(qty);
 }
 
-function AddtoCart_Submit(e, itemId, itemName, price, storeId) {
+function AddtoCart_Submit(e, itemId, itemName, price) {
     var qty = $(e).siblings('.item-qty').text();
     var data = {
         id: parseInt(itemId),
         qty: parseInt(qty),
-        storeId: storeId
+        itemName: itemName,
+        itemPrice: parseInt(price)
     }
 
     //calculate total Price of item
