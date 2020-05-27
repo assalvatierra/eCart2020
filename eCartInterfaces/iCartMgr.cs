@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using eCartModels;
 
+
 namespace eCartInterfaces
 {
     public interface iCartMgr
@@ -16,6 +17,7 @@ namespace eCartInterfaces
         List<CartActivity> getCartDeliveryActivities(int id);
         UserDetail GetUserDetails(string userId);
         CartDetail GetCartDetail(int id);
+        StoreItem GetStoreItem(int id);
 
         List<CartDetail> AddItemToCart(int id, int qty, decimal price, List<CartDetail> cartSession,string userId);
         bool addCartHistory(int cartId, int statusId, string userId);

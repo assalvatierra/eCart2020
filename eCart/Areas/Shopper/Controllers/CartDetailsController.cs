@@ -12,6 +12,7 @@ namespace eCart.Areas.Shopper.Controllers
     public class CartDetailsController : Controller
     {
         StoreFactory store = new StoreFactory();
+        CartManager cartManager = new CartManager();
 
         // GET: Shopper/Cart
         public ActionResult Index()
@@ -21,17 +22,65 @@ namespace eCart.Areas.Shopper.Controllers
 
         public PartialViewResult _CartSummary()
         {
-            if (GetUserId() != null && GetCartDetails() == null)
+            var userId = GetUserId();
+            var cartMgr = GetCartSession();
+            if (userId != null && cartMgr == null)
             {
-                 List<CartDetail> cartDetails = new List<CartDetail>();
-                 Session["CARTDETAILS"] = cartDetails;
-                 //assign user to session
-                 Session["USERID"] = GetUserId();
+                cartManager = new CartManager();
+                Session["CARTDETAILS"] = cartManager;
+
+                //assign user to session
+                Session["USERID"] = GetUserId();
             }
 
-            var cartItems = GetCartDetails();
+            if (userId == null || cartManager.GetCartList() == null)
+            {
+                return PartialView(new List<CartDetail>());
+            }
 
-            return PartialView(cartItems);
+
+            var cartList = cartManager.GetCartList();
+          
+            var cartDetails = ConvertCartDetails(cartList);
+            return PartialView(cartDetails);
+        }
+
+        public List<CartDetail> ConvertCartDetails(List<mvCartDetail> cartList)
+        {
+            List<CartDetail> cartDetails = new List<CartDetail>();
+            foreach (var cart in cartList)
+            {
+
+                //cartItems 
+                List<CartItem> cartItems = new List<CartItem>();
+
+                foreach (var item in cart.itemList)
+                {
+                    cartItems.Add(new CartItem()
+                    {
+                        StoreItemId = item.StoreItemId,
+                        StoreItem = store.CartMgr.GetStoreItem(item.StoreItemId),
+                        ItemQty = item.StoreId,
+                        CartItemStatusId = 1,
+                        Remarks1 = "",
+                        Remarks2 = "",
+                        ItemOrder = "1",
+                    });
+                }
+                
+                cartDetails.Add(new CartDetail()
+                {
+                    StoreDetailId = cart.StoreId,
+                    CartStatusId = cart.StatusId,
+                    CartItems = cartItems,
+                    DeliveryType = "Pickup",
+                    DtPickup = DateTime.Now,
+                    StorePickupPointId = 1,
+                });
+
+            }
+
+            return cartDetails;
         }
 
         public string GetUserId()
@@ -40,14 +89,21 @@ namespace eCart.Areas.Shopper.Controllers
             return userId;
         }
 
-        public List<CartDetail> GetCartDetails()
+        public CartManager GetCartDetails()
         {
            
-            var cartSession = (List<CartDetail>)Session["CARTDETAILS"];
+            var cartSession = (CartManager)Session["CARTDETAILS"];
             ViewBag.cart = cartSession;
             return cartSession;
         }
 
+        public CartManager GetCartSession()
+        {
+
+            var cartSession = (CartManager)Session["CARTDETAILS"];
+            ViewBag.cart = cartSession;
+            return cartSession;
+        }
 
         public void UpdateCartDetails(List<CartDetail> cart)
         {
@@ -59,21 +115,37 @@ namespace eCart.Areas.Shopper.Controllers
 
         }
 
+        public void UpdateCartSession(List<mvCartDetail> cart)
+        {
+
+            if (cart != null)
+            {
+                Session["CARTDETAILS"] = cart;
+            }
+
+        }
+
         [HttpPost]
-        public bool AddToCart(int id, int qty, decimal itemPrice)
+        public bool AddToCart(int id, int qty, int storeId)
         {
             try
             {
                 var UserId = GetUserId();
-                var cartSession = GetCartDetails();
-                if (cartSession == null)
-                {
-                    cartSession = new List<CartDetail>();
-                }
-                var cart = store.CartMgr.AddItemToCart(id, qty, itemPrice, cartSession, UserId);
+                var cartMgr = GetCartManager();
 
-                UpdateCartDetails(cart);
-                return true;
+                //if (cartSession == null)
+                //{
+                //    cartSession = new List<CartDetail>();
+                //}
+                //var cart = store.CartMgr.AddItemToCart(id, qty, itemPrice, cartSession, UserId);
+                //UpdateCartDetails(cart);
+
+                var response = cartManager.AddItem(storeId, id, qty);
+                if (response == 1)
+                {
+                    return true;
+                }
+                return false;
             }
             catch
             {
@@ -88,10 +160,17 @@ namespace eCart.Areas.Shopper.Controllers
             try
             {
                 var cart = GetCartDetails();
-                if (store.CartMgr.RemoveCartItem(cart,id))
-                {
-                    return true;
-                }
+
+                //if (store.CartMgr.RemoveCartItem(cart, id))
+                //{
+                //    return true;
+                //}
+
+                //var response = cartManager.RemoveItem(id);
+                //if (response == 1)
+                //{
+                //    return true;
+                //}
 
                 return false;
             }
@@ -105,7 +184,7 @@ namespace eCart.Areas.Shopper.Controllers
         [HttpGet]
         public JsonResult getSession()
         {
-            var cartSession = GetCartDetails();
+            var cartSession = cartManager.GetCartList();
             return Json(cartSession, JsonRequestBehavior.AllowGet);
         }
 
@@ -159,8 +238,8 @@ namespace eCart.Areas.Shopper.Controllers
             try
             {
                 var cartSession = GetCartDetails();
-                return store.CartMgr.UpdateCartPickupPoint(cartId, pickupPointId, cartSession);
-
+                //return store.CartMgr.UpdateCartPickupPoint(cartId, pickupPointId, cartSession);
+                return false;
             }
             catch (Exception ex)
             {
@@ -173,7 +252,8 @@ namespace eCart.Areas.Shopper.Controllers
             try
             {
                 var cartSession = GetCartDetails();
-                return store.CartMgr.UpdateCartAsDelivery(cartId, cartSession);
+                //return store.CartMgr.UpdateCartAsDelivery(cartId, cartSession);
+                return false;
             }
             catch (Exception ex)
             {
@@ -189,7 +269,8 @@ namespace eCart.Areas.Shopper.Controllers
             {
                 var cartSession = GetCartDetails();
                 receiverId = receiverId != 0 ? receiverId : 1;
-                return store.CartMgr.SetCartPaymentReceiver(cartId, receiverId, cartSession);
+                //return store.CartMgr.SetCartPaymentReceiver(cartId, receiverId, cartSession);
+                return false;
             }
             catch
             {
@@ -202,7 +283,8 @@ namespace eCart.Areas.Shopper.Controllers
         public bool SetCartPickupDate(int cartId, DateTime date)
         {
             var cartSession = GetCartDetails();
-            return store.CartMgr.SetCartPickupDate(cartId, date, cartSession);
+            //return store.CartMgr.SetCartPickupDate(cartId, date, cartSession);
+            return false;
 
         }
 
@@ -220,11 +302,11 @@ namespace eCart.Areas.Shopper.Controllers
 
                 var userId = GetUserId();
 
-                if (store.CartMgr.SaveOrder(cartSession, userId, id)) {  //save to db
+                //if (store.CartMgr.SaveOrder(cartSession, userId, id)) {  //save to db
                   
-                    return true;
+                //    return true;
                  
-                }
+                //}
 
                 return false;
             }
@@ -240,8 +322,9 @@ namespace eCart.Areas.Shopper.Controllers
             {
                 var userId = GetUserId();
                 var cartSession = GetCartDetails();
-                return store.CartMgr.saveOrder(cartSession, userId); //save to db
+                //return store.CartMgr.saveOrder(cartSession, userId); //save to db
 
+                return false;
             }
             catch
             {

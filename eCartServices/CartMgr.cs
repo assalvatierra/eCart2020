@@ -685,5 +685,15 @@ namespace eCartServices
                 throw ex;
             }
         }
+
+        public StoreItem GetStoreItem(int id)
+        {
+            try
+            {
+                return cartdb.GetStoreItem(id);
+            }catch{
+                return null;
+            }
+        }
     }
 }
