@@ -171,6 +171,7 @@
     <Compile Include="Areas\Rider\RiderAreaRegistration.cs" />
     <Compile Include="Areas\Shopper\Controllers\AccountsController.cs" />
     <Compile Include="Areas\Shopper\Controllers\CartDetailsController.cs" />
+    <Compile Include="Areas\Shopper\Controllers\KioskController.cs" />
     <Compile Include="Areas\Shopper\Controllers\UserDetailsController.cs" />
     <Compile Include="Areas\Shopper\ShopperAreaRegistration.cs" />
     <Compile Include="Areas\Store\Controllers\CartDetailsController.cs" />
@@ -202,6 +203,7 @@
     <Content Include="App_Data\aspnet-eCart-20200518113945_log.ldf">
       <DependentUpon>aspnet-eCart-20200518113945.mdf</DependentUpon>
     </Content>
+    <Content Include="Areas\Shopper\Scripts\kiosk.js" />
     <Content Include="Areas\Shopper\Scripts\cart.js" />
     <Content Include="Areas\Shopper\Scripts\checkout.js" />
     <Content Include="Areas\Shopper\Scripts\checkoutPayment.js" />
@@ -308,6 +310,8 @@
     <Content Include="Areas\Shopper\Views\CartDetails\PendingCarts.cshtml" />
     <Content Include="Areas\Shopper\Views\Accounts\Register.cshtml" />
     <Content Include="Areas\Shopper\Views\UserDetails\Index.cshtml" />
+    <Content Include="Areas\Shopper\Views\Kiosk\Index.cshtml" />
+    <Content Include="Areas\Shopper\Views\Kiosk\_CartSummary.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />
     <Content Include="Scripts\DateRangePicker\moment.min.js" />

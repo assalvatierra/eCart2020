@@ -47,5 +47,10 @@ namespace eCartInterfaces
         bool EditStoreItemImage(int storeItemId, string imageUrl);
         bool RemoveStoreItem(int id);
 
+        //Store Kiosks
+        List<StoreKiosk> GetStoreKiosks(int storeId);
+
+
+
     }
 }

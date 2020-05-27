@@ -492,5 +492,15 @@ namespace eCartServices
 
         #endregion
 
+        #region Store Kiosk
+        public List<StoreKiosk> GetStoreKiosks(int storeId)
+        {
+            var kiosks = db.StoreKiosks.Where(s => s.StoreDetailId == storeId);
+
+            return kiosks.ToList();
+        }
+
+
+        #endregion
     }
 }

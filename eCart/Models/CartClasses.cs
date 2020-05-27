@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using eCartModels;
+using eCartServices;
 
 namespace eCart
 {
@@ -12,10 +13,11 @@ namespace eCart
         int RemoveItem(int storeid, int storeitemid);
 
         List<mvCartDetail> GetCartList();
+        List<CartDetail> ConvertCartDetails();
     }
 
 
-    public class CartManager 
+    public class CartManager : iCartManager
     {
         List<mvCartDetail> cartlist;
 
@@ -109,6 +111,52 @@ namespace eCart
             return iret;
 
         }
+
+
+        public List<CartDetail> ConvertCartDetails()
+        {
+            //helper classes
+            StoreFactory store = new StoreFactory();
+
+            List<CartDetail> cartDetails = new List<CartDetail>();
+            foreach (var cart in this.cartlist)
+            {
+
+                //cartItems 
+                List<CartItem> cartItems = new List<CartItem>();
+
+                foreach (var item in cart.itemList)
+                {
+                    cartItems.Add(new CartItem()
+                    {
+                        StoreItemId = item.StoreItemId,
+                        StoreItem = store.CartMgr.GetStoreItem(item.StoreItemId),
+                        ItemQty = item.StoreId,
+                        CartItemStatusId = 1,
+                        Remarks1 = "",
+                        Remarks2 = "",
+                        ItemOrder = "1",
+                    });
+                }
+
+                cartDetails.Add(new CartDetail()
+                {
+                    StoreDetail = store.StoreMgr.getStoreDetails(cart.StoreId),
+                    StoreDetailId = cart.StoreId,
+                    CartStatusId = cart.StatusId,
+                    CartItems = cartItems,
+                    DeliveryType = "Pickup",
+                    DtPickup = DateTime.Now,
+                    StorePickupPointId = 1,
+                });
+
+            }
+
+            return cartDetails;
+        }
+
+
+
     }
 
 
@@ -156,45 +204,6 @@ namespace eCart
           
             var cartDetails = ConvertCartDetails(cartList);
             return PartialView(cartDetails);
-        }
-
-        public List<CartDetail> ConvertCartDetails(List<mvCartDetail> cartList)
-        {
-            List<CartDetail> cartDetails = new List<CartDetail>();
-            foreach (var cart in cartList)
-            {
-
-                //cartItems 
-                List<CartItem> cartItems = new List<CartItem>();
-
-                foreach (var item in cart.itemList)
-                {
-                    cartItems.Add(new CartItem()
-                    {
-                        StoreItemId = item.StoreItemId,
-                        StoreItem = store.CartMgr.GetStoreItem(item.StoreItemId),
-                        ItemQty = item.StoreId,
-                        CartItemStatusId = 1,
-                        Remarks1 = "",
-                        Remarks2 = "",
-                        ItemOrder = "1",
-                    });
-                }
-                
-                cartDetails.Add(new CartDetail()
-                {
-                    StoreDetail = store.StoreMgr.getStoreDetails(cart.StoreId),
-                    StoreDetailId = cart.StoreId,
-                    CartStatusId = cart.StatusId,
-                    CartItems = cartItems,
-                    DeliveryType = "Pickup",
-                    DtPickup = DateTime.Now,
-                    StorePickupPointId = 1,
-                });
-
-            }
-
-            return cartDetails;
         }
 
     
