@@ -12,7 +12,6 @@ namespace eCart.Areas.Shopper.Controllers
     public class CartDetailsController : Controller
     {
         StoreFactory store = new StoreFactory();
-        CartManager cartManager = new CartManager();
 
         // GET: Shopper/Cart
         public ActionResult Index()
@@ -23,23 +22,23 @@ namespace eCart.Areas.Shopper.Controllers
         public PartialViewResult _CartSummary()
         {
             var userId = GetUserId();
-            var cartMgr = GetCartSession();
-            if (userId != null && cartMgr == null)
+            if (userId != null && GetCartSession() == null)
             {
-                cartManager = new CartManager();
+                CartManager cartManager = new CartManager();
                 Session["CARTDETAILS"] = cartManager;
 
                 //assign user to session
                 Session["USERID"] = GetUserId();
             }
 
-            if (userId == null || cartManager.GetCartList() == null)
+            var cartMgr = GetCartSession();
+            if (userId == null || cartMgr.GetCartList() == null)
             {
                 return PartialView(new List<CartDetail>());
             }
 
 
-            var cartList = cartManager.GetCartList();
+            var cartList = GetCartSession().GetCartList();
           
             var cartDetails = ConvertCartDetails(cartList);
             return PartialView(cartDetails);
@@ -100,9 +99,7 @@ namespace eCart.Areas.Shopper.Controllers
         public CartManager GetCartSession()
         {
 
-            var cartSession = (CartManager)Session["CARTDETAILS"];
-            ViewBag.cart = cartSession;
-            return cartSession;
+            return (CartManager)Session["CARTDETAILS"];
         }
 
         public void UpdateCartDetails(List<CartDetail> cart)
@@ -115,7 +112,7 @@ namespace eCart.Areas.Shopper.Controllers
 
         }
 
-        public void UpdateCartSession(List<mvCartDetail> cart)
+        public void UpdateCartSession(CartManager cart)
         {
 
             if (cart != null)
@@ -131,8 +128,8 @@ namespace eCart.Areas.Shopper.Controllers
             try
             {
                 var UserId = GetUserId();
-                var cartMgr = GetCartManager();
-
+                var cartMgr = GetCartSession();
+                cartMgr.SetCartList(cartMgr.GetCartList());
                 //if (cartSession == null)
                 //{
                 //    cartSession = new List<CartDetail>();
@@ -140,9 +137,11 @@ namespace eCart.Areas.Shopper.Controllers
                 //var cart = store.CartMgr.AddItemToCart(id, qty, itemPrice, cartSession, UserId);
                 //UpdateCartDetails(cart);
 
-                var response = cartManager.AddItem(storeId, id, qty);
+                var response = cartMgr.AddItem(storeId, id, qty);
                 if (response == 1)
                 {
+                    var carlist = cartMgr.GetCartList();
+                    UpdateCartSession(cartMgr);
                     return true;
                 }
                 return false;
@@ -184,7 +183,7 @@ namespace eCart.Areas.Shopper.Controllers
         [HttpGet]
         public JsonResult getSession()
         {
-            var cartSession = cartManager.GetCartList();
+            var cartSession = GetCartSession();
             return Json(cartSession, JsonRequestBehavior.AllowGet);
         }
 
@@ -193,8 +192,12 @@ namespace eCart.Areas.Shopper.Controllers
             var cartMgr = store.CartMgr;
 
             if(HttpContext.User.Identity.IsAuthenticated)
-            { 
-                var cartDetails = GetCartDetails();
+            {
+                //var cartDetails = GetCartDetails();
+
+                var cartList = GetCartSession().GetCartList();
+                var cartDetails = ConvertCartDetails(cartList);
+
                 ViewBag.PaymentParties = cartMgr.GetPaymentRecievers();
                     string userId = HttpContext.User.Identity.GetUserId();
                 ViewBag.UserDetails = cartMgr.GetUserDetails(userId);

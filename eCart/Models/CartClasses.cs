@@ -17,6 +17,7 @@ namespace eCart
 
     public class CartManager : iCartManager
     {
+        int Id;
         List<mvCartDetail> cartlist;
 
         public CartManager()
@@ -25,6 +26,13 @@ namespace eCart
 
         }
 
+        public void SetCartList(List<mvCartDetail> cartDetails)
+        {
+            this.cartlist = cartDetails;
+
+        }
+
+
         public int AddItem(int storeid, int storeitemid, decimal Qty)
         {
             int iret = 0;
@@ -32,12 +40,13 @@ namespace eCart
             try
             {
                 //find cart of the store
-                mvCartDetail cart = cartlist.Find(c => c.StoreId == storeid);
+                mvCartDetail cart = this.cartlist.Find(c => c.StoreId == storeid);
                 if (cart == null)
                 {
                     //create cart for the store
                     cart = new mvCartDetail();
                     cart.itemList = new List<mvCartItem>();
+                    cart.StoreId = storeid;
 
                 }
 
@@ -56,6 +65,8 @@ namespace eCart
                         ItemQuantity = Qty
                     };
 
+                    cart.itemList.Add(item);
+
                     iret = 1;
 
                 }
@@ -70,7 +81,7 @@ namespace eCart
 
         public List<mvCartDetail> GetCartList()
         {
-            return cartlist;
+            return this.cartlist;
         }
 
         public int RemoveItem(int storeId, int storeitemid)
@@ -101,9 +112,9 @@ namespace eCart
     }
 
 
-
     public class mvCartItem
     {
+        public int Id;
         public int StoreId;
         public int StoreItemId;
         public Decimal ItemQuantity;
@@ -111,6 +122,7 @@ namespace eCart
 
     public class mvCartDetail
     {
+        public int Id;
         public int StoreId;
         public int StatusId;
         public List<mvCartItem> itemList; 
