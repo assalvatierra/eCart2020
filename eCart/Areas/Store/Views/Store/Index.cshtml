@@ -4,49 +4,81 @@
     ViewBag.Title = "Index";
 }
 
-    <div class="row">
-        <div class="container-panel col-lg-12 col-md-12 col-sm-12"> 
+<div class="row">
+    <div class="container-panel col-lg-12 col-md-12 col-sm-12">
 
-            <div class="col-lg-9 col-md-9 col-sm-12">
-                <div class="col-sm-4 col-md-6 col-lg-3" style="left:20px;">
-                    @if (Model.StoreImages.FirstOrDefault() != null)
-                    {
-                        var image = Model.StoreImages.FirstOrDefault();
-                        <img src="@image.ImageUrl" class="store-logo" />
-                    }
-                    else
-                    {
-                        <img src="~/img/placeholders/placeholder-product.png" class="store-logo login-image-side" />
-                    }
-                </div>
-
-                <div class="col-sm-8 col-md-6 col-lg-9">
-                    <h2> @Model.Name </h2>
-                    <p class="text-muted"> Address: <b>@Model.Address</b> </p>
-                    <p class="text-muted"> Categories: <b>@Model.StoreCategory.Name</b> </p>
-                </div>
+        <div class="col-lg-9 col-md-9 col-sm-12">
+            <div class="col-sm-4 col-md-6 col-lg-3" style="left:20px;">
+                @if (Model.StoreImages.FirstOrDefault() != null)
+                {
+                    var image = Model.StoreImages.FirstOrDefault();
+                    <img src="@image.ImageUrl" class="store-logo" />
+                }
+                else
+                {
+                    <img src="~/img/placeholders/placeholder-product.png" class="store-logo login-image-side" />
+                }
             </div>
 
-            <div class="col-lg-3 col-md-3 col-sm-12">
-                <div class="btn-group-vertical" style="width:100%;margin:0;">
-                    <a class="btn btn-default" href="@Url.Action("Edit","StoreDetails",new { id = ViewBag.StoreId })">
-                        Store Details
-                    </a>
-                    <a class="btn btn-default" href="@Url.Action("Index","StoreItems",new { id = ViewBag.StoreId })">
-                        Store Items
-                    </a>
-                    <a class="btn btn-default" href="@Url.Action("Index","StorePickupPoints",new { id = ViewBag.StoreId })" style="width:100%;">
-                        Pickup Points
-                    </a>
-                    <a class="btn btn-default" href="@Url.Action("Index","StorePickupPartners",new { id = ViewBag.StoreId })" style="width:100%;">
-                        Pickup Partner
-                    </a>
-                    <a class="btn btn-default" href="@Url.Action("Index","StorePayments",new { id = ViewBag.StoreId })" style="width:100%;">
-                        Subscription
-                    </a>
-                </div>
+            <div class="col-sm-8 col-md-6 col-lg-9">
+                <h2> @Model.Name </h2>
+                <p class="text-muted"> Address: <b>@Model.Address</b> </p>
+                <p class="text-muted"> Categories: <b>@Model.StoreCategory.Name</b> </p>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-12">
+            <div class="btn-group-vertical" style="width:100%;margin:0;">
+                <a class="btn btn-default" href="@Url.Action("Edit","StoreDetails",new { id = ViewBag.StoreId })">
+                    Store Details
+                </a>
+                <a class="btn btn-default" href="@Url.Action("Index","StoreItems",new { id = ViewBag.StoreId })">
+                    Store Items
+                </a>
+                <a class="btn btn-default" href="@Url.Action("Index","StorePickupPoints",new { id = ViewBag.StoreId })" style="width:100%;">
+                    Pickup Points
+                </a>
+                <a class="btn btn-default" href="@Url.Action("Index","StorePickupPartners",new { id = ViewBag.StoreId })" style="width:100%;">
+                    Pickup Partner
+                </a>
+                <a class="btn btn-default" href="@Url.Action("Index","StorePayments",new { id = ViewBag.StoreId })" style="width:100%;">
+                    Subscription
+                </a>
             </div>
         </div>
     </div>
+</div>
 
-@Html.Partial("_PartialCartList", Model.CartDetails as IEnumerable<eCartModels.CartDetail> )
+@Html.Partial("_PartialCartList", ViewBag.CartList as IEnumerable<eCartModels.CartDetail>, new ViewDataDictionary { { "StoreId", ViewBag.StoreId } })
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () { updateFilterStatus(); });
+
+        function updateFilterStatus() {
+            var url_string = window.location.href; //window.location.href
+            var url = new URL(url_string);
+            var cartStatus = url.searchParams.get("cartStatus");
+
+            if (cartStatus != null) {
+
+            switch (cartStatus.toString()) {
+                case '5':
+                    $('#cartStatus-Delivered').siblings().removeClass('active');
+                    $('#cartStatus-Delivered').addClass('active');
+                    break;
+                case '6':
+                    $('#cartStatus-Cancelled').siblings().removeClass('active');
+                    $('#cartStatus-Cancelled').addClass('active');
+                    break;
+                default:
+                    $('#cartStatus-Active').siblings().removeClass('active');
+                    $('#cartStatus-Active').addClass('active');
+                    break;
+            }
+
+            }
+        }
+    </script>
+}

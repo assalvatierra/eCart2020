@@ -14,9 +14,9 @@
 
                     @foreach ( var pickupPoint in Model )
                     {
-                        @*<a class="list-group-item btn btn-default" style="text-align:left;" onclick="AddPartner(this, @pickupPoint.Id, @ViewBag.StoreId);">
+                        <a class="list-group-item btn btn-default" style="text-align:left;" onclick="AddPartner(this, @pickupPoint.Id, @ViewBag.StoreId, '@pickupPoint.StoreDetail.Name',  '@pickupPoint.Address');">
                             <b> @pickupPoint.StoreDetail.Name </b> - <span class="text-muted"> @pickupPoint.Address</span>
-                        </a>*@
+                        </a>
                     }
 
                 </div>
@@ -26,28 +26,28 @@
 </div>
 
 <script>
-    function AddPartner(event, Id , StoreId) {
-        console.log("adding new partner");
-        //add to db
-        let data = $.get("/Store/StorePickupPartners/AddPartner",
+    function AddPartner(event, Id , StoreId, StoreName, Address) {
+         $.get("/Store/StorePickupPartners/AddPartner",
              { id: Id, storeId: StoreId },
-             (res) => {
-                 console.log(res);
-                 UpdateTable(res["Id"], res["PickupAddress"], res["StoreName"]);
+             (result) => {
+                 if (result == 'True') {
+                     UpdateTable(Id, StoreName, Address);
+                     $('#AddPartnerModal').modal('hide');
+                 } else {
+                     alert("Unable to Add Pickup Point");
+                 }
             });
 
         
     }
 
-    function UpdateTable(Id, Address, Store) {
+    function UpdateTable(Id, Store, Address ) {
         var newPartner =
             "<tr >  " +
             "<td class='text-primary'> <b>" + Store + "</b> </td>" +
             "<td> " + Address +" </td>"+
             "<td> " +
-            "<a href='/Store/StorePickupPartners/Edit/" + Id + "'> Edit </a> |" +
-            "<a href='/Store/StorePickupPartners/Details/" + Id + "'> Details </a> |" +
-            "<a href='/Store/StorePickupPartners/Delete/" + Id + "'> Delete </a> " +
+            "<a href='#'> Remove </a> " +
             "</td>" +
             "</tr>";
         $("#partnerTable").append(newPartner);

@@ -206,12 +206,20 @@ namespace eCartServices
 
         public void addCartDeliveryActivity(int cartId, int statusId)
         {
-            
+            throw new NotImplementedException();
         }
 
         public List<CartDetail> getStoreActiveCarts(int id)
         {
             var storeCarts = db.CartDetails.Where(s => s.StoreDetailId == id && s.CartStatusId <= 5); //active
+
+            return storeCarts.ToList();
+        }
+
+
+        public List<CartDetail> getStoreCarts(int id, int cartStatus)
+        {
+            var storeCarts = db.CartDetails.Where(s => s.StoreDetailId == id && s.CartStatusId == cartStatus); //active
 
             return storeCarts.ToList();
         }

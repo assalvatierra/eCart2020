@@ -44,4 +44,4 @@
     </table>
 </div>
 
-@*@{Html.RenderPartial("_ModalPartnerAdd", ViewBag.PickupPoints as IEnumerable<eCartModels.StorePickupPoint>, new ViewDataDictionary { { "StoreId", ViewBag.StoreId } });}*@
+@{Html.RenderPartial("_ModalPartnerAdd", ViewBag.PickupPoints as IEnumerable<eCartModels.StorePickupPoint>, new ViewDataDictionary { { "StoreId", ViewBag.StoreId } });}

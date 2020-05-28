@@ -21,12 +21,14 @@ namespace eCart.Areas.Store.Controllers
             if (id != null )
             {
                 var storeMgr = storeFactory.StoreMgr;
-                //                string STOREID = Session["STOREID"] != null ? Session["STOREID"].ToString() : id.ToString();
-
 
                 var userid = HttpContext.User.Identity.GetUserId();
                 var store = storeMgr.GetStoreDetailByLoginId(userid);
                 ViewBag.StoreId = store.Id;
+
+                //cartlist
+                ViewBag.CartList = storeMgr.getStoreActiveCarts((int)id);
+
                 return View(store);
             }
             else
@@ -35,5 +37,7 @@ namespace eCart.Areas.Store.Controllers
             }
             
         }
+
+       
     }
 }

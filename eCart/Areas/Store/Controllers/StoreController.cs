@@ -4,8 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using eCartModels;
-using eCartDbLayer;
-using eCartInterfaces;
 using eCartServices;
 using Microsoft.AspNet.Identity;
 
@@ -16,15 +14,15 @@ namespace eCart.Areas.Store.Controllers
         StoreFactory storeFactory = new StoreFactory();
 
         // GET: Store/Home
-        public ActionResult Index(int? id)
+        public ActionResult Index(int? cartStatus)
         {
             if (HttpContext.User.Identity.IsAuthenticated)
             {
                 var storeMgr = storeFactory.StoreMgr;
-                // string STOREID = Session["STOREID"] != null ? Session["STOREID"].ToString() : id.ToString();
-
                 var userid = HttpContext.User.Identity.GetUserId();
+
                 var store = storeMgr.GetStoreDetailByLoginId(userid);
+
                 if (store != null)
                 {
                     ViewBag.StoreId = store.Id;
@@ -34,6 +32,31 @@ namespace eCart.Areas.Store.Controllers
                     return RedirectToAction("NoUserStore");
                 }
 
+
+                var cartList = new List<CartDetail>();
+                if (cartStatus != null)
+                {
+                
+                    //cartlist
+                    if (cartStatus == 1)
+                    {
+                        cartList = storeMgr.getStoreActiveCarts(store.Id);
+                    }
+                    else if (cartStatus == 5)
+                    {
+                        cartList = storeMgr.getStoreCarts(store.Id, (int)cartStatus);
+                    }
+                    else if (cartStatus == 6)
+                    {
+                        cartList = storeMgr.getStoreCarts(store.Id, (int)cartStatus);
+                    }
+                }
+                else
+                {
+                    cartList = storeMgr.getStoreActiveCarts(store.Id);
+                }
+
+                ViewBag.CartList = cartList;
                 return View(store);
             }
             else

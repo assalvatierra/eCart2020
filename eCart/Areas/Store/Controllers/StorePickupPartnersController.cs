@@ -19,11 +19,13 @@ namespace eCart.Areas.Store.Controllers
         public ActionResult Index(int id)
         {
             var partneredList = db.StorePickupPartners.Where(p => p.StoreDetailId == id).Select(s => s.StorePickupPointId).ToList();
-            var pickupPointsList = db.StorePickupPoints.Include(s => s.StoreDetail).Where(s=>!partneredList.Contains(s.Id)).ToList().OrderBy(s => s.StoreDetailId);
+            var StorePickupPoints = db.StorePickupPoints.Where(p => p.StoreDetailId == id).ToList();
+            var pickupPointsList = db.StorePickupPoints.Include(s => s.StoreDetail).Where(s=>s.StorePickupStatusId == 1).ToList();
 
 
             ViewBag.StoreId = id;
-            ViewBag.PickupPoints = pickupPointsList;
+            ViewBag.PickupPoints = pickupPointsList.Except(StorePickupPoints).Where(s => !partneredList.Contains(s.Id)).OrderBy(s => s.StoreDetailId);
+
             var storePickupPartners = db.StorePickupPartners.Where(s=>s.StoreDetailId==id).Include(s => s.StoreDetail).Include(s => s.StorePickupPoint);
             return View(storePickupPartners.ToList());
         }
@@ -142,7 +144,7 @@ namespace eCart.Areas.Store.Controllers
         }
 
         [HttpGet]
-        public JsonResult AddPartner(int id, int storeId)
+        public bool AddPartner(int id, int storeId)
         {
             try
             {
@@ -153,23 +155,11 @@ namespace eCart.Areas.Store.Controllers
                 };
 
                 db.StorePickupPartners.Add(storePartner);
-                //db.SaveChanges();
+                db.SaveChanges();
 
-                var store = db.StoreItems.Find(storeId);
-
-
-                //create obj for json
-                var partnerStore = db.StorePickupPoints.Find(id);
-                var data = new jsonStorePartner
-                {
-                    Id = id,
-                    StoreName = partnerStore.StoreDetail.Name,
-                    PickupAddress = partnerStore.Address
-                };
-
-                return Json(data, JsonRequestBehavior.AllowGet);
-            } catch (Exception ex) {
-                return Json(ex.Message.ToString(), JsonRequestBehavior.AllowGet); ;
+                return true;
+            } catch {
+                return false;
             }
         }
     }
