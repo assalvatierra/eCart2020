@@ -40,5 +40,11 @@ namespace eCartInterfaces
         bool saveOrder(List<CartDetail> cartDetails, string userId);
         bool SaveOrder(List<CartDetail> cartDetails, string userId, int cartId);
 
+        bool AddStoreKiosk(StoreKiosk storeKiosk);
+        bool AddStoreKioskOrder(StoreKioskOrder kioskOrder);
+        bool UpdateStoreKiosk(StoreKiosk storeKiosk);
+        bool UpdateStoreKioskOrder(StoreKioskOrder kioskOrder);
+        StoreKiosk GetStoreKiosk(int id);
+        StoreKioskOrder GetStoreKioskOrder(int id);
     }
 }

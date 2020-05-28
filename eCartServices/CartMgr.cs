@@ -695,5 +695,39 @@ namespace eCartServices
                 return null;
             }
         }
+
+        #region  Store Kiosk
+
+        public bool AddStoreKiosk(StoreKiosk storeKiosk)
+        {
+            return cartdb.AddStoreKiosk(storeKiosk);
+        }
+
+        public bool AddStoreKioskOrder(StoreKioskOrder kioskOrder)
+        {
+            return cartdb.AddStoreKioskOrder(kioskOrder);
+        }
+
+        public bool UpdateStoreKiosk(StoreKiosk storeKiosk)
+        {
+            return cartdb.EditStoreKiosk(storeKiosk);
+        }
+
+        public bool UpdateStoreKioskOrder(StoreKioskOrder kioskOrder)
+        {
+            return cartdb.EditStoreKioskOrder(kioskOrder);
+        }
+
+        public StoreKiosk GetStoreKiosk(int id)
+        {
+            return cartdb.GetStoreKiosks().Where(s => s.Id == id).FirstOrDefault();
+        }
+
+        public StoreKioskOrder GetStoreKioskOrder(int id)
+        {
+            return cartdb.GetStoreKioskOrders().Where(s => s.Id == id).FirstOrDefault();
+        }
+
+        #endregion
     }
 }

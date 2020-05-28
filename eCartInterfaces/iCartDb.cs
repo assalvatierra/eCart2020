@@ -13,6 +13,8 @@ namespace eCartInterfaces
         bool AddCartItem(CartItem cartItem);
         bool AddPaymentDetails(PaymentDetail paymentDetail);
         bool AddCartDelivery(CartDelivery cartDelivery);
+        bool AddStoreKiosk(StoreKiosk storeKiosk);
+        bool AddStoreKioskOrder(StoreKioskOrder kioskOrder);
 
         StoreItem GetStoreItem(int id);
         IQueryable<StoreItem> GetStoreItems();
@@ -26,6 +28,8 @@ namespace eCartInterfaces
         IQueryable<CartActivity> GetCartActivities();
         IQueryable<CartItem> GetCartItems();
         IQueryable<CartDelivery> GetCartDeliveries();
+        IQueryable<StoreKiosk> GetStoreKiosks();
+        IQueryable<StoreKioskOrder> GetStoreKioskOrders();
 
         CartDetail GetCartDetail(int id);
         List<StorePickupPoint> GetStorePickupPoints(int storeId);
@@ -34,6 +38,8 @@ namespace eCartInterfaces
         bool EditCartDetails(CartDetail cartDetail);
         bool EditCartItem(CartItem cartItem);
         bool EditCartDelivery(CartDelivery cartDelivery);
+        bool EditStoreKiosk(StoreKiosk storeKiosk);
+        bool EditStoreKioskOrder(StoreKioskOrder kioskOrder);
 
         bool RemoveCartDelivery(CartDelivery cartDelivery);
 

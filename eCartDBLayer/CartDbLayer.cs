@@ -291,5 +291,77 @@ namespace eCartDbLayer
                 return false;
             }
         }
+
+        public bool AddStoreKiosk(StoreKiosk storeKiosk)
+        {
+            try
+            {
+                db.StoreKiosks.Add(storeKiosk);
+                db.SaveChanges();
+                return true;
+
+            }
+            catch
+            {
+                return false;
+
+            }
+        }
+
+        public bool AddStoreKioskOrder(StoreKioskOrder kioskOrder)
+        {
+            try
+            {
+                db.StoreKioskOrders.Add(kioskOrder);
+                db.SaveChanges();
+                return true;
+
+            }
+            catch
+            {
+                return false;
+
+            }
+        }
+
+        public bool EditStoreKiosk(StoreKiosk storeKiosk)
+        {
+            try
+            {
+                db.Entry(storeKiosk).State = EntityState.Modified;
+                db.SaveChanges();
+                return true;
+
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool EditStoreKioskOrder(StoreKioskOrder kioskOrder)
+        {
+            try
+            {
+                db.Entry(kioskOrder).State = EntityState.Modified;
+                db.SaveChanges();
+                return true;
+
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public IQueryable<StoreKiosk> GetStoreKiosks()
+        {
+            return db.StoreKiosks;
+        }
+
+        public IQueryable<StoreKioskOrder> GetStoreKioskOrders()
+        {
+            return db.StoreKioskOrders;
+        }
     }
 }
