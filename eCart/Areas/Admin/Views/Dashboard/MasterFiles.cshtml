@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "MasterFiles";
+}
+
+
+<div class="jumbotron">
+    <h2> Master List </h2>
+    <span>
+        @Html.ActionLink("Go Back", "Index", "Dashboard", new { area = "Admin" }, null)
+    </span>
+</div>
+
+<div class="row">
+    <div class="col-sm-3">
+        <a href="@Url.Action("Index", "MasterCities", new { area = "Admin" })" class="col-lg-12 bordered admin-panel-items">
+            <img src="~/Areas/Admin/img/bulleted-list.png" style="margin:5px" alt="Edit" />
+            Cities
+        </a>
+    </div>
+    <div class="col-sm-3">
+        <a href="@Url.Action("Index", "MasterAreas", new { area = "Admin" })" class="col-lg-12 bordered admin-panel-items">
+            <img src="~/Areas/Admin/img/bulleted-list.png" style="margin:5px" alt="Edit" />
+            Areas
+        </a>
+    </div>
+    <div class="col-sm-3">
+        <a href="@Url.Action("Index", "ItemCategories", new { area = "Admin" })" class="col-lg-12 bordered admin-panel-items">
+            <img src="~/Areas/Admin/img/bulleted-list.png" style="margin:5px" alt="Edit" />
+            Item Categories
+        </a>
+    </div>
+    <div class="col-sm-3">
+        <a href="@Url.Action("Index", "ItemcatGroups", new { area = "Admin" })" class="col-lg-12 bordered admin-panel-items">
+            <img src="~/Areas/Admin/img/bulleted-list.png" style="margin:5px" alt="Edit" />
+            Category Groups
+        </a>
+    </div>
+</div>

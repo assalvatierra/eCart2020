@@ -1,0 +1,99 @@
+﻿@model IEnumerable<eCartModels.StorePayment>
+
+@{
+    ViewBag.Title = "Store Payments";
+}
+        <h2>Store Payments </h2>
+
+        <p>
+            @Html.ActionLink("Back to Dashboard", "Index", "Dashboard") |
+            @Html.ActionLink("Create New", "Create")
+        </p>
+        <div class="panel bordered">
+            <div>
+                <table class="table">
+                    <tr>
+                        <th>
+                            Date Posted
+                        </th>
+                        <th>
+                            Store
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.StorePaymentType.Description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.dtPayment)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Amount)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Remarks)
+                        </th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.dtPosted)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StoreDetail.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StorePaymentStatu.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StorePaymentType.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.dtPayment)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Amount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Remarks)
+                            </td>
+                            <td>
+                                @if (item.StorePaymentStatusId == 1)
+                                {
+
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                                    <text> | </text>
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                }
+                            </td>
+
+                            <td>
+                                @if (item.StorePaymentStatusId == 1)
+                                {
+                                    <button class="btn btn-primary" onclick="AcceptPayment(@item.Id)"> Accept  </button>
+                                }
+
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+
+@section Scripts {
+    <script>
+        function AcceptPayment(paymentId) {
+            $.post("/Admin/StorePayments/AcceptPayment", { id: paymentId }, (result) => {
+                console.log(result);
+                window.location.reload();
+
+            });
+        }
+    </script>
+}

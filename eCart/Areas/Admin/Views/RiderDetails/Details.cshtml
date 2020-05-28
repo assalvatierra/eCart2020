@@ -1,0 +1,58 @@
+﻿@model eCartModels.RiderDetail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+@Html.ActionLink("Back to List", "Index", "RiderDetails")
+
+<div class="panel">
+    <div class="panel-body">
+        <div class="col-lg-6">
+            <h3 style="font-weight:bold;"> @Model.Name </h3>
+            <p style="font-size:20px;"> @Model.Mobile / @Model.Mobile2 </p>
+            <p> @Model.Address ( @Model.MasterCity.Name ) </p>
+        </div>
+        <div class="col-lg-6">
+            <br /><br /><br />
+            <p> <span class="text-muted"> Status: </span> @Model.RiderStatu.Name </p>
+            <p> <span class="text-muted"> Remarks: </span> @Model.Remarks </p>
+        </div>
+    </div>
+</div>
+
+<h3>Delivery List  </h3>
+<div class="panel">
+    <div class="panel-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th> Delivery Date </th>
+                    <th> Address </th>
+                    <th> Remarks </th>
+                    <th>  </th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var delivery in Model.CartDeliveries as IEnumerable<eCart.Models.CartDelivery>)
+                {
+                    <tr>
+                        <td> @delivery.dtDelivery.ToString("MMM dd yyyy hh:mm tt") </td>
+                        <td> @delivery.Address </td>
+                        <td> @delivery.Remarks </td>
+                        <td> @Html.ActionLink("Cart Details", "CartDetails", new { id = delivery.CartDetailId, riderId = delivery.RiderDetailId }) </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

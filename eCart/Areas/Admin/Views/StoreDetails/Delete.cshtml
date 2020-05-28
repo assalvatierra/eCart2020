@@ -1,0 +1,88 @@
+﻿@model eCartModels.StoreDetail
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>StoreDetail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MasterArea.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MasterArea.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MasterCity.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MasterCity.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StoreCategory.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StoreCategory.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StoreStatu.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StoreStatu.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LoginId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoginId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Remarks)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Remarks)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

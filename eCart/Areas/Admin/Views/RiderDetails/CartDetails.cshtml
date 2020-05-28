@@ -1,0 +1,145 @@
+﻿@model eCart.Models.CartDetail
+
+@{
+    ViewBag.Title = "Cart Details";
+}
+
+<div class="row">
+    <h1> Carts Details</h1>
+    @Html.ActionLink("Back to List", "Details", "RiderDetails", new { area = "Admin", id = @ViewBag.RiderId }, null)
+</div>
+
+<div class="panel row" style="padding:15px;">
+    <div class="panel-body store-cart">
+        <div class="row">
+            <h3 class="col-lg-12">
+                Cart # : @Model.Id  &nbsp;
+            </h3>
+            <div class="col-lg-4">
+                <p><span class="text-muted"> Status: </span> <span id="cart-status-text"> @Model.CartStatu.Name </span></p>
+            </div>
+        </div>
+
+        <hr />
+        <h4> <b> Shopper Details </b> </h4>
+        <div class="col-lg-12">
+            <div class="col-lg-4">
+                <p> <span class="text-muted"> Shopper:</span> @Model.UserDetail.Name    </p>
+                <p> <span class="text-muted"> Contact:</span> @Model.UserDetail.Mobile  </p>
+                <p> <span class="text-muted"> Email:</span> @Model.UserDetail.Email     </p>
+
+            </div>
+
+            <div class="col-lg-4">
+                <p> <span class="text-muted"> Delivery Type:</span>  @Model.DeliveryType</p>
+                <p> <span class="text-muted"> Pickup Date:</span> @Model.DtPickup.ToString("MMM dd yyyy HH:mm ") </p>
+                <p> <span class="text-muted"> Pickup Location:</span>  @Model.StorePickupPoint.StoreDetail.Name, @Model.StorePickupPoint.Address </p>
+            </div>
+
+            <div class="col-lg-4">
+                <p>
+                    <span class="text-muted"> Payment Type:</span>
+                    @if (Model.PaymentDetails.Count != 0)
+                    {
+                        @Model.PaymentDetails.FirstOrDefault().PaymentReceiver.Description
+                    }
+                    else
+                    {
+                        <text> Cash on Delivery </text>
+                    }
+
+                </p>
+                <p>
+                    <span class="text-muted"> Payment Status:</span>
+                    @if (Model.PaymentDetails.Count != 0)
+                    {
+                        @Model.PaymentDetails.LastOrDefault().PaymentStatu.Name
+                    }
+                    else
+                    {
+                        <text> Pending </text>
+                    }
+
+                </p>
+            </div>
+        </div>
+        <hr />
+        <h4> <b> Shopper Items </b> </h4>
+        <div style="margin:0px -15px;">
+            <table class="table bordered">
+
+                <thead style="font-weight:bold;background-color:whitesmoke;">
+                    <tr>
+                        <th style="padding-left:20px;"> Item </th>
+                        <th> Qty </th>
+                        <th> Item Price </th>
+                        <th> Total </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ decimal total = 0; }
+                    @foreach (var item in Model.CartItems)
+                    {
+                        <tr>
+                            <td style="padding-left:20px;">
+                                <b>  @item.StoreItem.ItemMaster.Name </b>
+                            </td>
+                            <td>
+                                @item.ItemQty
+                            </td>
+                            <td>
+                                @item.StoreItem.UnitPrice.ToString("0.00")
+                            </td>
+                            <td>
+                                @{
+                                    var subtotal = item.StoreItem.UnitPrice * item.ItemQty;
+                                    total += subtotal;
+                                }
+
+                                <b> @subtotal.ToString("0.00") </b>
+                            </td>
+                        </tr>
+                    }
+
+                    <tr>
+                        <td colspan="3" style="text-align:right;"> <span style="font-size:16px;"> Total Amount: </span> </td>
+                        <td><b style="font-size:20px;"> @total.ToString("0.00") </b></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <h4> <b> Payments</b> </h4>
+    <div class="panel ">
+        <table class="table bordered">
+            <thead>
+                <tr style="font-weight:bold;background-color:whitesmoke;">
+                    <th> Date </th>
+                    <th> Party </th>
+                    <th> Party Info </th>
+                    <th> Receiver </th>
+                    <th> Receiver Info </th>
+                    <th> status </th>
+                    <th> Amount </th>
+                </tr>
+            </thead>
+            <tbody id="table-payments">
+                @foreach (var payment in ViewBag.PaymentDetails as IEnumerable<eCart.Models.PaymentDetail>)
+                {
+                    <tr>
+                        <td> @payment.dtPayment </td>
+                        <td> @payment.PaymentParty.Name </td>
+                        <td> @payment.PartyInfo </td>
+                        <td> @payment.PaymentReceiver.Description </td>
+                        <td> @payment.ReceiverInfo </td>
+                        <td> @payment.PaymentStatu.Name </td>
+                        <td> @payment.Amount.ToString("0.00") </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
