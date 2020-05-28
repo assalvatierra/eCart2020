@@ -8,25 +8,27 @@ using System.Web;
 using System.Web.Mvc;
 using eCartDbLayer;
 using eCartModels;
+using eCartServices;
 
 namespace eCart.Areas.Store.Controllers
 {
     public class StorePickupPartnersController : Controller
     {
         private StoreContext db = new StoreContext();
+        private StoreFactory store = new StoreFactory();
 
         // GET: Store/StorePickupPartners/{storeId}
         public ActionResult Index(int id)
         {
-            var partneredList = db.StorePickupPartners.Where(p => p.StoreDetailId == id).Select(s => s.StorePickupPointId).ToList();
-            var StorePickupPoints = db.StorePickupPoints.Where(p => p.StoreDetailId == id).ToList();
-            var pickupPointsList = db.StorePickupPoints.Include(s => s.StoreDetail).Where(s=>s.StorePickupStatusId == 1).ToList();
+            var partneredList = store.StoreMgr.GetStorePickupPartners(id).Select(s => s.StorePickupPointId).ToList();
+            var StorePickupPoints = store.StoreMgr.GetStorePickupPoints(id);
+            var pickupPointsList = store.StoreMgr.GetStorePickupPoints().Where(s=>s.StorePickupStatusId == 1).ToList();
 
 
             ViewBag.StoreId = id;
             ViewBag.PickupPoints = pickupPointsList.Except(StorePickupPoints).Where(s => !partneredList.Contains(s.Id)).OrderBy(s => s.StoreDetailId);
 
-            var storePickupPartners = db.StorePickupPartners.Where(s=>s.StoreDetailId==id).Include(s => s.StoreDetail).Include(s => s.StorePickupPoint);
+            var storePickupPartners = store.StoreMgr.GetStorePickupPartners(id);
             return View(storePickupPartners.ToList());
         }
 

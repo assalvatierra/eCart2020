@@ -6,22 +6,22 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-//using eCart.Areas.Store.Models;
 using eCartModels;
 using eCartDbLayer;
+using eCartServices;
 
 namespace eCart.Areas.Store.Controllers
 {
     public class ItemMastersController : Controller
     {
         private StoreContext db = new StoreContext();
+        private StoreFactory store = new StoreFactory();
 
         // GET: Store/ItemMasters
         public ActionResult Index()
         {
-            return View(db.ItemMasters.ToList());
+            return View(store.RefDbLayer.GetItemMaster().ToList());
         }
-
 
         // GET: Store/ItemMasters/Details/5
         public ActionResult Details(int? id)
@@ -30,7 +30,7 @@ namespace eCart.Areas.Store.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ItemMaster itemMaster = db.ItemMasters.Find(id);
+            ItemMaster itemMaster = store.RefDbLayer.GetItemMaster().Where(i => i.Id == id).FirstOrDefault();
             if (itemMaster == null)
             {
                 return HttpNotFound();

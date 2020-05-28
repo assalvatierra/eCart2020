@@ -82,12 +82,8 @@ namespace eCart.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    if (CreateCart(model.Email))
-                    {
-                        return RedirectToLocal(returnUrl);
-                    }
-                    ModelState.AddModelError("", "Invalid login attempt. Shopper Cart Cannot be created");
-                    return View(model);
+                    CreateCart(model.Email);
+                    return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

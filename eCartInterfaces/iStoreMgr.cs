@@ -19,6 +19,9 @@ namespace eCartInterfaces
         StoreItem getStoreItem(int id);
         StorePickupPoint getDefaultPickupPoint(int StoreId);
         StoreDetail getRandomStore();
+        List<StorePickupPoint> GetStorePickupPoints();
+        List<StorePickupPoint> GetStorePickupPoints(int id);
+        List<StorePickupPartner> GetStorePickupPartners(int id);
 
         string addPaymentDetails(string date, int partyId, string partyInfo, int receiverId, string receiverInfo, int statusId, decimal amount, int cartDetailId);
         void addCartDeliveryActivity(int cartId, int statusId);

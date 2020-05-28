@@ -508,6 +508,21 @@ namespace eCartServices
             return kiosks.ToList();
         }
 
+        public List<StorePickupPoint> GetStorePickupPoints(int id)
+        {
+            return storeDb.GetStorePickupPoints().Where(s => s.StoreDetailId == id).ToList();
+        }
+
+        public List<StorePickupPartner> GetStorePickupPartners(int id)
+        {
+            return storeDb.GetStorePickupPartners().Where(s => s.StoreDetailId == id).ToList();
+        }
+
+        public List<StorePickupPoint> GetStorePickupPoints()
+        {
+            return storeDb.GetStorePickupPoints().ToList();
+        }
+
 
         #endregion
     }

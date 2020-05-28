@@ -33,5 +33,7 @@ namespace eCartInterfaces
         ItemImage GetItemImage(int itemMasterId);
         IQueryable<ItemCatGroup> GetItemCatGroups();
         IQueryable<ItemCategory> GetItemCategories();
+        IQueryable<StorePickupPoint> GetStorePickupPoints();
+        IQueryable<StorePickupPartner> GetStorePickupPartners();
     }
 }

@@ -260,6 +260,16 @@ namespace eCartDbLayer
             }
         }
 
+        public IQueryable<StorePickupPoint> GetStorePickupPoints()
+        {
+            return sdb.StorePickupPoints;
+        }
+
+        public IQueryable<StorePickupPartner> GetStorePickupPartners()
+        {
+            return sdb.StorePickupPartners;
+        }
+
 
         #endregion
 
