@@ -62,7 +62,7 @@ function AddtoCart_Submit(e, itemId, itemName, price) {
 
 function RemoveItem(e, Id) {
 
-    $.post('RemoveCartItem', { id: Id }, (response) => {
+    $.post('/kiosk/RemoveCartItem', { id: Id }, (response) => {
         console.log(response);
         if (response == 'True') {  //remove element 
             $(e).parent().parent().remove();

@@ -15,6 +15,9 @@ namespace eCart.Areas.Shopper.Controllers
         // GET: Shopper/Kiosk
         public ActionResult Index()
         {
+            if (!HttpContext.User.Identity.IsAuthenticated)
+                return RedirectToAction("login", "account", new { area = "" });
+
             var storeMgr = store.StoreMgr;
             var userid = HttpContext.User.Identity.GetUserId();
             var storedetail = storeMgr.GetStoreDetailByLoginId(userid);
@@ -55,10 +58,33 @@ namespace eCart.Areas.Shopper.Controllers
 
                 return true;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return false;
             }
+        }
+
+        [HttpPost]
+        public bool RemoveCartItem(int id)
+        {
+            try
+            {
+
+                iCartManager cart = (iCartManager)Session["USERCART"];
+                if (cart == null)
+                    return false;
+
+                int currentstoreid = (int)Session["STOREID"];
+                cart.RemoveItem(currentstoreid,id);
+                Session["USERCART"] = cart;
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
         }
 
         public PartialViewResult _CartSummary()
@@ -75,5 +101,22 @@ namespace eCart.Areas.Shopper.Controllers
 
             return PartialView(cartItems);
         }
+
+        public ActionResult CartCheckout()
+        {
+            iCartManager cart = (iCartManager)Session["USERCART"];
+            if (cart == null)
+            {
+                cart = (iCartManager)(new CartManager());
+                Session["USERCART"] = cart;
+            }
+
+            var cartItems = cart.ConvertCartDetails();
+
+            return View(cartItems);
+
+        }
+
+
     }
 }

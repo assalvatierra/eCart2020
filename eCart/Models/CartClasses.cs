@@ -224,62 +224,9 @@ namespace eCart
 
         }
 
-        [HttpPost]
-        public bool AddToCart(int id, int qty, int storeId)
-        {
-            try
-            {
-                var UserId = GetUserId();
-                var cartMgr = GetCartSession();
-                cartMgr.SetCartList(cartMgr.GetCartList());
-                //if (cartSession == null)
-                //{
-                //    cartSession = new List<CartDetail>();
-                //}
-                //var cart = store.CartMgr.AddItemToCart(id, qty, itemPrice, cartSession, UserId);
-                //UpdateCartDetails(cart);
-
-                var response = cartMgr.AddItem(storeId, id, qty);
-                if (response == 1)
-                {
-                    var carlist = cartMgr.GetCartList();
-                    UpdateCartSession(cartMgr);
-                    return true;
-                }
-                return false;
-            }
-            catch
-            {
-                return false;
-            }
-        }
+       
     
     
-        [HttpPost]
-        public bool RemoveCartItem(int id)
-        {
-            try
-            {
-                var cart = GetCartDetails();
-
-                //if (store.CartMgr.RemoveCartItem(cart, id))
-                //{
-                //    return true;
-                //}
-
-                //var response = cartManager.RemoveItem(id);
-                //if (response == 1)
-                //{
-                //    return true;
-                //}
-
-                return false;
-            }
-            catch
-            {
-                return false;
-            }
-        }
 
 
         [HttpGet]

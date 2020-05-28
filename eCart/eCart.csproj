@@ -312,6 +312,7 @@
     <Content Include="Areas\Shopper\Views\UserDetails\Index.cshtml" />
     <Content Include="Areas\Shopper\Views\Kiosk\Index.cshtml" />
     <Content Include="Areas\Shopper\Views\Kiosk\_CartSummary.cshtml" />
+    <Content Include="Areas\Shopper\Views\Kiosk\CartCheckout.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />
     <Content Include="Scripts\DateRangePicker\moment.min.js" />
