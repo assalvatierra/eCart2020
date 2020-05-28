@@ -30,6 +30,15 @@ namespace eCart.Areas.Shopper.Controllers
             Session["STOREID"] = storeId;
 
             var storeKiosks = storeMgr.GetStoreKiosks(storeId);
+
+            //Implement modal window to select kiosk if store has multiple kiosks
+            //if(storeKiosks!=null)
+            //{
+            //    StoreKiosk kiosk = storeKiosks.First();
+            //    Session["KIOSK"] = kiosk;
+
+            //}
+
             var storeItems = storeMgr.getStoreItems(storeId);
 
             //store details to show
@@ -115,6 +124,12 @@ namespace eCart.Areas.Shopper.Controllers
 
             return View(cartItems);
 
+        }
+
+        public ActionResult ClearCart()
+        {
+            Session["USERCART"] = (iCartManager)(new CartManager());
+            return RedirectToAction("index");
         }
 
 

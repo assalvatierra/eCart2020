@@ -44,10 +44,11 @@ namespace eCart
                 mvCartDetail cart = this.cartlist.Find(c => c.StoreId == storeid);
                 if (cart == null)
                 {
-                    //create cart for the store
+                    //create cart for the kiosk
                     cart = new mvCartDetail();
                     cart.itemList = new List<mvCartItem>();
                     cart.StoreId = storeid;
+                    cartlist.Add(cart);
 
                 }
 
@@ -69,8 +70,7 @@ namespace eCart
                     cart.itemList.Add(item);
                     
                     iret = 1;
-
-                    cartlist.Add(cart);
+                    
                 }
             }
             catch(Exception e)
@@ -131,7 +131,7 @@ namespace eCart
                     {
                         StoreItemId = item.StoreItemId,
                         StoreItem = store.CartMgr.GetStoreItem(item.StoreItemId),
-                        ItemQty = item.StoreId,
+                        ItemQty = item.ItemQuantity,
                         CartItemStatusId = 1,
                         Remarks1 = "",
                         Remarks2 = "",
