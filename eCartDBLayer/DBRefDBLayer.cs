@@ -57,5 +57,10 @@ namespace eCartDbLayer
         {
             return db.PaymentParties;
         }
+
+        public IQueryable<PaymentStatus> GetPaymentStatus()
+        {
+            return db.PaymentStatus;
+        }
     }
 }

@@ -1848,8 +1848,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Customer" Type="String" Nullable="true" MaxLength="30" />
-          <Property Name="DtOrder" Type="DateTime" Nullable="false" />
+          <Property Name="Customer" Type="String" Nullable="true" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="DtOrder" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CartDetailId" Type="Int32" Nullable="false" />
           <Property Name="StoreKioskId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CartDetail" Relationship="ecartdb.CartDetailStoreQueOrder" FromRole="StoreKioskOrder" ToRole="CartDetail" />

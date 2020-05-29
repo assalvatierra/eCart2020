@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using eCartDBLayer;
 using eCartInterfaces;
 using eCartModels;
 
@@ -10,6 +11,7 @@ namespace eCartServices
     public class RiderMgr : iRiderMgr
     {
         private ecartdbContainer db = new ecartdbContainer();
+        private iRiderDb rdb = new RiderDBLayer();
 
         public void AddCartPayment(RiderCashDetail cashDetail)
         {
@@ -108,6 +110,11 @@ namespace eCartServices
             {
                 throw ex;
             }
+        }
+
+        public List<RiderDetail> GetActiveRiders()
+        {
+            return rdb.GetRiderDetails().Where(r => r.RiderStatusId == 1).ToList();
         }
     }
 }

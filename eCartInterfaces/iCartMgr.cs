@@ -15,6 +15,8 @@ namespace eCartInterfaces
         List<PaymentReceiver> GetPaymentRecievers();
         List<CartHistory> getCartHistory(int id);
         List<CartActivity> getCartDeliveryActivities(int id);
+        List<PaymentDetail> GetCartPaymentDetails(int id);
+        List<CartDelivery> GetCartDeliveries(int id);
         UserDetail GetUserDetails(string userId);
         CartDetail GetCartDetail(int id);
         StoreItem GetStoreItem(int id);
@@ -39,6 +41,7 @@ namespace eCartInterfaces
 
         bool saveOrder(List<CartDetail> cartDetails, string userId);
         bool SaveOrder(List<CartDetail> cartDetails, string userId, int cartId);
+        int  SaveKioskOrder(List<CartDetail> cartDetails, string userId, int cartId);
 
         bool AddStoreKiosk(StoreKiosk storeKiosk);
         bool AddStoreKioskOrder(StoreKioskOrder kioskOrder);
@@ -46,5 +49,6 @@ namespace eCartInterfaces
         bool UpdateStoreKioskOrder(StoreKioskOrder kioskOrder);
         StoreKiosk GetStoreKiosk(int id);
         StoreKioskOrder GetStoreKioskOrder(int id);
+        List<StoreKiosk> GetStoreKioskList(int id);
     }
 }

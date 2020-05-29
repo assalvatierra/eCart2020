@@ -236,7 +236,6 @@ D:\Projects\eCart2020\eCart\obj\Debug\eCart.csproj.CoreCompileInputs.cache
 D:\Projects\eCart2020\eCart\obj\Debug\eCart.csproj.CopyComplete
 D:\Projects\eCart2020\eCart\obj\Debug\eCart.dll
 D:\Projects\eCart2020\eCart\obj\Debug\eCart.pdb
-C:\Users\VILLOSA\source\repos\eCart2020\eCart\obj\Debug\eCart.csproj.CoreCompileInputs.cache
 C:\Users\VILLOSA\source\repos\eCart2020\eCart\bin\eCart.dll.config
 C:\Users\VILLOSA\source\repos\eCart2020\eCart\bin\eCart.dll
 C:\Users\VILLOSA\source\repos\eCart2020\eCart\bin\eCart.pdb
@@ -352,6 +351,7 @@ C:\Users\VILLOSA\source\repos\eCart2020\eCart\bin\Microsoft.Owin.Security.Micros
 C:\Users\VILLOSA\source\repos\eCart2020\eCart\bin\Microsoft.Owin.Security.OAuth.xml
 C:\Users\VILLOSA\source\repos\eCart2020\eCart\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\VILLOSA\source\repos\eCart2020\eCart\obj\Debug\eCart.csprojAssemblyReference.cache
+C:\Users\VILLOSA\source\repos\eCart2020\eCart\obj\Debug\eCart.csproj.CoreCompileInputs.cache
 C:\Users\VILLOSA\source\repos\eCart2020\eCart\obj\Debug\eCart.csproj.CopyComplete
 C:\Users\VILLOSA\source\repos\eCart2020\eCart\obj\Debug\eCart.dll
 C:\Users\VILLOSA\source\repos\eCart2020\eCart\obj\Debug\eCart.pdb

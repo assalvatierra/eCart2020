@@ -12,9 +12,14 @@ namespace eCart.Areas.Shopper.Controllers
     public class KioskController : Controller
     {
         StoreFactory store = new StoreFactory();
+
+
         // GET: Shopper/Kiosk
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
+            if (id == null)
+                return RedirectToAction("PageError");
+
             if (!HttpContext.User.Identity.IsAuthenticated)
                 return RedirectToAction("login", "account", new { area = "" });
 
@@ -23,8 +28,6 @@ namespace eCart.Areas.Shopper.Controllers
             var storedetail = storeMgr.GetStoreDetailByLoginId(userid);
             if (store == null)
                 return RedirectToAction("PageError");
-
-
 
             int storeId = (int)storedetail.Id;
             Session["STOREID"] = storeId;
@@ -47,16 +50,16 @@ namespace eCart.Areas.Shopper.Controllers
             ViewBag.StoreName = storeDetails.Name;
             ViewBag.StoreAddress = storeDetails.Address;
             ViewBag.StoreImg = storeDetails.StoreImages.FirstOrDefault() != null ? storeDetails.StoreImages.FirstOrDefault().ImageUrl : defaultImg;
+            ViewBag.KioskId = (int)id;
 
             return View(storeItems);
         }
 
         [HttpPost]
-        public bool AddToCart(int id, int qty, decimal itemPrice)
+        public bool AddToCart(int id, int qty)
         {
             try
             {
-
                 iCartManager cart = (iCartManager)Session["USERCART"];
                 if (cart == null)
                     cart = (iCartManager)(new CartManager());
@@ -111,7 +114,7 @@ namespace eCart.Areas.Shopper.Controllers
             return PartialView(cartItems);
         }
 
-        public ActionResult CartCheckout()
+        public ActionResult CartCheckout(int kioskId, string customer)
         {
             iCartManager cart = (iCartManager)Session["USERCART"];
             if (cart == null)
@@ -121,6 +124,9 @@ namespace eCart.Areas.Shopper.Controllers
             }
 
             var cartItems = cart.ConvertCartDetails();
+
+            ViewBag.Name = customer;
+            ViewBag.KioskId = kioskId;
 
             return View(cartItems);
 
@@ -132,6 +138,77 @@ namespace eCart.Areas.Shopper.Controllers
             return RedirectToAction("index");
         }
 
+        public ActionResult SelectKiosk()
+        {
+            var storeMgr = store.StoreMgr;
+            var userid = HttpContext.User.Identity.GetUserId();
+            var storedetail = storeMgr.GetStoreDetailByLoginId(userid);
+            if (store == null)
+                return RedirectToAction("PageError");
+
+            var kioskList = store.CartMgr.GetStoreKioskList(storedetail.Id);
+
+            return View(kioskList.ToList());
+        }
+
+
+        public string GetUserId()
+        {
+            var userId = HttpContext.User.Identity.GetUserId();
+            return userId;
+        }
+
+
+        public bool SubmitOrder(int id, int kioskId, string customer)
+        {
+            try
+            {
+                iCartManager cart = (iCartManager)Session["USERCART"];
+                if (cart == null)
+                {
+                    cart = (iCartManager)(new CartManager());
+                    Session["USERCART"] = cart;
+                }
+
+                var cartSession = cart.ConvertCartDetails();
+               
+                if (cartSession == null)
+                {
+                    return false;
+                }
+
+                var userId = GetUserId();
+                cartSession.FirstOrDefault().StoreDetail = null;
+                cartSession.FirstOrDefault().UserDetailId = store.CartMgr.GetUserDetails(userId).Id;
+                var cartId = store.CartMgr.SaveKioskOrder(cartSession, userId, id);
+                if (cartId > 0)
+                {  //save to db
+
+                    var kioskOrder = new StoreKioskOrder()
+                    {
+                        CartDetailId = cartId,
+                        StoreKioskId = kioskId,
+                        DtOrder = DateTime.Now,
+                        Customer = customer.Trim()
+                    };
+
+                    //save storeKioskOrder
+                    var kioskOrderRes = store.CartMgr.AddStoreKioskOrder(kioskOrder);
+                    if (kioskOrderRes)
+                    {
+                        ClearCart();
+                        return true;
+                    }
+
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
     }
 }

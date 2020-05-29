@@ -21,8 +21,9 @@ namespace eCartDbLayer
 
                 return true;
             }
-            catch
+            catch(Exception ex)
             {
+                throw ex;
                 return false;
 
             }
@@ -312,14 +313,15 @@ namespace eCartDbLayer
         {
             try
             {
+
                 db.StoreKioskOrders.Add(kioskOrder);
                 db.SaveChanges();
                 return true;
 
             }
-            catch
+            catch (Exception ex)
             {
-                return false;
+                throw ex;
 
             }
         }

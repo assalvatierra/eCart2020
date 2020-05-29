@@ -309,17 +309,75 @@ namespace eCartServices
                 }
                 return false;
             }
-            catch
+            catch (Exception ex)
             {
+                throw ex;
                 return false;
             }
         }
+
+        public int SaveKioskOrder(List<CartDetail> cartDetails, string userId, int cartId)
+        {
+            try
+            {
+                var cart = cartDetails.Find(s => s.Id == cartId);
+                var OrderId = 0;
+                var userID = userId;
+                var ACTIVE = 2;
+                var storeID = cart.StoreDetailId;
+                //check if cart is active, then change status to submitted 
+                //and save to the database
+                if (cart.CartStatusId == 1)
+                {
+                    var tempCartId = AddCartDetails(cart);
+                    if (tempCartId > 0)
+                    {
+                        //add cart items
+                        var AddCartItemsRes = AddCartItems(cart.CartItems.ToList(), tempCartId);
+                        if (!AddCartItemsRes)
+                        {
+                            return OrderId;
+                        }
+
+                        //addPaymentDetails
+                        if (cart.PaymentDetails != null)
+                        {
+                            var AddCartPayments = AddPaymentDetails(cart.PaymentDetails.ToList(), tempCartId);
+                            if (!AddCartPayments)
+                            {
+                                return OrderId;
+                            }
+
+                        }
+
+                        //add cart history
+                        var addHistory = addCartHistory(tempCartId, ACTIVE, userID);
+                        if (addHistory)
+                        {
+                            //remove cart from session
+                            var remResult = RemoveCartSession(cart, cartDetails);
+                            if (remResult)
+                            {
+                                //return true;
+                                OrderId = tempCartId;
+                            }
+                        }
+                    }
+                }
+                return OrderId;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+                return 0;
+            }
+        }
+
 
         public int AddCartDetails(CartDetail cart)
         {
             CartDetail tempCart = new CartDetail()
             {
-                Id = cart.Id,
                 CartStatusId = 2,  //Submitted
                 DeliveryType = cart.DeliveryType,
                 DtPickup = cart.DtPickup,
@@ -696,6 +754,32 @@ namespace eCartServices
             }
         }
 
+
+        public List<PaymentDetail> GetCartPaymentDetails(int id)
+        {
+            try
+            {
+                return cartdb.GetCartDetail(id).PaymentDetails.ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+
+        public List<CartDelivery> GetCartDeliveries(int id)
+        {
+            try
+            {
+                return cartdb.GetCartDetail(id).CartDeliveries.ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         #region  Store Kiosk
 
         public bool AddStoreKiosk(StoreKiosk storeKiosk)
@@ -726,6 +810,11 @@ namespace eCartServices
         public StoreKioskOrder GetStoreKioskOrder(int id)
         {
             return cartdb.GetStoreKioskOrders().Where(s => s.Id == id).FirstOrDefault();
+        }
+
+        public List<StoreKiosk> GetStoreKioskList(int id)
+        {
+            return cartdb.GetStoreKiosks().Where(s => s.StoreDetailId == id).ToList();
         }
 
         #endregion

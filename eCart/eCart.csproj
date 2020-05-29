@@ -213,6 +213,7 @@
     <Content Include="App_Data\aspnet-eCart-20200518113945_log.ldf">
       <DependentUpon>aspnet-eCart-20200518113945.mdf</DependentUpon>
     </Content>
+    <Content Include="Areas\Shopper\Scripts\kioskcheckout.js" />
     <Content Include="Areas\Shopper\Scripts\kiosk.js" />
     <Content Include="Areas\Shopper\Scripts\cart.js" />
     <Content Include="Areas\Shopper\Scripts\checkout.js" />
@@ -372,6 +373,9 @@
     <Content Include="Areas\Admin\Views\UserDetails\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\UserDetails\Index.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Shopper\Views\Kiosk\SelectKiosk.cshtml" />
+    <Content Include="Areas\Shopper\Views\Kiosk\_ModalCustomerName.cshtml" />
+    <Content Include="Areas\Shopper\Views\Kiosk\_ModalCheckoutSuccess.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />
     <Content Include="Scripts\DateRangePicker\moment.min.js" />

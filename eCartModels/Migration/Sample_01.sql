@@ -10,7 +10,7 @@ values ('c33996c3-a2ff-4c6c-b330-61ce70931d9b', 'Shopper', 'Davao City', 'shoppe
 insert into StoreDetails([LoginId],[Name],[Address],[Remarks],[StoreStatusId],[StoreCategoryId],[MasterCityId],[MasterAreaId]) 
 values	('c33996c3-a2ff-4c6c-b330-61ce70931d9b', 'NCCC Mall', 'Matina Crossing, Davao City','', 1, 3, 1, 1),
 		('97a5778d-4ef4-4a48-b920-eeac9aee9c50', 'SM Mall', 'Ecoland, Davao City','', 1, 3, 1, 1),
-		(8, 'Gaisano Mall', 'Sta Ana, Davao City','', 1, 3, 2, 1);
+		('8', 'Gaisano Mall', 'Sta Ana, Davao City','', 1, 3, 2, 1);
 
 -- store images --
 insert into StoreImages([StoreDetailId],[StoreImgTypeId],[ImageUrl]) values
@@ -88,3 +88,8 @@ insert into StorePayments([StoreDetailId],[dtPayment],[Amount],[StorePaymentType
 (1,'05/09/2020 3:00 PM', '2500', 1, 'Pending test', '05/09/2020 3:45 PM', 1),
 (2,'05/09/2020 3:00 PM', '2500', 1, 'Accepted test', '05/09/2020 3:45 PM', 2);
 
+-- Store Kiosk --
+insert into StoreKiosks([StoreDetailId],[KioskName]) values 
+(1,'NCCC-Kiosk01'), (1,'NCCC-Kiosk02'), (1,'NCCC-Kiosk03'), 
+(2,'SM-Kiosk01'), (2,'SM-Kiosk02'), (2,'SM-Kiosk03'), 
+(3,'GS-Kiosk01'), (3,'GS-Kiosk02'), (3,'GS-Kiosk03');

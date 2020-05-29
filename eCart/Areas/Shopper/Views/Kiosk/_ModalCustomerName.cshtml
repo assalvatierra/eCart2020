@@ -1,0 +1,35 @@
+﻿<!-- Change Pickup Location Modal -->
+<div id="customerNameModal" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content" style="width:300px;left:100px;top:100px;">
+            <div class="modal-header">
+                <h4 class="modal-title"> Enter Customer Name: </h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <input class="form-control" type="text" id="Customer-Name" />
+                    <p class="text-warning" id="name-err-warning" style="display:none;"> Please enter your name. </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="SubmitCustomerName();" style="width:100%;"> Proceed </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function SubmitCustomerName() {
+        var name = $("#Customer-Name").val();
+        if (name.length > 0) {
+            $("#customerNameModal").modal("hide");
+            $("#Current-Customer-Name").text(name);;
+        } else {
+            $("#name-err-warning").show();
+        }
+        console.log(name);
+    }
+</script>

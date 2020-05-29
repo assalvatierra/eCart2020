@@ -48,6 +48,7 @@ namespace eCart
                     cart = new mvCartDetail();
                     cart.itemList = new List<mvCartItem>();
                     cart.StoreId = storeid;
+                    cart.StatusId = 1;
                     cartlist.Add(cart);
 
                 }
@@ -141,14 +142,15 @@ namespace eCart
 
                 cartDetails.Add(new CartDetail()
                 {
+                    Id = cart.Id,
                     StoreDetail = store.StoreMgr.getStoreDetails(cart.StoreId),
                     StoreDetailId = cart.StoreId,
                     CartStatusId = cart.StatusId,
                     CartItems = cartItems,
                     DeliveryType = "Pickup",
                     DtPickup = DateTime.Now,
-                    StorePickupPointId = 1,
-                });
+                    StorePickupPointId = 1
+                }); 
 
             }
 

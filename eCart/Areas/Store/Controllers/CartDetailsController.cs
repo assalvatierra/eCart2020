@@ -20,14 +20,10 @@ namespace eCart.Areas.Store.Controllers
         StoreFactory store = new StoreFactory();
        
         // GET: Store/CartDetails/{cartId}
-        public ActionResult Index(int id)
-        {
-            var storeMgr = store.StoreMgr;
-            var cartDetails = db.CartDetails.Include(c => c.CartStatu).Include(c => c.StoreDetail).Include(c => c.StorePickupPoint).Include(c => c.UserDetail).Where(c=>c.Id == id);
-            ViewBag.StoreId = id;
-            ViewBag.StoreCarts = storeMgr.getStoreActiveCarts(id);
-            return View(cartDetails.ToList());
-        }
+        //public ActionResult Index(int id)
+        //{
+        //    return View();
+        //}
 
         // GET: Store/CartDetails/Details/5
         public ActionResult Details(int? id)
@@ -42,11 +38,11 @@ namespace eCart.Areas.Store.Controllers
             ViewBag.StoreId = cartDetail.StoreDetailId;
             ViewBag.Store = cartDetail.StoreDetail.Name;
             ViewBag.PaymentReceiverList = store.RefDbLayer.GetPaymentReceivers().ToList();
+            ViewBag.PaymentStatusList = store.RefDbLayer.GetPaymentStatus().ToList();
             ViewBag.PaymentPartyList = store.RefDbLayer.GetPaymentParties().ToList();
-            ViewBag.PaymentStatusList = db.PaymentStatus.ToList();
-            ViewBag.PaymentDetails = db.PaymentDetails.Where(s => s.CartDetailId == id).ToList();
-            ViewBag.CartDelivery = db.CartDeliveries.Where(s => s.CartDetailId == id).ToList();
-            ViewBag.RiderList = db.RiderDetails.Where(r=>r.RiderStatusId == 1).ToList();
+            ViewBag.PaymentDetails = store.CartMgr.GetCartPaymentDetails((int)id);
+            ViewBag.CartDelivery = store.CartMgr.GetCartDeliveries((int)id);
+            ViewBag.RiderList = store.RiderMgr.GetActiveRiders();
            
 
             if (cartDetail == null)
@@ -56,13 +52,19 @@ namespace eCart.Areas.Store.Controllers
             return View(cartDetail);
         }
 
+        // GET: Store/CartDetails/PaymentDetails/{cartId}
+        //public ActionResult PaymentDetails()
+        //{
+        //    return View();
+        //}
+
         // GET: Store/CartDetails/Create
         public ActionResult Create()
         {
-            ViewBag.CartStatusId = new SelectList(db.CartStatus, "Id", "Name");
-            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId");
-            ViewBag.StorePickupPointId = new SelectList(db.StorePickupPoints, "Id", "Address");
-            ViewBag.UserDetailId = new SelectList(db.UserDetails, "Id", "UserId");
+            //ViewBag.CartStatusId = new SelectList(db.CartStatus, "Id", "Name");
+            //ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId");
+            //ViewBag.StorePickupPointId = new SelectList(db.StorePickupPoints, "Id", "Address");
+            //ViewBag.UserDetailId = new SelectList(db.UserDetails, "Id", "UserId");
             return View();
         }
 
@@ -75,15 +77,15 @@ namespace eCart.Areas.Store.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.CartDetails.Add(cartDetail);
-                db.SaveChanges();
+                //db.CartDetails.Add(cartDetail);
+                //db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CartStatusId = new SelectList(db.CartStatus, "Id", "Name", cartDetail.CartStatusId);
-            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", cartDetail.StoreDetailId);
-            ViewBag.StorePickupPointId = new SelectList(db.StorePickupPoints, "Id", "Address", cartDetail.StorePickupPointId);
-            ViewBag.UserDetailId = new SelectList(db.UserDetails, "Id", "UserId", cartDetail.UserDetailId);
+            //ViewBag.CartStatusId = new SelectList(db.CartStatus, "Id", "Name", cartDetail.CartStatusId);
+            //ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", cartDetail.StoreDetailId);
+            //ViewBag.StorePickupPointId = new SelectList(db.StorePickupPoints, "Id", "Address", cartDetail.StorePickupPointId);
+            //ViewBag.UserDetailId = new SelectList(db.UserDetails, "Id", "UserId", cartDetail.UserDetailId);
             return View(cartDetail);
         }
 
@@ -94,16 +96,16 @@ namespace eCart.Areas.Store.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CartDetail cartDetail = db.CartDetails.Find(id);
-            if (cartDetail == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.CartStatusId = new SelectList(db.CartStatus, "Id", "Name", cartDetail.CartStatusId);
-            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", cartDetail.StoreDetailId);
-            ViewBag.StorePickupPointId = new SelectList(db.StorePickupPoints, "Id", "Address", cartDetail.StorePickupPointId);
-            ViewBag.UserDetailId = new SelectList(db.UserDetails, "Id", "UserId", cartDetail.UserDetailId);
-            return View(cartDetail);
+            //CartDetail cartDetail = db.CartDetails.Find(id);
+            //if (cartDetail == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            //ViewBag.CartStatusId = new SelectList(db.CartStatus, "Id", "Name", cartDetail.CartStatusId);
+            //ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", cartDetail.StoreDetailId);
+            //ViewBag.StorePickupPointId = new SelectList(db.StorePickupPoints, "Id", "Address", cartDetail.StorePickupPointId);
+            //ViewBag.UserDetailId = new SelectList(db.UserDetails, "Id", "UserId", cartDetail.UserDetailId);
+            return View();
         }
 
         // POST: Store/CartDetails/Edit/5
@@ -115,15 +117,15 @@ namespace eCart.Areas.Store.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(cartDetail).State = EntityState.Modified;
-                db.SaveChanges();
+                //db.Entry(cartDetail).State = EntityState.Modified;
+                //db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CartStatusId = new SelectList(db.CartStatus, "Id", "Name", cartDetail.CartStatusId);
-            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", cartDetail.StoreDetailId);
-            ViewBag.StorePickupPointId = new SelectList(db.StorePickupPoints, "Id", "Address", cartDetail.StorePickupPointId);
-            ViewBag.UserDetailId = new SelectList(db.UserDetails, "Id", "UserId", cartDetail.UserDetailId);
-            return View(cartDetail);
+            //ViewBag.CartStatusId = new SelectList(db.CartStatus, "Id", "Name", cartDetail.CartStatusId);
+            //ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", cartDetail.StoreDetailId);
+            //ViewBag.StorePickupPointId = new SelectList(db.StorePickupPoints, "Id", "Address", cartDetail.StorePickupPointId);
+            //ViewBag.UserDetailId = new SelectList(db.UserDetails, "Id", "UserId", cartDetail.UserDetailId);
+            return View();
         }
 
         // GET: Store/CartDetails/Delete/5
@@ -133,12 +135,15 @@ namespace eCart.Areas.Store.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CartDetail cartDetail = db.CartDetails.Find(id);
-            if (cartDetail == null)
-            {
-                return HttpNotFound();
-            }
-            return View(cartDetail);
+
+            //CartDetail cartDetail = db.CartDetails.Find(id);
+            //if (cartDetail == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            //return View(cartDetail);
+
+            return View();
         }
 
         // POST: Store/CartDetails/Delete/5
@@ -146,9 +151,9 @@ namespace eCart.Areas.Store.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            CartDetail cartDetail = db.CartDetails.Find(id);
-            db.CartDetails.Remove(cartDetail);
-            db.SaveChanges();
+            //CartDetail cartDetail = db.CartDetails.Find(id);
+            //db.CartDetails.Remove(cartDetail);
+            //db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -156,7 +161,7 @@ namespace eCart.Areas.Store.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                //db.Dispose();
             }
             base.Dispose(disposing);
         }

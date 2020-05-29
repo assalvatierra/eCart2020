@@ -66,6 +66,7 @@
     <Compile Include="StoreContext.cs" />
     <Compile Include="StoreDBLayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RiderDBLayer.cs" />
     <Compile Include="UserDBLayer.cs" />
   </ItemGroup>
   <ItemGroup>

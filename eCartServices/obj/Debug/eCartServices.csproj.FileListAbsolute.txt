@@ -42,7 +42,6 @@ D:\Projects\eCart2020\eCartServices\bin\Debug\Microsoft.AspNet.Identity.EntityFr
 D:\Projects\eCart2020\eCartServices\bin\Debug\Microsoft.AspNet.Identity.Core.dll
 D:\Projects\eCart2020\eCartServices\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
 D:\Projects\eCart2020\eCartServices\bin\Debug\Microsoft.AspNet.Identity.Core.xml
-C:\Users\VILLOSA\source\repos\eCart2020\eCartServices\obj\Debug\eCartServices.csproj.CoreCompileInputs.cache
 C:\Users\VILLOSA\source\repos\eCart2020\eCartServices\bin\Debug\eCartServices.dll.config
 C:\Users\VILLOSA\source\repos\eCart2020\eCartServices\bin\Debug\eCartServices.dll
 C:\Users\VILLOSA\source\repos\eCart2020\eCartServices\bin\Debug\eCartServices.pdb
@@ -63,6 +62,7 @@ C:\Users\VILLOSA\source\repos\eCart2020\eCartServices\bin\Debug\EntityFramework.
 C:\Users\VILLOSA\source\repos\eCart2020\eCartServices\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
 C:\Users\VILLOSA\source\repos\eCart2020\eCartServices\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 C:\Users\VILLOSA\source\repos\eCart2020\eCartServices\obj\Debug\eCartServices.csprojAssemblyReference.cache
+C:\Users\VILLOSA\source\repos\eCart2020\eCartServices\obj\Debug\eCartServices.csproj.CoreCompileInputs.cache
 C:\Users\VILLOSA\source\repos\eCart2020\eCartServices\obj\Debug\eCartServices.csproj.CopyComplete
 C:\Users\VILLOSA\source\repos\eCart2020\eCartServices\obj\Debug\eCartServices.dll
 C:\Users\VILLOSA\source\repos\eCart2020\eCartServices\obj\Debug\eCartServices.pdb
