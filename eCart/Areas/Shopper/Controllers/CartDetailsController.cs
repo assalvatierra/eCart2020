@@ -30,7 +30,7 @@ namespace eCart.Areas.Shopper.Controllers
             }
 
             var cartItems = GetCartDetails();
-
+            ViewBag.IsUserLogged = GetUserId() != null ? true : false;
             return PartialView(cartItems);
         }
 
@@ -44,7 +44,6 @@ namespace eCart.Areas.Shopper.Controllers
         {
            
             var cartSession = (List<CartDetail>)Session["CARTDETAILS"];
-            ViewBag.cart = cartSession;
             return cartSession;
         }
 
@@ -60,17 +59,18 @@ namespace eCart.Areas.Shopper.Controllers
         }
 
         [HttpPost]
-        public bool AddToCart(int id, int qty, decimal itemPrice)
+        public bool AddToCart(int id, int qty)
         {
             try
             {
                 var UserId = GetUserId();
+               
                 var cartSession = GetCartDetails();
                 if (cartSession == null)
                 {
                     cartSession = new List<CartDetail>();
                 }
-                var cart = store.CartMgr.AddItemToCart(id, qty, itemPrice, cartSession, UserId);
+                var cart = store.CartMgr.AddItemToCart(id, qty, cartSession, UserId);
 
                 UpdateCartDetails(cart);
                 return true;
@@ -95,8 +95,9 @@ namespace eCart.Areas.Shopper.Controllers
 
                 return false;
             }
-            catch
+            catch (Exception ex)
             {
+                throw ex;
                 return false;
             }
         }

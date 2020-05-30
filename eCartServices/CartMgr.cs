@@ -25,7 +25,7 @@ namespace eCartServices
             return pickupPoint.Id;
         }
 
-        public List<CartDetail> AddItemToCart(int id, int qty, decimal price, List<CartDetail> cartSession, string userId)
+        public List<CartDetail> AddItemToCart(int id, int qty, List<CartDetail> cartSession, string userId)
         {
             try
             {
@@ -195,8 +195,9 @@ namespace eCartServices
                 //no item found
                 return false;
             }
-            catch 
+            catch(Exception ex)
             {
+                throw ex;
                 return false;
             }
         }

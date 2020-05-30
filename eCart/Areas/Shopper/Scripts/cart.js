@@ -25,9 +25,7 @@ function AddtoCart_Submit(e, itemId, itemName, price) {
     var qty = $(e).siblings('.item-qty').text();
     var data = {
         id: parseInt(itemId),
-        qty: parseInt(qty),
-        itemName: itemName,
-        itemPrice: parseInt(price)
+        qty: parseInt(qty)
     }
 
     //calculate total Price of item

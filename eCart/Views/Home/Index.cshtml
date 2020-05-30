@@ -18,7 +18,7 @@
     <script>
         //On Add to Cart Button Click
         function AddtoCart(e) {
-            if ('@HttpContext.Current.User.Identity.IsAuthenticated') {
+            if ('@HttpContext.Current.User.Identity.IsAuthenticated' == 'True') {
                 $(e).addClass('hidden');                //hide
                 $(e).siblings().removeClass('hidden');  //show
             } else {
