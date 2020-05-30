@@ -1,0 +1,73 @@
+﻿@model IEnumerable<eCartModels.StoreKioskOrder>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@{Html.RenderAction("StoreHeader", "Store", null);}
+    <div class="row">
+        <div class="col-lg-12" style="margin:10px 0px;">
+            <h2> Active Kiosk Orders </h2>
+            <div class="col-lg-4" style="margin-top:5px;">
+                <div class="btn-group">
+                    <a class="btn btn-default active" id="cartStatus-Active" href="@Url.Action("Index", "StoreKioskOrders", new { id = ViewBag.StoreId, orderStatus = 1 })"> Active </a>
+                    <a class="btn btn-default" id="cartStatus-Delivered" href="@Url.Action("Index", "StoreKioskOrders", new { id = ViewBag.StoreId, orderStatus = 5 })"> Delivered </a>
+                    <a class="btn btn-default" id="cartStatus-Cancelled" href="@Url.Action("Index", "StoreKioskOrders", new { id = ViewBag.StoreId, orderStatus = 6 })"> Cancelled </a>
+                </div>
+            </div>
+
+            <div class="col-lg-offset-5 col-lg-3" style="margin-top:5px;">
+                <div class="btn-group">
+                    <a class="btn btn-default" href="@Url.Action("Index", "Store")">  Online Orders </a>
+                    <a class="btn btn-default active"> Kiosk Orders </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<div class="row">
+    <div class="panel bordered">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.DtOrder)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StoreKiosk.KioskName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Customer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CartDetail.DeliveryType)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.DtOrder.ToString("MMM dd yyyy hh:mm tt")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StoreKiosk.KioskName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Customer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CartDetail.DeliveryType)
+                    </td>
+                    <td>
+                        @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })*@ 
+                        @* @Html.ActionLink("Details", "Details", new { id = item.Id })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

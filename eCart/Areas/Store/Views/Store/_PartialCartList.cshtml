@@ -4,10 +4,19 @@
 
 <div class="col-lg-12" style="margin:10px 0px;">
     <h2> Active Shoppers Carts </h2>
-    <div class="btn-group">
-        <a class="btn btn-default active" id="cartStatus-Active" href="@Url.Action("Index", "Store", new { id = ViewBag.StoreId, cartStatus = 1 })" > Active </a>
-        <a class="btn btn-default" id="cartStatus-Delivered" href="@Url.Action("Index", "Store", new { id = ViewBag.StoreId, cartStatus = 5 })" > Delivered </a>
-        <a class="btn btn-default" id="cartStatus-Cancelled" href="@Url.Action("Index", "Store", new { id = ViewBag.StoreId, cartStatus = 6 })" > Cancelled </a>
+    <div class="col-lg-4" style="margin-top:5px;">
+        <div class="btn-group">
+            <a class="btn btn-default active" id="cartStatus-Active" href="@Url.Action("Index", "Store", new { id = ViewBag.StoreId, cartStatus = 1 })"> Active </a>
+            <a class="btn btn-default" id="cartStatus-Delivered" href="@Url.Action("Index", "Store", new { id = ViewBag.StoreId, cartStatus = 5 })"> Delivered </a>
+            <a class="btn btn-default" id="cartStatus-Cancelled" href="@Url.Action("Index", "Store", new { id = ViewBag.StoreId, cartStatus = 6 })"> Cancelled </a>
+        </div>
+    </div>
+
+    <div class="col-lg-offset-5 col-lg-3" style="margin-top:5px;">
+        <div class="btn-group">
+            <a class="btn btn-default active" > Online Orders </a>
+            <a class="btn btn-default" href="@Url.Action("Index", "StoreKioskOrders", new { id = ViewBag.StoreId })"> Kiosk Orders </a>
+        </div>
     </div>
 </div>
 

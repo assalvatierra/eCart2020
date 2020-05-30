@@ -49,6 +49,7 @@ namespace eCartInterfaces
         bool UpdateStoreKioskOrder(StoreKioskOrder kioskOrder);
         StoreKiosk GetStoreKiosk(int id);
         StoreKioskOrder GetStoreKioskOrder(int id);
+        List<StoreKioskOrder> GetStoreKioskOrderList(int storeId);
         List<StoreKiosk> GetStoreKioskList(int id);
     }
 }

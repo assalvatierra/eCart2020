@@ -48,36 +48,3 @@
         </div>
     </div>
 </div>
-
-@Html.Partial("_PartialCartList", ViewBag.CartList as IEnumerable<eCartModels.CartDetail>, new ViewDataDictionary { { "StoreId", ViewBag.StoreId } })
-
-@section Scripts{
-    <script>
-        $(document).ready(function () { updateFilterStatus(); });
-
-        function updateFilterStatus() {
-            var url_string = window.location.href; //window.location.href
-            var url = new URL(url_string);
-            var cartStatus = url.searchParams.get("cartStatus");
-
-            if (cartStatus != null) {
-
-            switch (cartStatus.toString()) {
-                case '5':
-                    $('#cartStatus-Delivered').siblings().removeClass('active');
-                    $('#cartStatus-Delivered').addClass('active');
-                    break;
-                case '6':
-                    $('#cartStatus-Cancelled').siblings().removeClass('active');
-                    $('#cartStatus-Cancelled').addClass('active');
-                    break;
-                default:
-                    $('#cartStatus-Active').siblings().removeClass('active');
-                    $('#cartStatus-Active').addClass('active');
-                    break;
-            }
-
-            }
-        }
-    </script>
-}

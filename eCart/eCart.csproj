@@ -191,6 +191,7 @@
     <Compile Include="Areas\Store\Controllers\StoreController.cs" />
     <Compile Include="Areas\Store\Controllers\StoreDetailsController.cs" />
     <Compile Include="Areas\Store\Controllers\StoreItemsController.cs" />
+    <Compile Include="Areas\Store\Controllers\StoreKioskOrdersController.cs" />
     <Compile Include="Areas\Store\Controllers\StorePaymentsController.cs" />
     <Compile Include="Areas\Store\Controllers\StorePickupPartnersController.cs" />
     <Compile Include="Areas\Store\Controllers\StorePickupPointsController.cs" />
@@ -376,6 +377,8 @@
     <Content Include="Areas\Shopper\Views\Kiosk\SelectKiosk.cshtml" />
     <Content Include="Areas\Shopper\Views\Kiosk\_ModalCustomerName.cshtml" />
     <Content Include="Areas\Shopper\Views\Kiosk\_ModalCheckoutSuccess.cshtml" />
+    <Content Include="Areas\Store\Views\StoreKioskOrders\Index.cshtml" />
+    <Content Include="Areas\Store\Views\Store\StoreHeader.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />
     <Content Include="Scripts\DateRangePicker\moment.min.js" />

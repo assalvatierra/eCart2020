@@ -66,6 +66,30 @@ namespace eCart.Areas.Store.Controllers
 
         }
 
+
+        // GET: Store/Home
+        public PartialViewResult StoreHeader()
+        {
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                var storeMgr = storeFactory.StoreMgr;
+                var userid = HttpContext.User.Identity.GetUserId();
+
+                var store = storeMgr.GetStoreDetailByLoginId(userid);
+
+                if (store != null)
+                {
+                    ViewBag.StoreId = store.Id;
+                }
+               
+
+                return PartialView(store);
+            }
+
+            return PartialView();
+
+        }
+
         public ActionResult NoUserStore()
         {
             return View();
