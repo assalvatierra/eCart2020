@@ -12,7 +12,6 @@ namespace eCart.Areas.Shopper.Controllers
 {
     public class AccountsController : Controller
     {
-        ecartdbContainer edb = new ecartdbContainer();
         ShopperContext sdb = new ShopperContext();
 
         //AccMgr accMgr = new AccMgr();
@@ -57,9 +56,9 @@ namespace eCart.Areas.Shopper.Controllers
 
         public ActionResult Register()
         {
-            ViewBag.UserStatusId = new SelectList(edb.UserStatus, "Id", "Name");
-            ViewBag.MasterCityId = new SelectList(edb.MasterCities, "Id", "Name");
-            ViewBag.MasterAreaId = new SelectList(edb.MasterAreas, "Id", "Name");
+            //ViewBag.UserStatusId = new SelectList(edb.UserStatus, "Id", "Name");
+            //ViewBag.MasterCityId = new SelectList(edb.MasterCities, "Id", "Name");
+            //ViewBag.MasterAreaId = new SelectList(edb.MasterAreas, "Id", "Name");
 
             return View();
         }
@@ -108,9 +107,9 @@ namespace eCart.Areas.Shopper.Controllers
 
 
 
-            ViewBag.UserStatusId = new SelectList(edb.UserStatus, "Id", "Name", registration.UserStatusId);
-            ViewBag.MasterCityId = new SelectList(edb.MasterCities, "Id", "Name", registration.MasterCityId);
-            ViewBag.MasterAreaId = new SelectList(edb.MasterAreas, "Id", "Name", registration.MasterAreaId);
+            //ViewBag.UserStatusId = new SelectList(edb.UserStatus, "Id", "Name", registration.UserStatusId);
+            //ViewBag.MasterCityId = new SelectList(edb.MasterCities, "Id", "Name", registration.MasterCityId);
+            //ViewBag.MasterAreaId = new SelectList(edb.MasterAreas, "Id", "Name", registration.MasterAreaId);
             return View();
         }
 
@@ -234,8 +233,8 @@ namespace eCart.Areas.Shopper.Controllers
                     MasterCityId = 1,
                 };
 
-                edb.UserDetails.Add(userDetail);
-                edb.SaveChanges();
+                //edb.UserDetails.Add(userDetail);
+                //edb.SaveChanges();
 
                 return userDetail.Id;
             }
@@ -293,6 +292,12 @@ namespace eCart.Areas.Shopper.Controllers
             {
                 return false;
             }
+        }
+
+
+        public ActionResult Error()
+        {
+            return View();
         }
 
     }

@@ -1,4 +1,5 @@
 ﻿using eCartModels;
+using eCartServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,19 @@ namespace eCart.Areas.Shopper.Controllers
 {
     public class UserDetailsController : Controller
     {
-        private ecartdbContainer db = new ecartdbContainer();
+
+        StoreFactory store = new StoreFactory();
 
         // GET: Shopper/UserDetails
         public ActionResult Index(int id)
         {
-            var userDetails = db.UserDetails.Find(id);
+            var userDetails = store.UserMgr.GetUserDetails(id);
+
+            if (userDetails == null)
+            {
+                return RedirectToAction("Error", "Accounts");
+            }
+
             return View(userDetails);
         }
     }

@@ -70,7 +70,7 @@ namespace eCart.Areas.Shopper.Controllers
 
                 return true;
             }
-            catch (Exception e)
+            catch 
             {
                 return false;
             }

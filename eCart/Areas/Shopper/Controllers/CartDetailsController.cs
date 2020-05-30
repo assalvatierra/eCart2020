@@ -95,9 +95,8 @@ namespace eCart.Areas.Shopper.Controllers
 
                 return false;
             }
-            catch (Exception ex)
+            catch 
             {
-                throw ex;
                 return false;
             }
         }
@@ -163,9 +162,9 @@ namespace eCart.Areas.Shopper.Controllers
                 return store.CartMgr.UpdateCartPickupPoint(cartId, pickupPointId, cartSession);
 
             }
-            catch (Exception ex)
+            catch 
             {
-                throw ex;
+                return false;
             }
         }
 
@@ -176,9 +175,9 @@ namespace eCart.Areas.Shopper.Controllers
                 var cartSession = GetCartDetails();
                 return store.CartMgr.UpdateCartAsDelivery(cartId, cartSession);
             }
-            catch (Exception ex)
+            catch 
             {
-                throw ex;
+                return false;
             }
 
         }
