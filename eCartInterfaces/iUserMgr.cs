@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eCartModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,5 +10,6 @@ namespace eCartInterfaces
     public interface iUserMgr
     {
         string GetUserId(string email);
+        UserDetail GetUserDetails(int id);
     }
 }

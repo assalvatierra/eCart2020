@@ -36,7 +36,10 @@
                     @Html.DisplayFor(modelItem => item.StorePickupPoint.Address)
                 </td>
                 <td>
-                    @Html.ActionLink("Remove", "Delete", new { id = item.Id })
+                    @*@Html.ActionLink("Remove", "Delete", new { id = item.Id })*@ 
+                    <a href="" data-toggle="modal" data-target="#RemovePartnerModal"  onclick="PrepRemovePartner(this, @item.Id,  @item.StoreDetailId,  '@item.StorePickupPoint.StoreDetail.Name', '@item.StorePickupPoint.Address')">
+                        Remove
+                    </a>
                 </td>
             </tr>
         }
@@ -45,3 +48,5 @@
 </div>
 
 @{Html.RenderPartial("_ModalPartnerAdd", ViewBag.PickupPoints as IEnumerable<eCartModels.StorePickupPoint>, new ViewDataDictionary { { "StoreId", ViewBag.StoreId } });}
+
+@{Html.RenderPartial("_ModalPartnerRemove");}

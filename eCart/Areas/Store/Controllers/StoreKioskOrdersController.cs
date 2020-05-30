@@ -14,6 +14,7 @@ namespace eCart.Areas.Store.Controllers
     public class StoreKioskOrdersController : Controller
     {
         private StoreFactory store = new StoreFactory();
+
         // GET: Store/StoreKioskOrders
         public ActionResult Index(int? id, int? orderStatus)
         {

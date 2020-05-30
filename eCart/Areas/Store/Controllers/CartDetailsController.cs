@@ -16,7 +16,6 @@ namespace eCart.Areas.Store.Controllers
 {
     public class CartDetailsController : Controller
     {
-        private StoreContext db = new StoreContext();
         StoreFactory store = new StoreFactory();
        
         // GET: Store/CartDetails/{cartId}
@@ -52,11 +51,6 @@ namespace eCart.Areas.Store.Controllers
             return View(cartDetail);
         }
 
-        // GET: Store/CartDetails/PaymentDetails/{cartId}
-        //public ActionResult PaymentDetails()
-        //{
-        //    return View();
-        //}
 
         // GET: Store/CartDetails/Create
         public ActionResult Create()

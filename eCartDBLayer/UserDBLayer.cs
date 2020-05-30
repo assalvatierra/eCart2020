@@ -11,6 +11,12 @@ namespace eCartDBLayer
 {
     public class UserDBLayer : iUserDb
     {
+        ecartdbContainer db = new ecartdbContainer();
+
+        public IQueryable<UserDetail> GetUserDetails()
+        {
+            return db.UserDetails;
+        }
 
         public string GetUserId(string email)
         {

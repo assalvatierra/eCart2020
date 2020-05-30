@@ -14,7 +14,6 @@ namespace eCart.Areas.Store.Controllers
 {
     public class StorePickupPartnersController : Controller
     {
-        private StoreContext db = new StoreContext();
         private StoreFactory store = new StoreFactory();
 
         // GET: Store/StorePickupPartners/{storeId}
@@ -32,119 +31,6 @@ namespace eCart.Areas.Store.Controllers
             return View(storePickupPartners.ToList());
         }
 
-        // GET: Store/StorePickupPartners/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            StorePickupPartner storePickupPartner = db.StorePickupPartners.Find(id);
-            if (storePickupPartner == null)
-            {
-                return HttpNotFound();
-            }
-            return View(storePickupPartner);
-        }
-
-        // GET: Store/StorePickupPartners/Create
-        public ActionResult Create()
-        {
-            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId");
-            ViewBag.StorePickupPointId = new SelectList(db.StorePickupPoints, "Id", "Address");
-            return View();
-        }
-
-        // POST: Store/StorePickupPartners/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,StorePickupPointId,StoreDetailId")] StorePickupPartner storePickupPartner)
-        {
-            if (ModelState.IsValid)
-            {
-                db.StorePickupPartners.Add(storePickupPartner);
-                db.SaveChanges();
-                return RedirectToAction("Index", new { id = storePickupPartner.StoreDetailId });
-            }
-
-            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", storePickupPartner.StoreDetailId);
-            ViewBag.StorePickupPointId = new SelectList(db.StorePickupPoints, "Id", "Address", storePickupPartner.StorePickupPointId);
-            return View(storePickupPartner);
-        }
-
-        // GET: Store/StorePickupPartners/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            StorePickupPartner storePickupPartner = db.StorePickupPartners.Find(id);
-            if (storePickupPartner == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", storePickupPartner.StoreDetailId);
-            ViewBag.StorePickupPointId = new SelectList(db.StorePickupPoints, "Id", "Address", storePickupPartner.StorePickupPointId);
-            return View(storePickupPartner);
-        }
-
-        // POST: Store/StorePickupPartners/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,StorePickupPointId,StoreDetailId")] StorePickupPartner storePickupPartner)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(storePickupPartner).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index", new { id = storePickupPartner.StoreDetailId });
-            }
-            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", storePickupPartner.StoreDetailId);
-            ViewBag.StorePickupPointId = new SelectList(db.StorePickupPoints, "Id", "Address", storePickupPartner.StorePickupPointId);
-            return View(storePickupPartner);
-        }
-
-        // GET: Store/StorePickupPartners/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            StorePickupPartner storePickupPartner = db.StorePickupPartners.Find(id);
-            if (storePickupPartner == null)
-            {
-                return HttpNotFound();
-            }
-            return View(storePickupPartner);
-        }
-
-        // POST: Store/StorePickupPartners/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            StorePickupPartner storePickupPartner = db.StorePickupPartners.Find(id);
-            var storeId = storePickupPartner.StoreDetailId;
-            db.StorePickupPartners.Remove(storePickupPartner);
-            db.SaveChanges();
-            return RedirectToAction("Index", new { id = storeId });
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         [HttpGet]
         public bool AddPartner(int id, int storeId)
         {
@@ -156,11 +42,24 @@ namespace eCart.Areas.Store.Controllers
                     StorePickupPointId = id
                 };
 
-                db.StorePickupPartners.Add(storePartner);
-                db.SaveChanges();
+                return store.StoreMgr.AddStorePickupPartner(storePartner);
 
-                return true;
             } catch {
+                return false;
+            }
+        }
+
+        [HttpPost]
+        public bool RemovePartner(int id, int storeId)
+        {
+            try
+            {
+                var storePartner = store.StoreMgr.GetStorePickupPartners(storeId).Find(s=>s.Id == id);
+
+                return store.StoreMgr.RemoveStorePickupPartner(storePartner);
+            }
+            catch
+            {
                 return false;
             }
         }

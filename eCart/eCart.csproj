@@ -186,7 +186,6 @@
     <Compile Include="Areas\Shopper\ShopperAreaRegistration.cs" />
     <Compile Include="Areas\Store\Controllers\CartDetailsController.cs" />
     <Compile Include="Areas\Store\Controllers\HomeController1.cs" />
-    <Compile Include="Areas\Store\Controllers\ItemMastersController.cs" />
     <Compile Include="Areas\Store\Controllers\PaymentDetailsController.cs" />
     <Compile Include="Areas\Store\Controllers\StoreController.cs" />
     <Compile Include="Areas\Store\Controllers\StoreDetailsController.cs" />
@@ -242,11 +241,6 @@
     <Content Include="Areas\Store\Views\CartDetails\_PartialCartDelivery.cshtml" />
     <Content Include="Areas\Store\Views\Store\Index.cshtml" />
     <Content Include="Areas\Store\Views\Store\_PartialCartList.cshtml" />
-    <Content Include="Areas\Store\Views\ItemMasters\Create.cshtml" />
-    <Content Include="Areas\Store\Views\ItemMasters\Delete.cshtml" />
-    <Content Include="Areas\Store\Views\ItemMasters\Details.cshtml" />
-    <Content Include="Areas\Store\Views\ItemMasters\Edit.cshtml" />
-    <Content Include="Areas\Store\Views\ItemMasters\Index.cshtml" />
     <Content Include="Areas\Store\Views\PaymentDetails\Create.cshtml" />
     <Content Include="Areas\Store\Views\PaymentDetails\Delete.cshtml" />
     <Content Include="Areas\Store\Views\PaymentDetails\Details.cshtml" />
@@ -272,10 +266,6 @@
     <Content Include="Areas\Store\Views\StorePayments\Details.cshtml" />
     <Content Include="Areas\Store\Views\StorePayments\Edit.cshtml" />
     <Content Include="Areas\Store\Views\StorePayments\Index.cshtml" />
-    <Content Include="Areas\Store\Views\StorePickupPartners\Create.cshtml" />
-    <Content Include="Areas\Store\Views\StorePickupPartners\Delete.cshtml" />
-    <Content Include="Areas\Store\Views\StorePickupPartners\Details.cshtml" />
-    <Content Include="Areas\Store\Views\StorePickupPartners\Edit.cshtml" />
     <Content Include="Areas\Store\Views\StorePickupPartners\Index.cshtml" />
     <Content Include="Areas\Store\Views\StorePickupPartners\_ModalPartnerAdd.cshtml" />
     <Content Include="Areas\Store\Views\StorePickupPoints\Create.cshtml" />
@@ -379,6 +369,8 @@
     <Content Include="Areas\Shopper\Views\Kiosk\_ModalCheckoutSuccess.cshtml" />
     <Content Include="Areas\Store\Views\StoreKioskOrders\Index.cshtml" />
     <Content Include="Areas\Store\Views\Store\StoreHeader.cshtml" />
+    <Content Include="Areas\Shopper\Views\Accounts\Error.cshtml" />
+    <Content Include="Areas\Store\Views\StorePickupPartners\_ModalPartnerRemove.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />
     <Content Include="Scripts\DateRangePicker\moment.min.js" />

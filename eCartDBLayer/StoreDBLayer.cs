@@ -270,6 +270,34 @@ namespace eCartDbLayer
             return sdb.StorePickupPartners;
         }
 
+        public bool AddStorePickupPartner(StorePickupPartner pickupPartner)
+        {
+            try
+            {
+                sdb.StorePickupPartners.Add(pickupPartner);
+                sdb.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool RemoveStorePickupPartner(StorePickupPartner pickupPartner)
+        {
+            try
+            {
+                sdb.StorePickupPartners.Remove(pickupPartner);
+                sdb.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
 
         #endregion
 

@@ -523,6 +523,30 @@ namespace eCartServices
             return storeDb.GetStorePickupPoints().ToList();
         }
 
+        public bool AddStorePickupPartner(StorePickupPartner pickupPartner)
+        {
+            try
+            {
+                return storeDb.AddStorePickupPartner(pickupPartner);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool RemoveStorePickupPartner(StorePickupPartner pickupPartner)
+        {
+            try
+            {
+                return storeDb.RemoveStorePickupPartner(pickupPartner);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
 
         #endregion
     }
