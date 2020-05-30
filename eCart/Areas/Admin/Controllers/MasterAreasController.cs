@@ -7,17 +7,17 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using eCartModels;
+using eCartServices;
 
 namespace eCart.Areas.Admin.Controllers
 {
     public class MasterAreasController : Controller
     {
-        private ecartdbContainer db = new ecartdbContainer();
-
+        private StoreFactory store = new StoreFactory();
         // GET: Admin/MasterAreas
         public ActionResult Index()
         {
-            var masterAreas = db.MasterAreas.Include(m => m.MasterCity);
+            var masterAreas = store.AdminMgr.GetMasterAreaList();
             return View(masterAreas.ToList());
         }
 
@@ -28,7 +28,7 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MasterArea masterArea = db.MasterAreas.Find(id);
+            MasterArea masterArea = store.AdminMgr.GetMasterArea((int)id);
             if (masterArea == null)
             {
                 return HttpNotFound();
@@ -39,7 +39,7 @@ namespace eCart.Areas.Admin.Controllers
         // GET: Admin/MasterAreas/Create
         public ActionResult Create()
         {
-            ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name");
+            ViewBag.MasterCityId = new SelectList(store.RefDbLayer.GetMasterCities(), "Id", "Name");
             return View();
         }
 
@@ -52,12 +52,13 @@ namespace eCart.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.MasterAreas.Add(masterArea);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (store.AdminMgr.AddMasterArea(masterArea))
+                {
+                    return RedirectToAction("Index");
+                }
             }
 
-            ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name", masterArea.MasterCityId);
+            ViewBag.MasterCityId = new SelectList(store.RefDbLayer.GetMasterCities(), "Id", "Name", masterArea.MasterCityId);
             return View(masterArea);
         }
 
@@ -68,12 +69,12 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MasterArea masterArea = db.MasterAreas.Find(id);
+            MasterArea masterArea = store.AdminMgr.GetMasterArea((int)id);
             if (masterArea == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name", masterArea.MasterCityId);
+            ViewBag.MasterCityId = new SelectList(store.RefDbLayer.GetMasterCities(), "Id", "Name", masterArea.MasterCityId);
             return View(masterArea);
         }
 
@@ -86,11 +87,13 @@ namespace eCart.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(masterArea).State = EntityState.Modified;
-                db.SaveChanges();
+                if (store.AdminMgr.EditMasterArea(masterArea))
+                {
+                    return RedirectToAction("Index");
+                }
                 return RedirectToAction("Index");
             }
-            ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name", masterArea.MasterCityId);
+            ViewBag.MasterCityId = new SelectList(store.RefDbLayer.GetMasterCities(), "Id", "Name", masterArea.MasterCityId);
             return View(masterArea);
         }
 
@@ -101,7 +104,7 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MasterArea masterArea = db.MasterAreas.Find(id);
+            MasterArea masterArea = store.AdminMgr.GetMasterArea((int)id);
             if (masterArea == null)
             {
                 return HttpNotFound();
@@ -114,17 +117,19 @@ namespace eCart.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            MasterArea masterArea = db.MasterAreas.Find(id);
-            db.MasterAreas.Remove(masterArea);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            MasterArea masterArea = store.AdminMgr.GetMasterArea((int)id);
+            if (store.AdminMgr.RemoveMasterArea(masterArea))
+            {
+                return RedirectToAction("Index");
+            }
+            return View(masterArea);
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                store.AdminMgr.DbDispose();
             }
             base.Dispose(disposing);
         }

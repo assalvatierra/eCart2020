@@ -9,6 +9,7 @@ namespace eCartServices
         iCartMgr cartmgr;
         iRiderMgr riderMgr;
         iUserMgr userMgr;
+        iAdminMgr adminMgr;
         iDBRefDBLayer DBRef;
         public DBRefContext dbRef = new DBRefContext();
 
@@ -23,6 +24,8 @@ namespace eCartServices
 
             this.userMgr = new UserMgr();
             this.riderMgr = new RiderMgr();
+
+            this.adminMgr = new AdminMgr();
 
             this.DBRef = new DBRefDBLayer();
         }
@@ -42,6 +45,11 @@ namespace eCartServices
         public iUserMgr UserMgr
         {
             get { return this.userMgr; }
+        }
+
+        public iAdminMgr AdminMgr
+        {
+            get { return this.adminMgr; }
         }
 
         public iRiderMgr RiderMgr

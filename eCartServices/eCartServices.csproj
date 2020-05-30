@@ -58,6 +58,7 @@
     <Compile Include="RiderMgr.cs" />
     <Compile Include="StoreFactory.cs" />
     <Compile Include="StoreMgr.cs" />
+    <Compile Include="AdminMgr.cs" />
     <Compile Include="UserMgr.cs" />
   </ItemGroup>
   <ItemGroup>

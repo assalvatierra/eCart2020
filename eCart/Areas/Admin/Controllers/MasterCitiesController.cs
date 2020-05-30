@@ -7,17 +7,18 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using eCartModels;
+using eCartServices;
 
 namespace eCart.Areas.Admin.Controllers
 {
     public class MasterCitiesController : Controller
     {
-        private ecartdbContainer db = new ecartdbContainer();
+        private StoreFactory store = new StoreFactory();
 
         // GET: Admin/MasterCities
         public ActionResult Index()
         {
-            return View(db.MasterCities.ToList());
+            return View(store.AdminMgr.GetMasterCitiesList());
         }
 
         // GET: Admin/MasterCities/Details/5
@@ -27,7 +28,7 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MasterCity masterCity = db.MasterCities.Find(id);
+            MasterCity masterCity = store.AdminMgr.GetMasterCity((int)id);
             if (masterCity == null)
             {
                 return HttpNotFound();
@@ -50,9 +51,10 @@ namespace eCart.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.MasterCities.Add(masterCity);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (store.AdminMgr.AddMasterCity(masterCity))
+                {
+                    return RedirectToAction("Index");
+                }
             }
 
             return View(masterCity);
@@ -65,7 +67,7 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MasterCity masterCity = db.MasterCities.Find(id);
+            MasterCity masterCity = store.AdminMgr.GetMasterCity((int)id);
             if (masterCity == null)
             {
                 return HttpNotFound();
@@ -82,9 +84,10 @@ namespace eCart.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(masterCity).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (store.AdminMgr.EditMasterCity(masterCity))
+                {
+                    return RedirectToAction("Index");
+                }
             }
             return View(masterCity);
         }
@@ -96,7 +99,7 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MasterCity masterCity = db.MasterCities.Find(id);
+            MasterCity masterCity = store.AdminMgr.GetMasterCity((int)id);
             if (masterCity == null)
             {
                 return HttpNotFound();
@@ -109,9 +112,11 @@ namespace eCart.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            MasterCity masterCity = db.MasterCities.Find(id);
-            db.MasterCities.Remove(masterCity);
-            db.SaveChanges();
+            MasterCity masterCity = store.AdminMgr.GetMasterCity(id);
+            if (store.AdminMgr.RemoveMasterCity(masterCity))
+            {
+                return RedirectToAction("Index");
+            }
             return RedirectToAction("Index");
         }
 
@@ -119,7 +124,7 @@ namespace eCart.Areas.Admin.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                store.AdminMgr.DbDispose();
             }
             base.Dispose(disposing);
         }

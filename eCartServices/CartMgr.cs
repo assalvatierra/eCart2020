@@ -815,7 +815,7 @@ namespace eCartServices
 
         public List<StoreKioskOrder> GetStoreKioskOrderList(int storeId)
         {
-            return cartdb.GetStoreKioskOrders().Where(s => s.StoreKiosk.StoreDetailId == storeId).ToList();
+            return cartdb.GetStoreKioskOrders().Where(s => s.StoreKiosk.StoreDetailId == storeId).OrderByDescending(s=>s.DtOrder).ToList();
         }
 
         public List<StoreKiosk> GetStoreKioskList(int id)

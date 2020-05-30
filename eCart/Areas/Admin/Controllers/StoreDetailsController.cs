@@ -7,17 +7,18 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using eCartModels;
+using eCartServices;
 
 namespace eCart.Areas.Admin.Controllers
 {
     public class StoreDetailsController : Controller
     {
-        private ecartdbContainer db = new ecartdbContainer();
+        private StoreFactory store = new StoreFactory();
 
         // GET: Admin/StoreDetails
         public ActionResult Index()
         {
-            var storeDetails = db.StoreDetails.Include(s => s.MasterArea).Include(s => s.MasterCity).Include(s => s.StoreCategory).Include(s => s.StoreStatu);
+            var storeDetails = store.RefDbLayer.GetStoreDetails().Include(s => s.MasterArea).Include(s => s.MasterCity).Include(s => s.StoreCategory).Include(s => s.StoreStatu);
             return View(storeDetails.ToList());
         }
 
@@ -28,7 +29,7 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            StoreDetail storeDetail = db.StoreDetails.Find(id);
+            StoreDetail storeDetail = store.RefDbLayer.GetStoreDetails().Where(s=>s.Id == id).FirstOrDefault();
             if (storeDetail == null)
             {
                 return HttpNotFound();
@@ -39,10 +40,10 @@ namespace eCart.Areas.Admin.Controllers
         // GET: Admin/StoreDetails/Create
         public ActionResult Create()
         {
-            ViewBag.MasterAreaId = new SelectList(db.MasterAreas, "Id", "Name");
-            ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name");
-            ViewBag.StoreCategoryId = new SelectList(db.StoreCategories, "Id", "Name");
-            ViewBag.StoreStatusId = new SelectList(db.StoreStatus, "Id", "Name");
+            ViewBag.MasterAreaId = new SelectList(store.RefDbLayer.GetMasterAreas(), "Id", "Name");
+            ViewBag.MasterCityId = new SelectList(store.RefDbLayer.GetMasterCities(), "Id", "Name");
+            ViewBag.StoreCategoryId = new SelectList(store.RefDbLayer.GetStoreCategories(), "Id", "Name");
+            ViewBag.StoreStatusId = new SelectList(store.RefDbLayer.GetStoreStatus(), "Id", "Name");
             return View();
         }
 
@@ -55,15 +56,18 @@ namespace eCart.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.StoreDetails.Add(storeDetail);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+
+                if (store.AdminMgr.AddStoreDetails(storeDetail))
+                {
+                    return RedirectToAction("Index");
+                }
+
             }
 
-            ViewBag.MasterAreaId = new SelectList(db.MasterAreas, "Id", "Name", storeDetail.MasterAreaId);
-            ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name", storeDetail.MasterCityId);
-            ViewBag.StoreCategoryId = new SelectList(db.StoreCategories, "Id", "Name", storeDetail.StoreCategoryId);
-            ViewBag.StoreStatusId = new SelectList(db.StoreStatus, "Id", "Name", storeDetail.StoreStatusId);
+            ViewBag.MasterAreaId = new SelectList(store.RefDbLayer.GetMasterAreas(), "Id", "Name", storeDetail.MasterAreaId);
+            ViewBag.MasterCityId = new SelectList(store.RefDbLayer.GetMasterCities(), "Id", "Name", storeDetail.MasterCityId);
+            ViewBag.StoreCategoryId = new SelectList(store.RefDbLayer.GetStoreCategories(), "Id", "Name", storeDetail.StoreCategoryId);
+            ViewBag.StoreStatusId = new SelectList(store.RefDbLayer.GetStoreStatus(), "Id", "Name", storeDetail.StoreStatusId);
             return View(storeDetail);
         }
 
@@ -74,15 +78,15 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            StoreDetail storeDetail = db.StoreDetails.Find(id);
+            StoreDetail storeDetail = store.AdminMgr.GetStoreDetail((int)id);
             if (storeDetail == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.MasterAreaId = new SelectList(db.MasterAreas, "Id", "Name", storeDetail.MasterAreaId);
-            ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name", storeDetail.MasterCityId);
-            ViewBag.StoreCategoryId = new SelectList(db.StoreCategories, "Id", "Name", storeDetail.StoreCategoryId);
-            ViewBag.StoreStatusId = new SelectList(db.StoreStatus, "Id", "Name", storeDetail.StoreStatusId);
+            ViewBag.MasterAreaId = new SelectList(store.RefDbLayer.GetMasterAreas(), "Id", "Name", storeDetail.MasterAreaId);
+            ViewBag.MasterCityId = new SelectList(store.RefDbLayer.GetMasterCities(), "Id", "Name", storeDetail.MasterCityId);
+            ViewBag.StoreCategoryId = new SelectList(store.RefDbLayer.GetStoreCategories(), "Id", "Name", storeDetail.StoreCategoryId);
+            ViewBag.StoreStatusId = new SelectList(store.RefDbLayer.GetStoreStatus(), "Id", "Name", storeDetail.StoreStatusId);
             return View(storeDetail);
         }
 
@@ -95,14 +99,16 @@ namespace eCart.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(storeDetail).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                
+                if (store.AdminMgr.EditStoreDetails(storeDetail))
+                {
+                    return RedirectToAction("Index");
+                }
             }
-            ViewBag.MasterAreaId = new SelectList(db.MasterAreas, "Id", "Name", storeDetail.MasterAreaId);
-            ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name", storeDetail.MasterCityId);
-            ViewBag.StoreCategoryId = new SelectList(db.StoreCategories, "Id", "Name", storeDetail.StoreCategoryId);
-            ViewBag.StoreStatusId = new SelectList(db.StoreStatus, "Id", "Name", storeDetail.StoreStatusId);
+            ViewBag.MasterAreaId = new SelectList(store.RefDbLayer.GetMasterAreas(), "Id", "Name", storeDetail.MasterAreaId);
+            ViewBag.MasterCityId = new SelectList(store.RefDbLayer.GetMasterCities(), "Id", "Name", storeDetail.MasterCityId);
+            ViewBag.StoreCategoryId = new SelectList(store.RefDbLayer.GetStoreCategories(), "Id", "Name", storeDetail.StoreCategoryId);
+            ViewBag.StoreStatusId = new SelectList(store.RefDbLayer.GetStoreStatus(), "Id", "Name", storeDetail.StoreStatusId);
             return View(storeDetail);
         }
 
@@ -113,7 +119,7 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            StoreDetail storeDetail = db.StoreDetails.Find(id);
+            StoreDetail storeDetail = store.AdminMgr.GetStoreDetail((int)id);
             if (storeDetail == null)
             {
                 return HttpNotFound();
@@ -126,17 +132,21 @@ namespace eCart.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            StoreDetail storeDetail = db.StoreDetails.Find(id);
-            db.StoreDetails.Remove(storeDetail);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            StoreDetail storeDetail = store.AdminMgr.GetStoreDetail((int)id);
+
+            if (store.AdminMgr.RemovestoreDetails(storeDetail))
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(storeDetail);
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                store.AdminMgr.DbDispose();
             }
             base.Dispose(disposing);
         }

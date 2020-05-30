@@ -19,6 +19,8 @@ namespace eCartInterfaces
         IQueryable<PaymentReceiver> GetPaymentReceivers();
         IQueryable<PaymentParty> GetPaymentParties();
         IQueryable<PaymentStatus> GetPaymentStatus();
+        IQueryable<StoreCategory> GetStoreCategories();
+        IQueryable<UserStatus> GetUserStatusList();
 
     }
 }

@@ -7,17 +7,19 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using eCartModels;
+using eCartServices;
 
 namespace eCart.Areas.Admin.Controllers
 {
     public class UserDetailsController : Controller
     {
-        private ecartdbContainer db = new ecartdbContainer();
+        private StoreFactory store = new StoreFactory();
+
 
         // GET: Admin/UserDetails
         public ActionResult Index()
         {
-            var userDetails = db.UserDetails.Include(u => u.MasterArea).Include(u => u.MasterCity).Include(u => u.UserStatu);
+            var userDetails = store.AdminMgr.GetUserDetailList();
             return View(userDetails.ToList());
         }
 
@@ -28,7 +30,7 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserDetail userDetail = db.UserDetails.Find(id);
+            UserDetail userDetail = store.AdminMgr.GetUserDetail((int)id);
             if (userDetail == null)
             {
                 return HttpNotFound();
@@ -39,9 +41,9 @@ namespace eCart.Areas.Admin.Controllers
         // GET: Admin/UserDetails/Create
         public ActionResult Create()
         {
-            ViewBag.MasterAreaId = new SelectList(db.MasterAreas, "Id", "Name");
-            ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name");
-            ViewBag.UserStatusId = new SelectList(db.UserStatus, "Id", "Name");
+            ViewBag.MasterAreaId = new SelectList(store.RefDbLayer.GetMasterAreas(), "Id", "Name");
+            ViewBag.MasterCityId = new SelectList(store.RefDbLayer.GetMasterCities(), "Id", "Name");
+            ViewBag.UserStatusId = new SelectList(store.RefDbLayer.GetUserStatusList(), "Id", "Name");
             return View();
         }
 
@@ -54,14 +56,15 @@ namespace eCart.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.UserDetails.Add(userDetail);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (store.AdminMgr.AddUserDetails(userDetail))
+                {
+                    return RedirectToAction("Index");
+                }
             }
 
-            ViewBag.MasterAreaId = new SelectList(db.MasterAreas, "Id", "Name", userDetail.MasterAreaId);
-            ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name", userDetail.MasterCityId);
-            ViewBag.UserStatusId = new SelectList(db.UserStatus, "Id", "Name", userDetail.UserStatusId);
+            ViewBag.MasterAreaId = new SelectList(store.RefDbLayer.GetMasterAreas(), "Id", "Name", userDetail.MasterAreaId);
+            ViewBag.MasterCityId = new SelectList(store.RefDbLayer.GetMasterCities(), "Id", "Name", userDetail.MasterCityId);
+            ViewBag.UserStatusId = new SelectList(store.RefDbLayer.GetUserStatusList(), "Id", "Name", userDetail.UserStatusId);
             return View(userDetail);
         }
 
@@ -72,14 +75,15 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserDetail userDetail = db.UserDetails.Find(id);
+            UserDetail userDetail = store.AdminMgr.GetUserDetail((int)id);
             if (userDetail == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.MasterAreaId = new SelectList(db.MasterAreas, "Id", "Name", userDetail.MasterAreaId);
-            ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name", userDetail.MasterCityId);
-            ViewBag.UserStatusId = new SelectList(db.UserStatus, "Id", "Name", userDetail.UserStatusId);
+
+            ViewBag.MasterAreaId = new SelectList(store.RefDbLayer.GetMasterAreas(), "Id", "Name", userDetail.MasterAreaId);
+            ViewBag.MasterCityId = new SelectList(store.RefDbLayer.GetMasterCities(), "Id", "Name", userDetail.MasterCityId);
+            ViewBag.UserStatusId = new SelectList(store.RefDbLayer.GetUserStatusList(), "Id", "Name", userDetail.UserStatusId);
             return View(userDetail);
         }
 
@@ -92,13 +96,16 @@ namespace eCart.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(userDetail).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (store.AdminMgr.EditUserDetails(userDetail))
+                {
+                    return RedirectToAction("Index");
+                }
+
             }
-            ViewBag.MasterAreaId = new SelectList(db.MasterAreas, "Id", "Name", userDetail.MasterAreaId);
-            ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name", userDetail.MasterCityId);
-            ViewBag.UserStatusId = new SelectList(db.UserStatus, "Id", "Name", userDetail.UserStatusId);
+
+            ViewBag.MasterAreaId = new SelectList(store.RefDbLayer.GetMasterAreas(), "Id", "Name", userDetail.MasterAreaId);
+            ViewBag.MasterCityId = new SelectList(store.RefDbLayer.GetMasterCities(), "Id", "Name", userDetail.MasterCityId);
+            ViewBag.UserStatusId = new SelectList(store.RefDbLayer.GetUserStatusList(), "Id", "Name", userDetail.UserStatusId);
             return View(userDetail);
         }
 
@@ -109,7 +116,7 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserDetail userDetail = db.UserDetails.Find(id);
+            UserDetail userDetail = store.AdminMgr.GetUserDetail((int)id);
             if (userDetail == null)
             {
                 return HttpNotFound();
@@ -122,17 +129,19 @@ namespace eCart.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            UserDetail userDetail = db.UserDetails.Find(id);
-            db.UserDetails.Remove(userDetail);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            UserDetail userDetail = store.AdminMgr.GetUserDetail((int)id);
+            if (store.AdminMgr.RemoveUserDetails(userDetail))
+            {
+                return RedirectToAction("Index");
+            }
+            return View(userDetail);
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                store.AdminMgr.DbDispose();
             }
             base.Dispose(disposing);
         }
