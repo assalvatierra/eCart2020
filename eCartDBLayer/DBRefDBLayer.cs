@@ -72,5 +72,30 @@ namespace eCartDbLayer
         {
             return db.UserStatuses;
         }
+
+        public IQueryable<ItemCatGroup> GetItemCatGroups()
+        {
+            return db.ItemCatGroups;
+        }
+
+        public IQueryable<StorePaymentType> GetStorePaymentTypes()
+        {
+            return db.StorePaymentTypes;
+        }
+
+        public IQueryable<StorePaymentStatus> GetStorePaymentStatus()
+        {
+            return db.StorePaymentStatus;
+        }
+
+        public IQueryable<RiderStatus> GetRiderStatus()
+        {
+            return db.RiderStatus;
+        }
+
+        public IQueryable<PaymentDetail> GetPaymentDetails()
+        {
+            return db.PaymentDetails;
+        }
     }
 }

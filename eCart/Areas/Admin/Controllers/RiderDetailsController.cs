@@ -7,17 +7,18 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using eCartModels;
+using eCartServices;
 
 namespace eCart.Areas.Admin.Controllers
 {
     public class RiderDetailsController : Controller
     {
-        private ecartdbContainer db = new ecartdbContainer();
+        private StoreFactory store = new StoreFactory();
 
         // GET: Admin/RiderDetails
         public ActionResult Index()
         {
-            var riderDetails = db.RiderDetails.Include(r => r.MasterCity).Include(r => r.RiderStatu);
+            var riderDetails = store.AdminMgr.GetRiderDetailsList();
             return View(riderDetails.ToList());
         }
 
@@ -28,7 +29,7 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RiderDetail riderDetail = db.RiderDetails.Find(id);
+            RiderDetail riderDetail = store.AdminMgr.GetRiderDetails((int)id);
             if (riderDetail == null)
             {
                 return HttpNotFound();
@@ -39,8 +40,8 @@ namespace eCart.Areas.Admin.Controllers
         // GET: Admin/RiderDetails/Create
         public ActionResult Create()
         {
-            ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name");
-            ViewBag.RiderStatusId = new SelectList(db.RiderStatus, "Id", "Name");
+            ViewBag.MasterCityId = new SelectList(store.RefDbLayer.GetMasterCities(), "Id", "Name");
+            ViewBag.RiderStatusId = new SelectList(store.RefDbLayer.GetRiderStatus(), "Id", "Name");
             return View();
         }
 
@@ -53,13 +54,12 @@ namespace eCart.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.RiderDetails.Add(riderDetail);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if(store.AdminMgr.AddRiderDetails(riderDetail))
+                    return RedirectToAction("Index");
             }
 
-            ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name", riderDetail.MasterCityId);
-            ViewBag.RiderStatusId = new SelectList(db.RiderStatus, "Id", "Name", riderDetail.RiderStatusId);
+            ViewBag.MasterCityId = new SelectList(store.RefDbLayer.GetMasterCities(), "Id", "Name", riderDetail.MasterCityId);
+            ViewBag.RiderStatusId = new SelectList(store.RefDbLayer.GetRiderStatus(), "Id", "Name", riderDetail.RiderStatusId);
             return View(riderDetail);
         }
 
@@ -70,13 +70,13 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RiderDetail riderDetail = db.RiderDetails.Find(id);
+            RiderDetail riderDetail = store.AdminMgr.GetRiderDetails((int)id);
             if (riderDetail == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name", riderDetail.MasterCityId);
-            ViewBag.RiderStatusId = new SelectList(db.RiderStatus, "Id", "Name", riderDetail.RiderStatusId);
+            ViewBag.MasterCityId = new SelectList(store.RefDbLayer.GetMasterCities(), "Id", "Name", riderDetail.MasterCityId);
+            ViewBag.RiderStatusId = new SelectList(store.RefDbLayer.GetRiderStatus(), "Id", "Name", riderDetail.RiderStatusId);
             return View(riderDetail);
         }
 
@@ -89,12 +89,11 @@ namespace eCart.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(riderDetail).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (store.AdminMgr.EditRiderDetails(riderDetail))
+                    return RedirectToAction("Index");
             }
-            ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name", riderDetail.MasterCityId);
-            ViewBag.RiderStatusId = new SelectList(db.RiderStatus, "Id", "Name", riderDetail.RiderStatusId);
+            ViewBag.MasterCityId = new SelectList(store.RefDbLayer.GetMasterCities(), "Id", "Name", riderDetail.MasterCityId);
+            ViewBag.RiderStatusId = new SelectList(store.RefDbLayer.GetRiderStatus(), "Id", "Name", riderDetail.RiderStatusId);
             return View(riderDetail);
         }
 
@@ -105,7 +104,7 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RiderDetail riderDetail = db.RiderDetails.Find(id);
+            RiderDetail riderDetail = store.AdminMgr.GetRiderDetails((int)id);
             if (riderDetail == null)
             {
                 return HttpNotFound();
@@ -118,9 +117,9 @@ namespace eCart.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            RiderDetail riderDetail = db.RiderDetails.Find(id);
-            db.RiderDetails.Remove(riderDetail);
-            db.SaveChanges();
+            RiderDetail riderDetail = store.AdminMgr.GetRiderDetails((int)id);
+            if (store.AdminMgr.RemoveRiderDetails(riderDetail))
+                return RedirectToAction("Index");
             return RedirectToAction("Index");
         }
 
@@ -128,7 +127,7 @@ namespace eCart.Areas.Admin.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                store.AdminMgr.DbDispose();
             }
             base.Dispose(disposing);
         }
@@ -136,7 +135,7 @@ namespace eCart.Areas.Admin.Controllers
 
         public ActionResult CartDetails(int id, int riderId)
         {
-            var cartDetail = db.CartDetails.Find(id);
+            var cartDetail = store.CartMgr.GetCartDetail(id) ;
 
             ViewBag.RiderId = riderId;
             ViewBag.StoreId = cartDetail.StoreDetailId;
@@ -144,9 +143,9 @@ namespace eCart.Areas.Admin.Controllers
             //ViewBag.PaymentReceiverList = db.PaymentReceivers.ToList();
             //ViewBag.PaymentPartyList = db.PaymentParties.ToList();
             //ViewBag.PaymentStatusList = db.PaymentStatus.ToList();
-            ViewBag.PaymentDetails = db.PaymentDetails.Where(s => s.CartDetailId == id).ToList();
+            ViewBag.PaymentDetails = store.AdminMgr.GetPaymentDetails(id);
             //ViewBag.CartDelivery = db.CartDeliveries.Where(s => s.CartDetailId == id).ToList();
-            ViewBag.RiderList = db.RiderDetails.Where(r => r.RiderStatusId == 1).ToList();
+            ViewBag.RiderList = store.AdminMgr.GetRiderDetailsList().Where(r => r.RiderStatusId == 1).ToList();
 
 
             return View(cartDetail);

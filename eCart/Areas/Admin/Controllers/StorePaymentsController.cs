@@ -13,13 +13,13 @@ namespace eCart.Areas.Admin.Controllers
 {
     public class StorePaymentsController : Controller
     {
-        private ecartdbContainer db = new ecartdbContainer();
-        private StoreFactory storeFactory = new StoreFactory();
+        //private ecartdbContainer db = new ecartdbContainer();
+        private StoreFactory store = new StoreFactory();
 
         // GET: Admin/StorePayments
         public ActionResult Index()
         {
-            var storePayments = db.StorePayments.Include(s => s.StoreDetail).Include(s => s.StorePaymentStatu).Include(s => s.StorePaymentType);
+            var storePayments = store.AdminMgr.GetStorePaymentList();
             return View(storePayments.OrderByDescending(s=>s.dtPosted).ToList());
         }
 
@@ -30,7 +30,7 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            StorePayment storePayment = db.StorePayments.Find(id);
+            StorePayment storePayment = store.AdminMgr.GetStorePayment((int)id);
             if (storePayment == null)
             {
                 return HttpNotFound();
@@ -41,9 +41,9 @@ namespace eCart.Areas.Admin.Controllers
         // GET: Admin/StorePayments/Create
         public ActionResult Create()
         {
-            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "Name");
-            ViewBag.StorePaymentStatusId = new SelectList(db.StorePaymentStatus, "Id", "Name");
-            ViewBag.StorePaymentTypeId = new SelectList(db.StorePaymentTypes, "Id", "Description");
+            ViewBag.StoreDetailId = new SelectList(store.RefDbLayer.GetStoreDetails(), "Id", "Name");
+            ViewBag.StorePaymentStatusId = new SelectList(store.RefDbLayer.GetStorePaymentStatus(), "Id", "Name");
+            ViewBag.StorePaymentTypeId = new SelectList(store.RefDbLayer.GetStorePaymentTypes(), "Id", "Description");
             return View();
         }
 
@@ -56,14 +56,13 @@ namespace eCart.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.StorePayments.Add(storePayment);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if(store.AdminMgr.AddStorePayment(storePayment))
+                    return RedirectToAction("Index");
             }
 
-            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "Name", storePayment.StoreDetailId);
-            ViewBag.StorePaymentStatusId = new SelectList(db.StorePaymentStatus, "Id", "Name", storePayment.StorePaymentStatusId);
-            ViewBag.StorePaymentTypeId = new SelectList(db.StorePaymentTypes, "Id", "Description", storePayment.StorePaymentTypeId);
+            ViewBag.StoreDetailId = new SelectList(store.RefDbLayer.GetStoreDetails(), "Id", "Name", storePayment.StoreDetailId);
+            ViewBag.StorePaymentStatusId = new SelectList(store.RefDbLayer.GetStorePaymentStatus(), "Id", "Name", storePayment.StorePaymentStatusId);
+            ViewBag.StorePaymentTypeId = new SelectList(store.RefDbLayer.GetStorePaymentTypes(), "Id", "Description", storePayment.StorePaymentTypeId);
             return View(storePayment);
         }
 
@@ -74,14 +73,14 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            StorePayment storePayment = db.StorePayments.Find(id);
+            StorePayment storePayment = store.AdminMgr.GetStorePayment((int)id);
             if (storePayment == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "Name", storePayment.StoreDetailId);
-            ViewBag.StorePaymentStatusId = new SelectList(db.StorePaymentStatus, "Id", "Name", storePayment.StorePaymentStatusId);
-            ViewBag.StorePaymentTypeId = new SelectList(db.StorePaymentTypes, "Id", "Description", storePayment.StorePaymentTypeId);
+            ViewBag.StoreDetailId = new SelectList(store.RefDbLayer.GetStoreDetails(), "Id", "Name", storePayment.StoreDetailId);
+            ViewBag.StorePaymentStatusId = new SelectList(store.RefDbLayer.GetStorePaymentStatus(), "Id", "Name", storePayment.StorePaymentStatusId);
+            ViewBag.StorePaymentTypeId = new SelectList(store.RefDbLayer.GetStorePaymentTypes(), "Id", "Description", storePayment.StorePaymentTypeId);
             return View(storePayment);
         }
 
@@ -94,13 +93,12 @@ namespace eCart.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(storePayment).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (store.AdminMgr.EditStorePayment(storePayment))
+                    return RedirectToAction("Index");
             }
-            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "Name", storePayment.StoreDetailId);
-            ViewBag.StorePaymentStatusId = new SelectList(db.StorePaymentStatus, "Id", "Name", storePayment.StorePaymentStatusId);
-            ViewBag.StorePaymentTypeId = new SelectList(db.StorePaymentTypes, "Id", "Description", storePayment.StorePaymentTypeId);
+            ViewBag.StoreDetailId = new SelectList(store.RefDbLayer.GetStoreDetails(), "Id", "Name", storePayment.StoreDetailId);
+            ViewBag.StorePaymentStatusId = new SelectList(store.RefDbLayer.GetStorePaymentStatus(), "Id", "Name", storePayment.StorePaymentStatusId);
+            ViewBag.StorePaymentTypeId = new SelectList(store.RefDbLayer.GetStorePaymentTypes(), "Id", "Description", storePayment.StorePaymentTypeId);
             return View(storePayment);
         }
 
@@ -111,7 +109,7 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            StorePayment storePayment = db.StorePayments.Find(id);
+            StorePayment storePayment = store.AdminMgr.GetStorePayment((int)id);
             if (storePayment == null)
             {
                 return HttpNotFound();
@@ -124,28 +122,30 @@ namespace eCart.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            StorePayment storePayment = db.StorePayments.Find(id);
-            db.StorePayments.Remove(storePayment);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            StorePayment storePayment = store.AdminMgr.GetStorePayment((int)id);
+            if (store.AdminMgr.RemoveStorePayment(storePayment))
+                return RedirectToAction("Index");
+            return View(storePayment);
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                store.AdminMgr.DbDispose();
             }
             base.Dispose(disposing);
         }
 
         [HttpPost]
-        public void AcceptPayment(int id)
+        public bool AcceptPayment(int id)
         {
-            var storePayment = db.StorePayments.Find(id);
+            var storePayment = store.AdminMgr.GetStorePayment(id);
             storePayment.StorePaymentStatusId = 2;  //accepted
-            db.Entry(storePayment).State = EntityState.Modified;
-            db.SaveChanges();
+
+            if (store.AdminMgr.EditStorePayment(storePayment))
+                return true;
+            return false;
         }
     }
 }

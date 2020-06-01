@@ -28,11 +28,52 @@ namespace eCartInterfaces
         MasterCity GetMasterCity(int id);
         List<MasterCity> GetMasterCitiesList();
 
-
         bool AddMasterArea(MasterArea masterArea);
         bool EditMasterArea(MasterArea masterArea);
         bool RemoveMasterArea(MasterArea masterArea);
         MasterArea GetMasterArea(int id);
         List<MasterArea> GetMasterAreaList();
+
+        bool AddItemCategory(ItemCategory itemCategory);
+        bool EditItemCategory(ItemCategory itemCategory);
+        bool RemoveItemCategory(ItemCategory itemCategory);
+        ItemCategory GetItemCategory(int id);
+        List<ItemCategory> GetItemCategoriesList();
+
+        bool AddItemCatGroup(ItemCatGroup itemCatGroup);
+        bool EditItemCatGroup(ItemCatGroup itemCatGroup);
+        bool RemoveItemCatGroup(ItemCatGroup itemCatGroup);
+        ItemCatGroup GetItemCatGroup(int id);
+        List<ItemCatGroup> GetItemCatGroupList();
+
+        bool AddItemMaster(ItemMaster itemMaster);
+        bool EditItemMaster(ItemMaster itemMaster);
+        bool RemoveItemMaster(ItemMaster itemMaster);
+        ItemMaster GetItemMaster(int id);
+        List<ItemMaster> GetItemMasterList();
+
+        bool AddStorePayment(StorePayment storePayment);
+        bool EditStorePayment(StorePayment storePayment);
+        bool RemoveStorePayment(StorePayment storePayment);
+        StorePayment GetStorePayment(int id);
+        List<StorePayment> GetStorePaymentList();
+
+        bool AddRiderDetails(RiderDetail rider);
+        bool EditRiderDetails(RiderDetail rider);
+        bool RemoveRiderDetails(RiderDetail rider);
+        RiderDetail GetRiderDetails(int id);
+        List<RiderDetail> GetRiderDetailsList();
+        List<PaymentDetail> GetPaymentDetails(int cartId);
+
+        bool AddItemMasterCategory(ItemMasterCategory itemMasterCategory);
+        bool RemoveItemMasterCategory(ItemMasterCategory itemMasterCategory);
+        ItemMasterCategory GetItemMasterCategory(int id);
+        List<ItemMasterCategory> GetItemMasterCategoryList();
+
+
+        bool AddItemImage(ItemImage itemImage);
+        bool EditItemImage(ItemImage itemImage);
+        ItemImage GetItemImage(int id);
+        ItemImage GetItemImageByItemId(int id);
     }
 }
