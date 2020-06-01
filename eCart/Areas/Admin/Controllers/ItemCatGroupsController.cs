@@ -7,17 +7,18 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using eCartModels;
+using eCartServices;
 
 namespace eCart.Areas.Admin.Controllers
 {
     public class ItemCatGroupsController : Controller
     {
-        private ecartdbContainer db = new ecartdbContainer();
+        private StoreFactory store = new StoreFactory();
 
         // GET: Admin/ItemCatGroups
         public ActionResult Index()
         {
-            return View(db.ItemCatGroups.ToList());
+            return View(store.AdminMgr.GetItemCatGroupList());
         }
 
         // GET: Admin/ItemCatGroups/Details/5
@@ -27,7 +28,7 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ItemCatGroup itemCatGroup = db.ItemCatGroups.Find(id);
+            ItemCatGroup itemCatGroup = store.AdminMgr.GetItemCatGroup((int)id);
             if (itemCatGroup == null)
             {
                 return HttpNotFound();
@@ -50,9 +51,8 @@ namespace eCart.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.ItemCatGroups.Add(itemCatGroup);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if(store.AdminMgr.AddItemCatGroup(itemCatGroup))
+                    return RedirectToAction("Index");
             }
 
             return View(itemCatGroup);
@@ -65,7 +65,7 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ItemCatGroup itemCatGroup = db.ItemCatGroups.Find(id);
+            ItemCatGroup itemCatGroup = store.AdminMgr.GetItemCatGroup((int)id);
             if (itemCatGroup == null)
             {
                 return HttpNotFound();
@@ -82,9 +82,8 @@ namespace eCart.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(itemCatGroup).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (store.AdminMgr.EditItemCatGroup(itemCatGroup))
+                    return RedirectToAction("Index");
             }
             return View(itemCatGroup);
         }
@@ -96,7 +95,7 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ItemCatGroup itemCatGroup = db.ItemCatGroups.Find(id);
+            ItemCatGroup itemCatGroup = store.AdminMgr.GetItemCatGroup((int)id);
             if (itemCatGroup == null)
             {
                 return HttpNotFound();
@@ -109,17 +108,17 @@ namespace eCart.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            ItemCatGroup itemCatGroup = db.ItemCatGroups.Find(id);
-            db.ItemCatGroups.Remove(itemCatGroup);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            ItemCatGroup itemCatGroup = store.AdminMgr.GetItemCatGroup((int)id);
+            if (store.AdminMgr.RemoveItemCatGroup(itemCatGroup))
+                return RedirectToAction("Index");
+            return View(itemCatGroup);
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                store.AdminMgr.DbDispose();
             }
             base.Dispose(disposing);
         }

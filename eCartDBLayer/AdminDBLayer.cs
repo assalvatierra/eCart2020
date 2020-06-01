@@ -187,8 +187,7 @@ namespace eCartDBLayer
 
         #endregion
 
-
-        #region MasterCities 
+        #region MasterAreas
         public bool AddMasterArea(MasterArea masterArea)
         {
             try
@@ -240,6 +239,356 @@ namespace eCartDBLayer
 
 
         #endregion
+
+        #region Item Categories
+        public bool AddItemCategory(ItemCategory itemCategory)
+        {
+            try
+            {
+                db.ItemCategories.Add(itemCategory);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
+        public bool EditItemCategory(ItemCategory itemCategory)
+        {
+            try
+            {
+                db.Entry(itemCategory).State = EntityState.Modified;
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public IQueryable<ItemCategory> GetItemCategories()
+        {
+            return db.ItemCategories;
+        }
+
+        public bool RemoveItemCategory(ItemCategory itemCategory)
+        {
+            try
+            {
+                db.ItemCategories.Remove(itemCategory);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+
+        #endregion
+
+        #region Item Categories Group
+        public bool AddItemCatGroup(ItemCatGroup itemCatGroup)
+        {
+            try
+            {
+                db.ItemCatGroups.Add(itemCatGroup);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
+        public bool EditItemCatGroup(ItemCatGroup itemCatGroup)
+        {
+            try
+            {
+                db.Entry(itemCatGroup).State = EntityState.Modified;
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public IQueryable<ItemCatGroup> GetItemCatGroups()
+        {
+            return db.ItemCatGroups;
+        }
+
+        public bool RemoveItemCatGroup(ItemCatGroup itemCatGroup)
+        {
+            try
+            {
+                db.ItemCatGroups.Remove(itemCatGroup);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+
+        #endregion
+
+        #region Item Masters
+        public bool AddItemMaster(ItemMaster itemMaster)
+        {
+            try
+            {
+                db.ItemMasters.Add(itemMaster);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
+        public bool EditItemMaster(ItemMaster itemMaster)
+        {
+            try
+            {
+                db.Entry(itemMaster).State = EntityState.Modified;
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public IQueryable<ItemMaster> GetItemMasters()
+        {
+            return db.ItemMasters;
+        }
+
+        public bool RemoveItemMaster(ItemMaster itemMaster)
+        {
+            try
+            {
+                db.ItemMasters.Remove(itemMaster);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+
+        #endregion
+
+        #region Store Payments
+        public bool AddStorePayment(StorePayment storePayment)
+        {
+            try
+            {
+                db.StorePayments.Add(storePayment);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
+        public bool EditStorePayment(StorePayment storePayment)
+        {
+            try
+            {
+                db.Entry(storePayment).State = EntityState.Modified;
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public IQueryable<StorePayment> GetStorePayments()
+        {
+            return db.StorePayments;
+        }
+
+        public bool RemoveStorePayment(StorePayment storePayment)
+        {
+            try
+            {
+                db.StorePayments.Remove(storePayment);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+        #endregion
+
+        #region Rider Details
+        public bool AddRiderDetails(RiderDetail riderDetail)
+        {
+            try
+            {
+                db.RiderDetails.Add(riderDetail);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
+        public bool EditRiderDetails(RiderDetail riderDetail)
+        {
+            try
+            {
+                db.Entry(riderDetail).State = EntityState.Modified;
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public IQueryable<RiderDetail> GetRiderDetails()
+        {
+            return db.RiderDetails;
+        }
+
+        public IQueryable<PaymentDetail> GetPaymentDetails()
+        {
+            return db.PaymentDetails;
+        }
+
+        public bool RemoveRiderDetails(RiderDetail riderDetail)
+        {
+            try
+            {
+                db.RiderDetails.Remove(riderDetail);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+        #endregion
+
+        #region Rider Details
+        public bool AddItemMasterCategory(ItemMasterCategory itemMasterCategory)
+        {
+            try
+            {
+                db.ItemMasterCategories.Add(itemMasterCategory);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
+
+        public IQueryable<ItemMasterCategory> GetItemMasterCategories()
+        {
+            return db.ItemMasterCategories;
+        }
+
+        public bool RemoveItemMasterCategory(ItemMasterCategory itemMasterCategory)
+        {
+            try
+            {
+                db.ItemMasterCategories.Remove(itemMasterCategory);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+        #endregion
+
+        #region Rider Details
+        public bool AddItemImage(ItemImage itemImage)
+        {
+            try
+            {
+                db.ItemImages.Add(itemImage);
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw e;
+                return false;
+            }
+        }
+
+
+
+        public IQueryable<ItemImage> GetItemImages()
+        {
+            return db.ItemImages;
+        }
+
+        public bool EditItemImage(ItemImage itemImage)
+        {
+            try
+            {
+                db.Entry(itemImage).State = EntityState.Modified;
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+        #endregion
+
+
+
 
     }
 }

@@ -371,6 +371,7 @@
     <Content Include="Areas\Store\Views\Store\StoreHeader.cshtml" />
     <Content Include="Areas\Shopper\Views\Accounts\Error.cshtml" />
     <Content Include="Areas\Store\Views\StorePickupPartners\_ModalPartnerRemove.cshtml" />
+    <Content Include="Areas\Admin\Views\ItemMasters\_ModalAddCategory.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />
     <Content Include="Scripts\DateRangePicker\moment.min.js" />

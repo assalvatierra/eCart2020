@@ -15,12 +15,17 @@ namespace eCartInterfaces
         IQueryable<ItemMaster> GetItemMaster();
         IQueryable<StoreDetail> GetStoreDetails();
         IQueryable<ItemCategory> GetItemCategories();
+        IQueryable<ItemCatGroup> GetItemCatGroups();
         IQueryable<ItemMasterCategory> GetItemMasterCategories();
         IQueryable<PaymentReceiver> GetPaymentReceivers();
         IQueryable<PaymentParty> GetPaymentParties();
         IQueryable<PaymentStatus> GetPaymentStatus();
+        IQueryable<PaymentDetail> GetPaymentDetails();
+        IQueryable<StorePaymentType> GetStorePaymentTypes();
+        IQueryable<StorePaymentStatus> GetStorePaymentStatus();
         IQueryable<StoreCategory> GetStoreCategories();
         IQueryable<UserStatus> GetUserStatusList();
+        IQueryable<RiderStatus> GetRiderStatus();
 
     }
 }

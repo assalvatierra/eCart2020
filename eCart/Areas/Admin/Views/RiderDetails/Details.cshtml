@@ -37,7 +37,7 @@
 
             <tbody>
 
-                @foreach (var delivery in Model.CartDeliveries as IEnumerable<eCart.Models.CartDelivery>)
+                @foreach (var delivery in Model.CartDeliveries as IEnumerable<eCartModels.CartDelivery>)
                 {
                     <tr>
                         <td> @delivery.dtDelivery.ToString("MMM dd yyyy hh:mm tt") </td>

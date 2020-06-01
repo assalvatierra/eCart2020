@@ -8,18 +8,19 @@ using System.Web;
 using System.Web.Mvc;
 using eCartModels;
 using eCartDBLayer;
+using eCartServices;
 
 namespace eCart.Areas.Admin.Controllers
 {
     public class ItemCategoriesController : Controller
     {
-        private ecartdbContainer db = new ecartdbContainer();
+        private StoreFactory store = new StoreFactory();
 
         // GET: Admin/ItemCategories
         public ActionResult Index()
         {
-            var itemCategories = db.ItemCategories.Include(i => i.ItemCatGroup);
-            return View(itemCategories.ToList());
+            var itemCategories = store.AdminMgr.GetItemCategoriesList();
+            return View(itemCategories);
         }
 
         // GET: Admin/ItemCategories/Details/5
@@ -29,7 +30,7 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ItemCategory itemCategory = db.ItemCategories.Find(id);
+            ItemCategory itemCategory = store.AdminMgr.GetItemCategory((int)id);
             if (itemCategory == null)
             {
                 return HttpNotFound();
@@ -40,7 +41,7 @@ namespace eCart.Areas.Admin.Controllers
         // GET: Admin/ItemCategories/Create
         public ActionResult Create()
         {
-            ViewBag.ItemCatGroupId = new SelectList(db.ItemCatGroups, "Id", "Name");
+            ViewBag.ItemCatGroupId = new SelectList(store.RefDbLayer.GetItemCatGroups(), "Id", "Name");
             return View();
         }
 
@@ -53,12 +54,11 @@ namespace eCart.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.ItemCategories.Add(itemCategory);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (store.AdminMgr.AddItemCategory(itemCategory))
+                    return RedirectToAction("Index");
             }
 
-            ViewBag.ItemCatGroupId = new SelectList(db.ItemCatGroups, "Id", "Name", itemCategory.ItemCatGroupId);
+            ViewBag.ItemCatGroupId = new SelectList(store.RefDbLayer.GetItemCatGroups(), "Id", "Name", itemCategory.ItemCatGroupId);
             return View(itemCategory);
         }
 
@@ -69,12 +69,12 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ItemCategory itemCategory = db.ItemCategories.Find(id);
+            ItemCategory itemCategory = store.AdminMgr.GetItemCategory((int)id);
             if (itemCategory == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ItemCatGroupId = new SelectList(db.ItemCatGroups, "Id", "Name", itemCategory.ItemCatGroupId);
+            ViewBag.ItemCatGroupId = new SelectList(store.RefDbLayer.GetItemCatGroups(), "Id", "Name", itemCategory.ItemCatGroupId);
             return View(itemCategory);
         }
 
@@ -87,11 +87,10 @@ namespace eCart.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(itemCategory).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (store.AdminMgr.EditItemCategory(itemCategory))
+                    return RedirectToAction("Index");
             }
-            ViewBag.ItemCatGroupId = new SelectList(db.ItemCatGroups, "Id", "Name", itemCategory.ItemCatGroupId);
+            ViewBag.ItemCatGroupId = new SelectList(store.RefDbLayer.GetItemCatGroups(), "Id", "Name", itemCategory.ItemCatGroupId);
             return View(itemCategory);
         }
 
@@ -102,7 +101,7 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ItemCategory itemCategory = db.ItemCategories.Find(id);
+            ItemCategory itemCategory = store.AdminMgr.GetItemCategory((int)id);
             if (itemCategory == null)
             {
                 return HttpNotFound();
@@ -115,17 +114,17 @@ namespace eCart.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            ItemCategory itemCategory = db.ItemCategories.Find(id);
-            db.ItemCategories.Remove(itemCategory);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            ItemCategory itemCategory = store.AdminMgr.GetItemCategory((int)id);
+            if (store.AdminMgr.RemoveItemCategory(itemCategory))
+                return RedirectToAction("Index");
+            return HttpNotFound();
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                store.AdminMgr.DbDispose();
             }
             base.Dispose(disposing);
         }

@@ -16,6 +16,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
+            <th>
+                Category
+            </th>
             <th></th>
         </tr>
 
@@ -23,7 +26,25 @@
         {
             <tr>
                 <td>
+                    @if (item.ItemImages.FirstOrDefault() != null)
+                    {
+                        <img src="@item.ItemImages.FirstOrDefault().ImageUrl" style="width:30px;" />
+                    }
+
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td id="category-@item.Id">
+                    @foreach (var category in item.ItemMasterCategories)
+                    {
+                        <span class="btn-group">
+                            <span class="btn btn-default btn-xs">  @category.ItemCategory.Name</span>
+                            <span class="btn btn-default btn-xs" onclick="RemoveItemCategory(this, @category.Id, '@category.ItemCategory.Name')">  &times; </span>
+                        </span>
+                    }
+
+                    <span class="btn btn-default btn-xs" data-target="#AddCategory" data-toggle="modal" style="cursor:pointer;" onclick="GetCategoryList(@item.Id);"> Add Category </span>
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
@@ -35,3 +56,7 @@
 
     </table>
 </div>
+
+
+
+@{Html.RenderPartial("_ModalAddCategory"); }

@@ -131,7 +131,6 @@ namespace eCartServices
         }
         #endregion
 
-
         #region Master City
         public bool AddMasterCity(MasterCity masterCity)
         {
@@ -255,6 +254,427 @@ namespace eCartServices
             }
         }
         #endregion
+
+        #region Item Categories
+        public bool AddItemCategory(ItemCategory itemCategory)
+        {
+            try
+            {
+                return adminDb.AddItemCategory(itemCategory);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool EditItemCategory(ItemCategory itemCategory)
+        {
+            try
+            {
+                return adminDb.EditItemCategory(itemCategory);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public ItemCategory GetItemCategory(int id)
+        {
+            try
+            {
+                return adminDb.GetItemCategories().Where(s => s.Id == id).FirstOrDefault();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public bool RemoveItemCategory(ItemCategory itemCategory)
+        {
+            try
+            {
+                return adminDb.RemoveItemCategory(itemCategory);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public List<ItemCategory> GetItemCategoriesList()
+        {
+            try
+            {
+                return adminDb.GetItemCategories().ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        #endregion
+
+        #region Item Categories Group
+        public bool AddItemCatGroup(ItemCatGroup itemCatGroup)
+        {
+            try
+            {
+                return adminDb.AddItemCatGroup(itemCatGroup);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool EditItemCatGroup(ItemCatGroup itemCatGroup)
+        {
+            try
+            {
+                return adminDb.EditItemCatGroup(itemCatGroup);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public ItemCatGroup GetItemCatGroup(int id)
+        {
+            try
+            {
+                return adminDb.GetItemCatGroups().Where(s => s.Id == id).FirstOrDefault();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public bool RemoveItemCatGroup(ItemCatGroup itemCatGroup)
+        {
+            try
+            {
+                return adminDb.RemoveItemCatGroup(itemCatGroup);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public List<ItemCatGroup> GetItemCatGroupList()
+        {
+            try
+            {
+                return adminDb.GetItemCatGroups().ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        #endregion
+
+        #region Item Masters
+        public bool AddItemMaster(ItemMaster itemMaster)
+        {
+            try
+            {
+                return adminDb.AddItemMaster(itemMaster);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool EditItemMaster(ItemMaster itemMaster)
+        {
+            try
+            {
+                return adminDb.EditItemMaster(itemMaster);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public ItemMaster GetItemMaster(int id)
+        {
+            try
+            {
+                return adminDb.GetItemMasters().Where(s => s.Id == id).FirstOrDefault();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public bool RemoveItemMaster(ItemMaster itemMaster)
+        {
+            try
+            {
+                return adminDb.RemoveItemMaster(itemMaster);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public List<ItemMaster> GetItemMasterList()
+        {
+            try
+            {
+                return adminDb.GetItemMasters().ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        #endregion
+
+        #region Store Payments
+        public bool AddStorePayment(StorePayment storePayment)
+        {
+            try
+            {
+                return adminDb.AddStorePayment(storePayment);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool EditStorePayment(StorePayment storePayment)
+        {
+            try
+            {
+                return adminDb.EditStorePayment(storePayment);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public StorePayment GetStorePayment(int id)
+        {
+            try
+            {
+                return adminDb.GetStorePayments().Where(s => s.Id == id).FirstOrDefault();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public bool RemoveStorePayment(StorePayment storePayment)
+        {
+            try
+            {
+                return adminDb.RemoveStorePayment(storePayment);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public List<StorePayment> GetStorePaymentList()
+        {
+            try
+            {
+                return adminDb.GetStorePayments().ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        #endregion
+
+        #region Rider Details
+        public bool AddRiderDetails(RiderDetail riderDetail)
+        {
+            try
+            {
+                return adminDb.AddRiderDetails(riderDetail);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool EditRiderDetails(RiderDetail riderDetail)
+        {
+            try
+            {
+                return adminDb.EditRiderDetails(riderDetail);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public RiderDetail GetRiderDetails(int id)
+        {
+            try
+            {
+                return adminDb.GetRiderDetails().Where(s => s.Id == id).FirstOrDefault();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public bool RemoveRiderDetails(RiderDetail riderDetail)
+        {
+            try
+            {
+                return adminDb.RemoveRiderDetails(riderDetail);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public List<RiderDetail> GetRiderDetailsList()
+        {
+            try
+            {
+                return adminDb.GetRiderDetails().ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        public List<PaymentDetail> GetPaymentDetails(int cartId)
+        {
+            return adminDb.GetPaymentDetails().Where(s => s.CartDetailId == cartId).ToList();
+        }
+        #endregion
+
+        #region Item Master Category
+        public bool AddItemMasterCategory(ItemMasterCategory itemMasterCategory)
+        {
+            try
+            {
+                return adminDb.AddItemMasterCategory(itemMasterCategory);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public ItemMasterCategory GetItemMasterCategory(int id)
+        {
+            try
+            {
+                return adminDb.GetItemMasterCategories().Where(s => s.Id == id).FirstOrDefault();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public bool RemoveItemMasterCategory(ItemMasterCategory itemMasterCategory)
+        {
+            try
+            {
+                return adminDb.RemoveItemMasterCategory(itemMasterCategory);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public List<ItemMasterCategory> GetItemMasterCategoryList()
+        {
+            try
+            {
+                return adminDb.GetItemMasterCategories().ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        #endregion
+
+        #region Item Master Category
+        public bool AddItemImage(ItemImage itemImage)
+        {
+            try
+            {
+                return adminDb.AddItemImage(itemImage);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public ItemImage GetItemImage(int id)
+        {
+            try
+            {
+                return adminDb.GetItemImages().Where(s => s.Id == id).FirstOrDefault();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+
+        public ItemImage GetItemImageByItemId(int id)
+        {
+            try
+            {
+                return adminDb.GetItemImages().Where(s => s.ItemMasterId == id).FirstOrDefault();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public bool EditItemImage(ItemImage itemImage)
+        {
+            try
+            {
+                return adminDb.EditItemImage(itemImage);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
+
+
+
 
 
     }

@@ -31,5 +31,39 @@ namespace eCartInterfaces
         bool EditMasterArea(MasterArea masterArea);
         bool RemoveMasterArea(MasterArea masterArea);
 
+        IQueryable<ItemCategory> GetItemCategories();
+        bool AddItemCategory(ItemCategory itemCategory);
+        bool EditItemCategory(ItemCategory itemCategory);
+        bool RemoveItemCategory(ItemCategory itemCategory);
+
+        IQueryable<ItemCatGroup> GetItemCatGroups();
+        bool AddItemCatGroup(ItemCatGroup itemCatGroup);
+        bool EditItemCatGroup(ItemCatGroup itemCatGroup);
+        bool RemoveItemCatGroup(ItemCatGroup itemCategory);
+
+        IQueryable<ItemMaster> GetItemMasters();
+        bool AddItemMaster(ItemMaster itemMaster);
+        bool EditItemMaster(ItemMaster itemMaster);
+        bool RemoveItemMaster(ItemMaster itemMaster);
+
+        IQueryable<StorePayment> GetStorePayments();
+        bool AddStorePayment(StorePayment storePayment);
+        bool EditStorePayment(StorePayment storePayment);
+        bool RemoveStorePayment(StorePayment storePayment);
+
+        IQueryable<RiderDetail> GetRiderDetails();
+        IQueryable<PaymentDetail> GetPaymentDetails();
+        bool AddRiderDetails(RiderDetail riderDetail);
+        bool EditRiderDetails(RiderDetail riderDetail);
+        bool RemoveRiderDetails(RiderDetail riderDetail);
+
+        IQueryable<ItemMasterCategory> GetItemMasterCategories();
+        bool AddItemMasterCategory(ItemMasterCategory itemMasterCategory);
+        bool RemoveItemMasterCategory(ItemMasterCategory itemMasterCategory);
+
+
+        IQueryable<ItemImage> GetItemImages();
+        bool AddItemImage(ItemImage itemImage);
+        bool EditItemImage(ItemImage itemImage);
     }
 }
