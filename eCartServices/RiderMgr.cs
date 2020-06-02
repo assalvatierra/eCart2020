@@ -13,6 +13,11 @@ namespace eCartServices
         private ecartdbContainer db = new ecartdbContainer();
         private iRiderDb rdb = new RiderDBLayer();
 
+        public bool DbDispose()
+        {
+            return rdb.DbDispose();
+        }
+
         public void AddCartPayment(RiderCashDetail cashDetail)
         {
             try
@@ -115,6 +120,46 @@ namespace eCartServices
         public List<RiderDetail> GetActiveRiders()
         {
             return rdb.GetRiderDetails().Where(r => r.RiderStatusId == 1).ToList();
+        }
+
+        public bool AddRiderDetails(RiderDetail riderDetail)
+        {
+            return rdb.AddRiderDetails(riderDetail);
+        }
+
+        public bool EditRiderDetails(RiderDetail riderDetail)
+        {
+            return rdb.EditRiderDetails(riderDetail);
+        }
+
+        public bool RemoveRiderDetails(RiderDetail riderDetail)
+        {
+            return rdb.RemoveRiderDetails(riderDetail);
+        }
+
+        public RiderDetail GetRiderDetails(int id)
+        {
+            return rdb.GetRiderDetails().Where(r => r.Id == id).FirstOrDefault();
+        }
+
+        public List<RiderDetail> GetRiderDetailsList()
+        {
+            return rdb.GetRiderDetails().ToList();
+        }
+
+        public CartDelivery GetCartDelivery(int id)
+        {
+            return rdb.GetCartDeliveries().Where(c => c.Id == id).FirstOrDefault();
+        }
+
+        public RiderCashDetail GetRiderCashDetailsByCartDetailId(int id)
+        {
+            return rdb.GetRiderCashDetails().Where(s => s.CartDetailId == id).OrderByDescending(s=>s.Id).FirstOrDefault();
+        }
+
+        public RiderCashDetail GetRiderCashDetails(int id)
+        {
+            return rdb.GetRiderCashDetails().Where(s => s.Id == id).OrderByDescending(s => s.Id).FirstOrDefault();
         }
     }
 }

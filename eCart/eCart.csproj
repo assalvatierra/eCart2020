@@ -179,6 +179,7 @@
     <Compile Include="Areas\Admin\Controllers\StoreKiosksController.cs" />
     <Compile Include="Areas\Admin\Controllers\StorePaymentsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserDetailsController.cs" />
+    <Compile Include="Areas\Rider\Controllers\RiderDetailsController.cs" />
     <Compile Include="Areas\Rider\RiderAreaRegistration.cs" />
     <Compile Include="Areas\Shopper\Controllers\AccountsController.cs" />
     <Compile Include="Areas\Shopper\Controllers\CartDetailsController.cs" />
@@ -214,6 +215,8 @@
     <Content Include="App_Data\aspnet-eCart-20200518113945_log.ldf">
       <DependentUpon>aspnet-eCart-20200518113945.mdf</DependentUpon>
     </Content>
+    <Content Include="Areas\Admin\img\bulleted-list-gray.png" />
+    <Content Include="Areas\Admin\img\bulleted-list.png" />
     <Content Include="Areas\Shopper\Scripts\kioskcheckout.js" />
     <Content Include="Areas\Shopper\Scripts\kiosk.js" />
     <Content Include="Areas\Shopper\Scripts\cart.js" />
@@ -378,6 +381,16 @@
     <Content Include="Areas\Admin\Views\StoreKiosks\Details.cshtml" />
     <Content Include="Areas\Admin\Views\StoreKiosks\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\StoreKiosks\Index.cshtml" />
+    <Content Include="Areas\Rider\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Rider\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Rider\Views\RiderDetails\Index.cshtml" />
+    <Content Include="Areas\Rider\Views\RiderDetails\Create.cshtml" />
+    <Content Include="Areas\Rider\Views\RiderDetails\Delete.cshtml" />
+    <Content Include="Areas\Rider\Views\RiderDetails\DeliveryDetails.cshtml" />
+    <Content Include="Areas\Rider\Views\RiderDetails\Details.cshtml" />
+    <Content Include="Areas\Rider\Views\RiderDetails\Edit.cshtml" />
+    <Content Include="Areas\Rider\Views\RiderDetails\_ModalPaymentAdd.cshtml" />
+    <Content Include="Areas\Rider\Views\RiderDetails\DeliveredCarts.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />
     <Content Include="Scripts\DateRangePicker\moment.min.js" />
@@ -434,9 +447,7 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
-    <Folder Include="Areas\Rider\Controllers\" />
     <Folder Include="Areas\Rider\Data\" />
-    <Folder Include="Areas\Rider\Views\Shared\" />
     <Folder Include="Areas\Shopper\Data\" />
     <Folder Include="Areas\Store\Data\" />
   </ItemGroup>

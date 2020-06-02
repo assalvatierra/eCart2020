@@ -1,0 +1,73 @@
+﻿@model IEnumerable<eCartModels.CartDelivery>
+
+@{
+    ViewBag.Title = "Index";
+    var Rider = ViewBag.Rider as eCartModels.RiderDetail;
+}
+
+<br />
+<div class="row panel bordered" >
+    <div class="panel-body">
+        <div class="row">
+
+            <img src="~/img/placeholders/food-delivery.png" class="col-lg-2 col-sm-12 rider-img" style="max-width:120px;" />
+
+            <div class="col-lg-8" style="margin:-15px;">
+                <h2 class="col-lg-12"> Rider Details </h2>
+                <div class="col-lg-10" style="font-size:15px;">
+                    <div class="col-lg-3">
+                        Name: <b>  @Rider.Name</b>
+                    </div>
+                    <div class="col-lg-6">
+                        Mobile:  <b>  @Rider.Mobile / @Rider.Mobile2 </b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 pull-right">
+                <div class="btn-group-vertical">
+                    @Html.ActionLink("Profile", "Details", new { id = Rider.Id }, new { @class = "btn btn-default" })
+                    @Html.ActionLink("Delivered Carts", "DeliveredCarts", new { id = Rider.Id }, new { @class = "btn btn-default" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <hr />
+                <h4><b> Active Carts For Delivery </b></h4>
+                <table class="table bordered">
+                    <thead>
+                        <tr>
+                            <th> CartID / Date </th>
+                            <th> Shopper / Location </th>
+                            <th> Status </th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var delivery in Model)
+                        {
+                            <tr>
+                                <td>
+                                    CartID:  @delivery.CartDetailId
+                                    <br />
+                                    <b> @delivery.dtDelivery.ToString("MMM dd yyyy hh:mm tt") </b>
+                                </td>
+                                <td>
+                                    @delivery.CartDetail.UserDetail.Name
+                                    <br />
+                                    @delivery.Address
+                                </td>
+                                <td>
+                                    @delivery.CartDetail.CartStatu.Name
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Details","DeliveryDetails", "RiderDetails",new { area="Rider", id = delivery.Id }, new { @class="btn btn-primary" } )
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

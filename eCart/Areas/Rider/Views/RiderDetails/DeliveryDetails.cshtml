@@ -1,0 +1,119 @@
+﻿@model eCartModels.CartDelivery
+
+@{
+    ViewBag.Title = "DeliveryDetails";
+    var Payments = ViewBag.RiderCashDetails as eCart.Models.RiderCashDetail;
+    var havePayment = Payments != null ? true : false;
+}
+<div class="row panel bordered">
+
+    <div class="panel-body">
+        <div class="col-lg-12">
+            <div class="row">
+                <h2 class="col-lg-12"> Delivery Details </h2>
+                <div class="col-lg-12"> @Html.ActionLink("Back to List", "Index", new { area = "Rider", id = Model.RiderDetailId })</div>
+                <p class="col-lg-4"> Delivery Status: <b> @ViewBag.DeliveryStatus </b> </p>
+
+                <div class="col-lg-8">
+                    <div class="btn-group">
+                        <button class="btn btn-default" onclick="UpdateStatus(@Model.Id, 2 )"> Item Pickup </button>
+                        <button class="btn btn-default" onclick="UpdateStatus(@Model.Id, 3 )"> In-Transit </button>
+                        <button class="btn btn-default" onclick="UpdateStatus(@Model.Id, 4 )"> Delivered </button>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-lg-12">
+                    <p> Order Status :  <b>@Model.CartDetail.CartStatu.Name </b> </p>
+                </div>
+                <div class="col-lg-4">
+                    <p>Deliver to:  <b>@Model.CartDetail.UserDetail.Name </b> </p>
+                </div>
+                <div class="col-lg-4">
+                    <p> Contact :  <b>@Model.CartDetail.UserDetail.Mobile </b> </p>
+                </div>
+                <div class="col-lg-12">
+                    <p>Address   :  <b> @Model.Address </b></p>
+                </div>
+                <div class="col-lg-4">
+                    <p> Delivery Date :  <b>@Model.dtDelivery.ToString("MMM dd yyyy") </b> </p>
+                </div>
+                <div class="col-lg-4">
+                    <p> Delivery Time :  <b>@Model.dtDelivery.ToShortTimeString() </b> </p>
+                </div>
+                <div class="col-lg-12">
+                    <p> Remarks :  <b>@Model.Remarks </b> </p>
+                </div>
+            </div>
+            <hr />
+        </div>
+        <div class="col-lg-12" style="left:-15px;">
+            <h4> Ordered Items </h4>
+        </div>
+        <table class="table bordered">
+            <thead>
+                <tr>
+                    <th> Item </th>
+                    <th style="min-width:50px;"> Price x Qty </th>
+                    <th> Total </th>
+                </tr>
+            </thead>
+            <tbody id="table-delivery">
+                @{ decimal subTotalAmount = 0; }
+                @foreach (var item in Model.CartDetail.CartItems)
+                {
+                    var qty = item.ItemQty;
+                    var unitprice = item.StoreItem.UnitPrice;
+                    var subtotal = qty * unitprice;
+                    subTotalAmount += subtotal;
+                    <tr>
+                        <td>
+                            <b> @item.StoreItem.ItemMaster.Name </b>
+                            <span class="text-muted">  @item.Remarks1 </span>
+                        </td>
+                        <td style="min-width:90px;">
+                            @item.ItemQty x
+                            @item.StoreItem.UnitPrice.ToString("0.00")
+                        </td>
+                        <td class="text-success"> <b> @subtotal.ToString("0.00")</b> </td>
+
+
+                    </tr>
+                }
+                <tr>
+                    <td colspan="2"> <b style="float:right;"> Total Amount:</b> </td>
+                    <td> <span style="color:forestgreen; font-size:20px;font-weight:bold;">Php @subTotalAmount.ToString("0.00") </span> </td>
+                </tr>
+
+                @if (Payments != null)
+                {
+                    <tr id="payment-row">
+                        <td colspan="2"> <b style="float:right;"> Payment:</b> </td>
+                        <td> <span style="color:dodgerblue; font-size:20px;font-weight:bold;">Php @Payments.Amount.ToString("0.00") </span> </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <!-- Delivery Actions -->
+        <div class="col-lg-12">
+            <div class="pull-right">
+                <button class="btn btn-primary" data-target="#paymentModal" data-toggle="modal" > Add Payment </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_ModalPaymentAdd", null, new ViewDataDictionary { { "RiderDetailId" , Model.RiderDetailId }, { "CartDetailID", Model.CartDetailId },
+    { "RiderCashParty" , ViewBag.RiderCashParty } ,{  "havePayment", havePayment } })
+
+
+<script>
+    function UpdateStatus(deliveryId, statusId) {
+
+        $.post("/Rider/RiderDetails/UpdateStatus", { id: deliveryId, statusId: statusId }).then(()=>{
+            window.location.reload();
+        });
+    }
+</script>
