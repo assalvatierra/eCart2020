@@ -73,7 +73,14 @@ namespace eCartInterfaces
 
         bool AddItemImage(ItemImage itemImage);
         bool EditItemImage(ItemImage itemImage);
+        bool RemoveItemImage(ItemImage itemImage);
         ItemImage GetItemImage(int id);
         ItemImage GetItemImageByItemId(int id);
+
+        bool AddStoreKiosk(StoreKiosk storeKiosk);
+        bool EditStoreKiosk(StoreKiosk storeKiosk);
+        bool RemoveStoreKiosk(StoreKiosk storeKiosk);
+        StoreKiosk GetStoreKiosk(int id);
+        List<StoreKiosk> GetStoreKioskList();
     }
 }

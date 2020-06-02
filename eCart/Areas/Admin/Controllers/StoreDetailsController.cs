@@ -34,6 +34,8 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.StoreKiosks = store.StoreMgr.GetStoreKiosks(storeDetail.Id);
+
             return View(storeDetail);
         }
 
@@ -150,5 +152,6 @@ namespace eCart.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }

@@ -13,7 +13,6 @@ namespace eCartDBLayer
     {
         ecartdbContainer db = new ecartdbContainer();
 
-
         public bool DbDispose()
         {
             try
@@ -508,7 +507,7 @@ namespace eCartDBLayer
 
         #endregion
 
-        #region Rider Details
+        #region Item Master Category
         public bool AddItemMasterCategory(ItemMasterCategory itemMasterCategory)
         {
             try
@@ -547,7 +546,7 @@ namespace eCartDBLayer
 
         #endregion
 
-        #region Rider Details
+        #region Item Image
         public bool AddItemImage(ItemImage itemImage)
         {
             try
@@ -556,9 +555,8 @@ namespace eCartDBLayer
                 db.SaveChanges();
                 return true;
             }
-            catch (Exception e)
+            catch 
             {
-                throw e;
                 return false;
             }
         }
@@ -585,10 +583,78 @@ namespace eCartDBLayer
 
         }
 
+        public bool RemoveItemImage(ItemImage itemImage)
+        {
+            try
+            {
+                db.ItemImages.Remove(itemImage);
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw e;
+                return false;
+            }
+        }
+
+
         #endregion
 
+        #region Item Image
 
 
+        public IQueryable<StoreKiosk> GetStoreKiosks()
+        {
+            return db.StoreKiosks;
+        }
+
+        public bool AddStoreKiosk(StoreKiosk storeKiosk)
+        {
+            try
+            {
+                db.StoreKiosks.Add(storeKiosk);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
+        public bool EditStoreKiosk(StoreKiosk storeKiosk)
+        {
+            try
+            {
+                db.Entry(storeKiosk).State = EntityState.Modified;
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+        public bool RemoveStoreKiosk(StoreKiosk storeKiosk)
+        {
+            try
+            {
+                db.StoreKiosks.Remove(storeKiosk);
+                db.SaveChanges();
+                return true;
+            }
+            catch 
+            {
+                return false;
+            }
+        }
+
+
+        #endregion
 
     }
 }

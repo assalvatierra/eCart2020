@@ -52,7 +52,6 @@
 
         $.get("/Admin/ItemMasters/GetItemCategoriesById", { id: categoryId })
             .then((result) => {
-                //console.log(result);
                 //add categories to the category modal
                 GenerateCategoryList(result, itemId);
 
@@ -67,7 +66,6 @@
         $("#AddCat-CategoryList").children().remove();
 
         for (var i = 0; i < categories.length; i++) {
-            //console.log(categories[i]["Name"]);
             let category = "<button class='list-group-item' onclick='SelectCategory(this," + itemId + ", " + categories[i]["Id"] + ")'> " + categories[i]["Name"] + " </button> ";
 
             $("#AddCat-CategoryList").append(category);
@@ -83,7 +81,7 @@
                 var tempCategory = "<div class='btn-group'>" +
                     "<button class='btn btn-default btn-xs'> " + $(e).text() + " </button>" +
                     "</div>";
-                $("#category-" + itemId).append(tempCategory);
+                $("#category-" + itemId).prepend(tempCategory);
             });
     }
 
@@ -102,4 +100,3 @@
         }
     }
 </script>
-  @*//"<button class='btn btn-default btn-xs' style='color:gray;' onclick='RemoveItemCategory(this," + categoryId + ")'>  &times; </button>" +*@

@@ -6,77 +6,80 @@
 
 <h2>Details</h2>
 
-<div>
-    <h4>StoreDetail</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.MasterArea.Name)
-        </dt>
+<div class="row panel bordered" style="padding:10px 20px; ">
+    <div class="col-lg-12">
+        <h2> @Model.Name </h2>
 
-        <dd>
-            @Html.DisplayFor(model => model.MasterArea.Name)
-        </dd>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.MasterCity.Name)
-        </dt>
+        <hr />
+    </div>
+    <div class="col-lg-6">
+        <div class="control-label">
+            <label class="text-muted"> Address: </label>
+            <label> @Model.Address  </label>
+        </div>
+        <div class="control-label">
+            <label class="text-muted"> Category: </label>
+            <label> @Model.StoreCategory.Name  </label>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.MasterCity.Name)
-        </dd>
+        <div class="control-label">
+            <label class="text-muted"> LoginId: </label>
+            <label> @Model.LoginId  </label>
+        </div>
+        <div class="control-label">
+            <label class="text-muted"> Remarks: </label>
+            <label> @Model.Remarks  </label>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="control-label">
+            <label class="text-muted"> Area: </label>
+            <label> @Model.MasterArea.Name  </label>
+        </div>
+        <div class="control-label">
+            <label class="text-muted"> City: </label>
+            <label> @Model.MasterCity.Name  </label>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.StoreCategory.Name)
-        </dt>
+        <div class="control-label">
+            <label class="text-muted"> Status: </label>
+            <label> @Model.StoreStatu.Name  </label>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <hr />
+    </div>
+    <div class="col-lg-12">
+        <h3> Store Kiosks </h3>
 
-        <dd>
-            @Html.DisplayFor(model => model.StoreCategory.Name)
-        </dd>
+        @Html.ActionLink("Create Kiosk", "Create", "StoreKiosks", new { id = Model.Id }, null)
+        <table class="table ">
+            <thead>
+                <tr>
+                    <th> Kiosk Name  </th>
+                    <th> </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var kiosk in ViewBag.StoreKiosks as IEnumerable<eCartModels.StoreKiosk>)
+                {
+                    <tr>
+                        <td> @kiosk.KioskName </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", "StoreKiosks", new { id = kiosk.Id }, null) |
 
-        <dt>
-            @Html.DisplayNameFor(model => model.StoreStatu.Name)
-        </dt>
+                            @Html.ActionLink("Delete", "Delete", "StoreKiosks", new { id = kiosk.Id }, null)
+                        </td>
+                    </tr>
+                }
+            </tbody>
 
-        <dd>
-            @Html.DisplayFor(model => model.StoreStatu.Name)
-        </dd>
+        </table>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LoginId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LoginId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Remarks)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Remarks)
-        </dd>
-
-    </dl>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
