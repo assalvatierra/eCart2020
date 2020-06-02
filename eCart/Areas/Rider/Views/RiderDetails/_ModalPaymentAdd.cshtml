@@ -1,0 +1,90 @@
+﻿<!-- Change Pickup Location Modal -->
+<div id="paymentModal" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="max-width:300px;">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"> Order Payment </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" hidden> <!-- Hidden -->
+                    <p class="control-label"> RiderId </p>
+                    <input type="text" class="form-control" id="RiderDetailId" value="@ViewBag.RiderDetailId" />
+                </div>
+                <div class="form-group" hidden> <!-- Hidden -->
+                    <p class="control-label"> CartDetailId </p>
+                    <input type="text" class="form-control" id="CartDetailId" value="@ViewBag.CartDetailId" />
+                </div>
+                <div class="form-group" hidden> <!-- Hidden -->
+                    <p class="control-label"> RiderCashParty </p>
+                    <select class="list-group form-control" id="RiderCashParty">
+                        @foreach (var party in ViewBag.RiderCashParty as IEnumerable<eCartModels.RiderCashParty>)
+                        {
+                            <option class="list-group-item" value="@party.Id">
+                                @party.Name - @party.Operation
+                            </option>
+                        }
+                     </select>
+                </div>
+                <div class="form-group" hidden> <!-- Hidden -->
+                    <p class="control-label"> Date </p>
+                    <input type="text" class="form-control" id="DtCash" />
+                </div>
+                <div class="form-group">
+                    <p class="control-label"> Amount </p>
+                    <input type="text" class="form-control" id="Amount" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="AddPayment()"> Submit </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/DateRangePicker/moment.min.js"></script>
+<script src="~/Scripts/DateRangePicker/daterangepicker.js"></script>
+<link href="~/Content/daterangepicker.css" rel="stylesheet" />
+<script>
+
+    $('#DtCash').daterangepicker({
+        singleDatePicker: true,
+        startDate: moment(),
+        showDropdowns: true,
+        timePicker: true,
+        timePicker24Hour: false,
+        timePickerIncrement: 10,
+        autoUpdateInput: true,
+        locale: {
+            format: 'MMM DD,YYYY h:mm A'
+        },
+    });
+
+    function AddPayment() {
+        var date = {
+            riderDetailId: $("#RiderDetailId").val(),
+            cartDetailId: $("#CartDetailId").val(),
+            riderCashPartyId: $("#RiderCashParty option:selected").val(),
+            dtCash: $("#DtCash").val(),
+            amount: $("#Amount").val()
+        }
+
+        var result = $.post("/Rider/RiderDetails/AddPayment", date).then(() => {
+            updateTablePayment($("#Amount").val());
+        });
+
+        console.log(result);
+    }
+
+    function updateTablePayment(amount) {
+        console.log("adding payment");
+
+        $("#payment-row").remove();
+            var payment = "<tr><td colspan='2'> <b style='float:right;'> Payment:</b> </td> " +
+                "<td> <span style='color:dodgerblue; font-size:20px;font-weight:bold;'>Php " + amount + "</span> </td>" +
+                "</tr>";
+       $("#table-delivery").append(payment);
+    }
+</script>

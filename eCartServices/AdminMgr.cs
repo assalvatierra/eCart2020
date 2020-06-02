@@ -620,7 +620,7 @@ namespace eCartServices
 
         #endregion
 
-        #region Item Master Category
+        #region Item Image
         public bool AddItemImage(ItemImage itemImage)
         {
             try
@@ -668,6 +668,68 @@ namespace eCartServices
             {
                 return false;
             }
+        }
+
+        public bool RemoveItemImage(ItemImage itemImage)
+        {
+            return adminDb.RemoveItemImage(itemImage);
+        }
+
+        #endregion
+
+        #region Store Kiosk
+        public bool AddStoreKiosk(StoreKiosk storeKiosk)
+        {
+            try
+            {
+                return adminDb.AddStoreKiosk(storeKiosk);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public StoreKiosk GetStoreKiosk(int id)
+        {
+            try
+            {
+                return adminDb.GetStoreKiosks().Where(s => s.Id == id).FirstOrDefault();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public List<StoreKiosk> GetStoreKioskList()
+        {
+            try
+            {
+                return adminDb.GetStoreKiosks().ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+
+        public bool EditStoreKiosk(StoreKiosk storeKiosk)
+        {
+            try
+            {
+                return adminDb.EditStoreKiosk(storeKiosk);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool RemoveStoreKiosk(StoreKiosk storeKiosk)
+        {
+            return adminDb.RemoveStoreKiosk(storeKiosk);
         }
 
         #endregion

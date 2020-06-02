@@ -61,9 +61,14 @@ namespace eCartInterfaces
         bool AddItemMasterCategory(ItemMasterCategory itemMasterCategory);
         bool RemoveItemMasterCategory(ItemMasterCategory itemMasterCategory);
 
-
         IQueryable<ItemImage> GetItemImages();
         bool AddItemImage(ItemImage itemImage);
         bool EditItemImage(ItemImage itemImage);
+        bool RemoveItemImage(ItemImage itemImage);
+
+        IQueryable<StoreKiosk> GetStoreKiosks();
+        bool AddStoreKiosk(StoreKiosk storeKiosk);
+        bool EditStoreKiosk(StoreKiosk storeKiosk);
+        bool RemoveStoreKiosk(StoreKiosk storeKiosk);
     }
 }

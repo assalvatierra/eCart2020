@@ -34,6 +34,7 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(itemMaster);
         }
 
@@ -143,6 +144,19 @@ namespace eCart.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             ItemMaster itemMaster = store.AdminMgr.GetItemMaster((int)id);
+
+            //check if item has img
+            var itemImg = store.AdminMgr.GetItemImageByItemId(itemMaster.Id);
+            if (itemImg != null)
+                store.AdminMgr.RemoveItemImage(itemImg);
+
+            //check if item categories
+            var itemCat = store.AdminMgr.GetItemMasterCategoryList().Where(c=>c.ItemMasterId == id);
+            foreach (var cat in itemCat)
+            {
+                RemoveItemCategory(cat.Id);
+            }
+
             if (store.AdminMgr.RemoveItemMaster(itemMaster))
                 return RedirectToAction("Index");
             return View(itemMaster);
