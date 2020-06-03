@@ -33,6 +33,7 @@
                 <td> Pickup Location </td>
                 <td> Total Items </td>
                 <td> Total Amount </td>
+                <td> Payment </td>
                 <td></td>
             </tr>
         </thead>
@@ -98,6 +99,13 @@
                         <span>
                             @amount.ToString("0.00")
                         </span>
+                    </td>
+                    <td>
+                        @if (cart.PaymentDetails.FirstOrDefault() != null)
+                        {
+                            @cart.PaymentDetails.LastOrDefault().Amount.ToString("0.00") <br />
+                            @cart.PaymentDetails.LastOrDefault().PaymentStatu.Name
+                        }
                     </td>
                     <td>
                         @Html.ActionLink("View Cart", "Details", "CartDetails", new { id = cart.Id }, new { @class="btn btn-primary" } )
