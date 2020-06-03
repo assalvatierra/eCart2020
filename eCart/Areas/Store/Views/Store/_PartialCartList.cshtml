@@ -101,14 +101,17 @@
                         </span>
                     </td>
                     <td>
-                        @if (cart.PaymentDetails.FirstOrDefault() != null)
-                        {
-                            @cart.PaymentDetails.LastOrDefault().Amount.ToString("0.00") <br />
-                            @cart.PaymentDetails.LastOrDefault().PaymentStatu.Name
-                        }
+                        <span id="table-payment-@cart.Id">
+                            @if (cart.PaymentDetails.FirstOrDefault() != null)
+                            {
+                                @cart.PaymentDetails.LastOrDefault().Amount.ToString("0.00") <br />
+                                @cart.PaymentDetails.LastOrDefault().PaymentStatu.Name
+                            }
+                        </span>
                     </td>
                     <td>
-                        @Html.ActionLink("View Cart", "Details", "CartDetails", new { id = cart.Id }, new { @class="btn btn-primary" } )
+                        @Html.ActionLink("View Cart", "Details", "CartDetails", new { id = cart.Id }, new { @class = "btn btn-primary" })
+                        <button class="btn btn-default" data-target="#PaymentModal" data-toggle="modal" onclick="SetPaymentCart(@cart.Id)"> Payment </button>
                     </td>
                 </tr>
             }

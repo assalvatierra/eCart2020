@@ -44,6 +44,9 @@
                 <a class="btn btn-default" href="@Url.Action("Index","StorePayments",new { id = ViewBag.StoreId })" style="width:100%;">
                     Subscription
                 </a>
+                <a class="btn btn-default" href="@Url.Action("Index","Cashier",new { id = ViewBag.StoreId })" style="width:100%;">
+                    Cashier
+                </a>
             </div>
         </div>
     </div>
@@ -51,7 +54,11 @@
 
 @Html.Partial("_PartialCartList", ViewBag.CartList as IEnumerable<eCartModels.CartDetail>, new ViewDataDictionary { { "StoreId", ViewBag.StoreId } })
 
+@Html.Partial("_ModalPayment", null, new ViewDataDictionary { { "PaymentReceiverList", ViewBag.PaymentReceiverList },
+    { "PaymentPartyList", ViewBag.PaymentPartyList }, { "PaymentStatusList", ViewBag.PaymentStatusList } })
+
 @section Scripts{
+    <script src="~/Areas/Store/Scripts/CartDetails/ModalPayment.js"></script>
     <script>
         $(document).ready(function () { updateFilterStatus(); });
 
@@ -62,20 +69,20 @@
 
             if (cartStatus != null) {
 
-            switch (cartStatus.toString()) {
-                case '5':
-                    $('#cartStatus-Delivered').siblings().removeClass('active');
-                    $('#cartStatus-Delivered').addClass('active');
-                    break;
-                case '6':
-                    $('#cartStatus-Cancelled').siblings().removeClass('active');
-                    $('#cartStatus-Cancelled').addClass('active');
-                    break;
-                default:
-                    $('#cartStatus-Active').siblings().removeClass('active');
-                    $('#cartStatus-Active').addClass('active');
-                    break;
-            }
+                switch (cartStatus.toString()) {
+                    case '5':
+                        $('#cartStatus-Delivered').siblings().removeClass('active');
+                        $('#cartStatus-Delivered').addClass('active');
+                        break;
+                    case '6':
+                        $('#cartStatus-Cancelled').siblings().removeClass('active');
+                        $('#cartStatus-Cancelled').addClass('active');
+                        break;
+                    default:
+                        $('#cartStatus-Active').siblings().removeClass('active');
+                        $('#cartStatus-Active').addClass('active');
+                        break;
+                }
 
             }
         }
