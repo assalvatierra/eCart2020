@@ -59,6 +59,5 @@ namespace eCartInterfaces
         List<StoreKiosk> GetStoreKiosks(int storeId);
 
 
-
     }
 }

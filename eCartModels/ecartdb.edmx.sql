@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/29/2020 17:48:58
+-- Date Created: 06/03/2020 16:38:33
 -- Generated from EDMX file: C:\Users\VILLOSA\source\repos\eCart2020\eCartModels\ecartdb.edmx
 -- --------------------------------------------------
 
@@ -642,6 +642,18 @@ CREATE TABLE [dbo].[StoreKioskOrders] (
 );
 GO
 
+-- Creating table 'CartReleases'
+CREATE TABLE [dbo].[CartReleases] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [DtRelease] datetime  NOT NULL,
+    [ReleaseBy] nvarchar(30)  NULL,
+    [LoginId] nvarchar(50)  NOT NULL,
+    [CartDetailId] int  NOT NULL,
+    [UserDetailId] int  NOT NULL,
+    [StorePickupPointId] int  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -877,6 +889,12 @@ GO
 -- Creating primary key on [Id] in table 'StoreKioskOrders'
 ALTER TABLE [dbo].[StoreKioskOrders]
 ADD CONSTRAINT [PK_StoreKioskOrders]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'CartReleases'
+ALTER TABLE [dbo].[CartReleases]
+ADD CONSTRAINT [PK_CartReleases]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -1602,6 +1620,51 @@ GO
 CREATE INDEX [IX_FK_CartDetailCartHistory]
 ON [dbo].[CartHistories]
     ([CartDetailId]);
+GO
+
+-- Creating foreign key on [CartDetailId] in table 'CartReleases'
+ALTER TABLE [dbo].[CartReleases]
+ADD CONSTRAINT [FK_CartReleaseCartDetail]
+    FOREIGN KEY ([CartDetailId])
+    REFERENCES [dbo].[CartDetails]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CartReleaseCartDetail'
+CREATE INDEX [IX_FK_CartReleaseCartDetail]
+ON [dbo].[CartReleases]
+    ([CartDetailId]);
+GO
+
+-- Creating foreign key on [UserDetailId] in table 'CartReleases'
+ALTER TABLE [dbo].[CartReleases]
+ADD CONSTRAINT [FK_CartReleaseUserDetail]
+    FOREIGN KEY ([UserDetailId])
+    REFERENCES [dbo].[UserDetails]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CartReleaseUserDetail'
+CREATE INDEX [IX_FK_CartReleaseUserDetail]
+ON [dbo].[CartReleases]
+    ([UserDetailId]);
+GO
+
+-- Creating foreign key on [StorePickupPointId] in table 'CartReleases'
+ALTER TABLE [dbo].[CartReleases]
+ADD CONSTRAINT [FK_StorePickupPointCartRelease]
+    FOREIGN KEY ([StorePickupPointId])
+    REFERENCES [dbo].[StorePickupPoints]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_StorePickupPointCartRelease'
+CREATE INDEX [IX_FK_StorePickupPointCartRelease]
+ON [dbo].[CartReleases]
+    ([StorePickupPointId]);
 GO
 
 -- --------------------------------------------------

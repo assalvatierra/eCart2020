@@ -27,6 +27,7 @@
                 </div>
                 <div class="btn-group  pull-right">
                     <button class="btn btn-default" data-target="#PaymentModal" data-toggle="modal"> Payment </button>
+                    <button class="btn btn-default" data-target="#CartReleaseModal" data-toggle="modal"> Cart Release </button>
                     @Html.ActionLink("History", "CartHistory", new { id = Model.Id }, new { @class = "btn btn-default" })
                 </div>
             </div>
@@ -163,11 +164,17 @@
     { "PaymentPartyList", ViewBag.PaymentPartyList }, { "PaymentStatusList", ViewBag.PaymentStatusList }, { "CartId", Model.Id } })
 
 
+
+@Html.Partial("_ModalCartRelease", null, new ViewDataDictionary { { "StorePickupPoints", ViewBag.StorePickupPoints },
+    { "UserDetails", ViewBag.UserDetails }, { "CartId", Model.Id } , { "UserId", ViewBag.UserId } , { "UserEmail", ViewBag.UserEmail } })
+
+
 @section Scripts{
     <script src="~/Areas/Store/Scripts/CartDetails/ModalPayment.js"></script>
     <script src="~/Areas/Store/Scripts/CartDetails/PartialCartDelivery.js"></script>
     <script src="~/Areas/Store/Scripts/CartDetails/ModalCartDeliveryAdd.js"></script>
     <script src="~/Areas/Store/Scripts/CartDetails/ModalCartDeliveryEdit.js"></script>
+    <script src="~/Areas/Store/Scripts/CartDetails/ModalCartRelease.js"></script>
     <script>
     //on document ready
         $(function () {
@@ -201,7 +208,7 @@
                 default:
                     break;
             }
-            
+
         }
 
     function SetCartStatus(cartId, statusId, status) {

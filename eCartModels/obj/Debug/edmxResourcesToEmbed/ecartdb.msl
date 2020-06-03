@@ -394,5 +394,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="CartReleases">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.CartRelease)">
+        <MappingFragment StoreEntitySet="CartReleases">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DtRelease" ColumnName="DtRelease" />
+          <ScalarProperty Name="ReleaseBy" ColumnName="ReleaseBy" />
+          <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+          <ScalarProperty Name="CartDetailId" ColumnName="CartDetailId" />
+          <ScalarProperty Name="UserDetailId" ColumnName="UserDetailId" />
+          <ScalarProperty Name="StorePickupPointId" ColumnName="StorePickupPointId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

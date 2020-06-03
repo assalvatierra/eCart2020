@@ -27,6 +27,7 @@ namespace eCartInterfaces
         IQueryable<UserStatus> GetUserStatusList();
         IQueryable<RiderStatus> GetRiderStatus();
         IQueryable<RiderCashParty> GetRiderCashParties();
+        IQueryable<UserDetail> GetUserDetails();
 
     }
 }

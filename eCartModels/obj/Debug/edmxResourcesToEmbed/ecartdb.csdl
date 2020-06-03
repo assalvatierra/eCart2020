@@ -232,6 +232,19 @@
       <End Role="CartDetail" EntitySet="CartDetails" />
       <End Role="CartHistory" EntitySet="CartHistories" />
     </AssociationSet>
+    <EntitySet Name="CartReleases" EntityType="ecartdb.CartRelease" />
+    <AssociationSet Name="CartReleaseCartDetail" Association="ecartdb.CartReleaseCartDetail">
+      <End Role="CartRelease" EntitySet="CartReleases" />
+      <End Role="CartDetail" EntitySet="CartDetails" />
+    </AssociationSet>
+    <AssociationSet Name="CartReleaseUserDetail" Association="ecartdb.CartReleaseUserDetail">
+      <End Role="CartRelease" EntitySet="CartReleases" />
+      <End Role="UserDetail" EntitySet="UserDetails" />
+    </AssociationSet>
+    <AssociationSet Name="StorePickupPointCartRelease" Association="ecartdb.StorePickupPointCartRelease">
+      <End Role="StorePickupPoint" EntitySet="StorePickupPoints" />
+      <End Role="CartRelease" EntitySet="CartReleases" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="UserDetail">
     <Key>
@@ -251,6 +264,7 @@
     <NavigationProperty Name="MasterCity" Relationship="ecartdb.MasterCityUserDetail" FromRole="UserDetail" ToRole="MasterCity" />
     <NavigationProperty Name="CartDetails" Relationship="ecartdb.UserDetailCartDetail" FromRole="UserDetail" ToRole="CartDetail" />
     <NavigationProperty Name="MasterArea" Relationship="ecartdb.MasterAreaUserDetail" FromRole="UserDetail" ToRole="MasterArea" />
+    <NavigationProperty Name="CartReleases" Relationship="ecartdb.CartReleaseUserDetail" FromRole="UserDetail" ToRole="CartRelease" />
   </EntityType>
   <EntityType Name="StoreDetail">
     <Key>
@@ -388,6 +402,7 @@
     <NavigationProperty Name="StorePickupPoint" Relationship="ecartdb.StorePickupPointCartDetail" FromRole="CartDetail" ToRole="StorePickupPoint" />
     <Property Name="StorePickupPointId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="CartHistories" Relationship="ecartdb.CartDetailCartHistory" FromRole="CartDetail" ToRole="CartHistory" />
+    <NavigationProperty Name="CartReleases" Relationship="ecartdb.CartReleaseCartDetail" FromRole="CartDetail" ToRole="CartRelease" />
   </EntityType>
   <EntityType Name="CartItem">
     <Key>
@@ -456,6 +471,7 @@
     <NavigationProperty Name="StorePickupPartners" Relationship="ecartdb.StorePickupPointStorePickupPartner" FromRole="StorePickupPoint" ToRole="StorePickupPartner" />
     <NavigationProperty Name="StorePickupStatu" Relationship="ecartdb.StorePickupStatusStorePickupPoint" FromRole="StorePickupPoint" ToRole="StorePickupStatus" />
     <NavigationProperty Name="CartDetails" Relationship="ecartdb.StorePickupPointCartDetail" FromRole="StorePickupPoint" ToRole="CartDetail" />
+    <NavigationProperty Name="CartReleases" Relationship="ecartdb.StorePickupPointCartRelease" FromRole="StorePickupPoint" ToRole="CartRelease" />
   </EntityType>
   <EntityType Name="StorePickupPartner">
     <Key>
@@ -1256,6 +1272,57 @@
       </Principal>
       <Dependent Role="CartHistory">
         <PropertyRef Name="CartDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="CartRelease">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DtRelease" Type="DateTime" Nullable="false" Precision="3" ConcurrencyMode="None" />
+    <Property Name="ReleaseBy" Type="String" Nullable="true" FixedLength="false" MaxLength="30" Unicode="true" />
+    <Property Name="LoginId" Type="String" Nullable="false" FixedLength="false" MaxLength="50" Unicode="true" />
+    <NavigationProperty Name="CartDetail" Relationship="ecartdb.CartReleaseCartDetail" FromRole="CartRelease" ToRole="CartDetail" />
+    <Property Name="CartDetailId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="UserDetail" Relationship="ecartdb.CartReleaseUserDetail" FromRole="CartRelease" ToRole="UserDetail" />
+    <Property Name="UserDetailId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="StorePickupPoint" Relationship="ecartdb.StorePickupPointCartRelease" FromRole="CartRelease" ToRole="StorePickupPoint" />
+    <Property Name="StorePickupPointId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="CartReleaseCartDetail">
+    <End Type="ecartdb.CartRelease" Role="CartRelease" Multiplicity="*" />
+    <End Type="ecartdb.CartDetail" Role="CartDetail" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="CartDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartRelease">
+        <PropertyRef Name="CartDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CartReleaseUserDetail">
+    <End Type="ecartdb.CartRelease" Role="CartRelease" Multiplicity="*" />
+    <End Type="ecartdb.UserDetail" Role="UserDetail" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="UserDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartRelease">
+        <PropertyRef Name="UserDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StorePickupPointCartRelease">
+    <End Type="ecartdb.StorePickupPoint" Role="StorePickupPoint" Multiplicity="1" />
+    <End Type="ecartdb.CartRelease" Role="CartRelease" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StorePickupPoint">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartRelease">
+        <PropertyRef Name="StorePickupPointId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

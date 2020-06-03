@@ -831,5 +831,35 @@ namespace eCartServices
         }
 
         #endregion
+
+
+        #region Cart Release
+
+        public bool AddCartRelease(CartRelease cartRelease)
+        {
+            return cartdb.AddCartRelease(cartRelease);
+        }
+
+        public bool EditCartRelease(CartRelease cartRelease)
+        {
+            return cartdb.EditCartRelease(cartRelease);
+        }
+
+        public bool RemoveCartRelease(CartRelease cartRelease)
+        {
+            return cartdb.RemoveCartRelease(cartRelease);
+        }
+
+        public CartRelease GetCartRelease(int id)
+        {
+            return cartdb.GetCartReleases().Where(c=>c.Id == id).FirstOrDefault();
+        }
+
+        public List<CartRelease> GetCartReleases()
+        {
+            return cartdb.GetCartReleases().ToList();
+        }
+
+        #endregion
     }
 }

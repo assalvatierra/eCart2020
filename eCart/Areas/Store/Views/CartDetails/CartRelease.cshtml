@@ -1,0 +1,43 @@
+﻿@model eCartModels.CartRelease
+
+@{
+    ViewBag.Title = "CartHistory";
+}
+    <div>
+        <br />
+        <p>
+            @Html.ActionLink("Back Cart Details", "Details", "CartDetails", new { area = "Store", id = Model.CartDetailId }, null)
+        </p>
+    </div>
+<div class="panel panel-padding bordered">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>Cart Release Details</h2>
+        </div>
+        <div class="form-group col-lg-12">
+            <label>  <span class="text-muted">Cart #:</span> 
+            @Model.CartDetailId.ToString("0000") </label>
+        </div>
+
+        <div class="form-group col-lg-6">
+            <label> <span class="text-muted">Date Release:</span> 
+            @Model.DtRelease.ToString("MMM dd yyyy h:mm tt") </label>
+        </div>
+
+        <div class="form-group col-lg-6">
+            <label> <span class="text-muted">Release By:</span>
+            @Model.ReleaseBy </label>
+        </div>
+
+        <div class="form-group col-lg-6">
+            <label> <span class="text-muted">Pickup Location:</span>
+            @Model.StorePickupPoint.Address </label>
+        </div>
+
+        <div class="form-group col-lg-6">
+            <label> <span class="text-muted">Recieved By:</span>
+            @Model.UserDetail.Name </label>
+        </div>
+
+    </div>
+</div>

@@ -387,3 +387,7 @@ textarea {
     vertical-align: sub;
     width: 18px;
 }
+
+.panel-padding{
+    padding:20px;
+}

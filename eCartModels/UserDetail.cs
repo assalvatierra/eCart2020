@@ -18,6 +18,7 @@ namespace eCartModels
         public UserDetail()
         {
             this.CartDetails = new HashSet<CartDetail>();
+            this.CartReleases = new HashSet<CartRelease>();
         }
     
         public int Id { get; set; }
@@ -36,5 +37,7 @@ namespace eCartModels
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CartDetail> CartDetails { get; set; }
         public virtual MasterArea MasterArea { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CartRelease> CartReleases { get; set; }
     }
 }

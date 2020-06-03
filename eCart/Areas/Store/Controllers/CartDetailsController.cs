@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using eCartDbLayer;
 using eCartModels;
 using eCartServices;
@@ -32,6 +33,12 @@ namespace eCart.Areas.Store.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+            var userId = HttpContext.User.Identity.GetUserId();
+            if (userId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             CartDetail cartDetail = store.CartMgr.GetCartDetail((int)id);
 
             ViewBag.StoreId = cartDetail.StoreDetailId;
@@ -42,7 +49,12 @@ namespace eCart.Areas.Store.Controllers
             ViewBag.PaymentDetails = store.CartMgr.GetCartPaymentDetails((int)id);
             ViewBag.CartDelivery = store.CartMgr.GetCartDeliveries((int)id);
             ViewBag.RiderList = store.RiderMgr.GetActiveRiders();
-           
+
+            //cart Realease
+            ViewBag.StorePickupPoints = new SelectList(store.CartMgr.GetStorePickupPoints(cartDetail.StoreDetailId), "Id", "Address", cartDetail.StorePickupPointId);
+            ViewBag.UserDetails = new SelectList(store.RefDbLayer.GetUserDetails().Where(u => u.UserStatusId == 1), "Id", "Name", cartDetail.UserDetailId);
+            ViewBag.UserId = userId;
+            ViewBag.UserEmail = HttpContext.User.Identity.GetUserName();
 
             if (cartDetail == null)
             {
@@ -246,6 +258,54 @@ namespace eCart.Areas.Store.Controllers
 
             return Json(cartDeliveryActivity, JsonRequestBehavior.AllowGet);
         }
+
+
         #endregion
+
+        #region cart release
+        [HttpPost]
+        public int AddCartRelease(string date, string releaseBy, string userId, int cartDetailId, int userDetailId, int storePickupPointId)
+        {
+            try
+            {
+                var cartRelease = new CartRelease()
+                {
+                    DtRelease = DateTime.Parse(date),
+                    ReleaseBy = releaseBy,
+                    LoginId = userId,
+                    CartDetailId = cartDetailId,
+                    UserDetailId = userDetailId,
+                    StorePickupPointId = storePickupPointId
+                };
+
+                if (store.CartMgr.AddCartRelease(cartRelease))
+                {
+                    return cartRelease.Id;
+                }
+                else
+                {
+                    //error
+                    return 0;
+                }
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        public ActionResult CartRelease(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var cartRelease = store.CartMgr.GetCartRelease((int)id);
+
+            return View(cartRelease);
+        }
+        #endregion
+
     }
+
 }

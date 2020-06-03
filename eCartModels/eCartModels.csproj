@@ -72,6 +72,9 @@
     <Compile Include="CartItemStatus.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
+    <Compile Include="CartRelease.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
     <Compile Include="CartStatus.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>

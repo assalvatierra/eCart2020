@@ -227,6 +227,7 @@
     <Content Include="Areas\Store\Scripts\CartDetails\CartStatus.js" />
     <Content Include="Areas\Store\Scripts\CartDetails\ModalCartDeliveryAdd.js" />
     <Content Include="Areas\Store\Scripts\CartDetails\ModalCartDeliveryEdit.js" />
+    <Content Include="Areas\Store\Scripts\CartDetails\ModalCartRelease.js" />
     <Content Include="Areas\Store\Scripts\CartDetails\ModalPayment.js" />
     <Content Include="Areas\Store\Scripts\CartDetails\PartialCartDelivery.js" />
     <Content Include="Areas\Store\Scripts\StoreItems\AddItem.js" />
@@ -399,6 +400,8 @@
     <Content Include="Areas\Store\Views\Cashier\Index.cshtml" />
     <Content Include="Areas\Store\Views\Cashier\CartDetails.cshtml" />
     <Content Include="Areas\Store\Views\Store\_ModalPayment.cshtml" />
+    <Content Include="Areas\Store\Views\CartDetails\CartRelease.cshtml" />
+    <Content Include="Areas\Store\Views\CartDetails\_ModalCartRelease.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />
     <Content Include="Scripts\DateRangePicker\moment.min.js" />

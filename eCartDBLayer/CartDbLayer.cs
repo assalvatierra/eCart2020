@@ -365,5 +365,52 @@ namespace eCartDbLayer
         {
             return db.StoreKioskOrders;
         }
+
+        public IQueryable<CartRelease> GetCartReleases()
+        {
+            return db.CartReleases;
+        }
+
+        public bool AddCartRelease(CartRelease cartRelease)
+        {
+            try
+            {
+                db.CartReleases.Add(cartRelease);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool EditCartRelease(CartRelease cartRelease)
+        {
+            try
+            {
+                db.Entry(cartRelease).State = EntityState.Modified;
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool RemoveCartRelease(CartRelease cartRelease)
+        {
+            try
+            {
+                db.CartReleases.Remove(cartRelease);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }
