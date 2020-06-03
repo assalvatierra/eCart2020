@@ -102,5 +102,10 @@ namespace eCartDbLayer
         {
             return db.RiderCashParties;
         }
+
+        public IQueryable<UserDetail> GetUserDetails()
+        {
+            return db.UserDetails;
+        }
     }
 }

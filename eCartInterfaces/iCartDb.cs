@@ -43,6 +43,11 @@ namespace eCartInterfaces
 
         bool RemoveCartDelivery(CartDelivery cartDelivery);
 
+        IQueryable<CartRelease> GetCartReleases();
+        bool AddCartRelease(CartRelease cartRelease);
+        bool EditCartRelease(CartRelease cartRelease);
+        bool RemoveCartRelease(CartRelease cartRelease);
+
         bool Save();
     }
 }

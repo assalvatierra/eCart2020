@@ -52,5 +52,11 @@ namespace eCartInterfaces
         StoreKioskOrder GetStoreKioskOrder(int id);
         List<StoreKioskOrder> GetStoreKioskOrderList(int storeId);
         List<StoreKiosk> GetStoreKioskList(int id);
+
+        bool AddCartRelease(CartRelease cartRelease);
+        bool EditCartRelease(CartRelease cartRelease);
+        bool RemoveCartRelease(CartRelease cartRelease);
+        CartRelease GetCartRelease(int id);
+        List<CartRelease> GetCartReleases();
     }
 }

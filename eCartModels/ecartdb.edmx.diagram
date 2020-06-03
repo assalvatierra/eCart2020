@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="da403231fa2d42db801b54b6b611a007" Name="Diagram1" ZoomLevel="61" >
+      <Diagram DiagramId="da403231fa2d42db801b54b6b611a007" Name="Diagram1" ZoomLevel="90" >
         <EntityTypeShape EntityType="ecartdb.UserDetail" Width="1.5" PointX="9.75" PointY="10" />
         <EntityTypeShape EntityType="ecartdb.StoreDetail" Width="1.5" PointX="15.5" PointY="18.125" />
         <EntityTypeShape EntityType="ecartdb.UserStatus" Width="1.5" PointX="7.875" PointY="8.125" />
@@ -93,6 +93,17 @@
         </AssociationConnector>
         <AssociationConnector Association="ecartdb.StorePickupPointCartDetail" />
         <AssociationConnector Association="ecartdb.CartDetailCartHistory" />
+        <EntityTypeShape EntityType="ecartdb.CartRelease" Width="1.5" PointX="23" PointY="24.5" />
+        <AssociationConnector Association="ecartdb.CartReleaseCartDetail" />
+        <AssociationConnector Association="ecartdb.CartReleaseUserDetail" />
+        <AssociationConnector Association="ecartdb.StorePickupPointCartRelease" ManuallyRouted="true" >
+          <ConnectorPoint PointX="24.5" PointY="18.566793619791667" />
+          <ConnectorPoint PointX="24.875" PointY="18.941793619791667" />
+          <ConnectorPoint PointX="25.885994711699169" PointY="18.941793619791667" />
+          <ConnectorPoint PointX="25.885994711699169" PointY="24.125" />
+          <ConnectorPoint PointX="24.875" PointY="24.125" />
+          <ConnectorPoint PointX="24.5" PointY="24.5" />
+        </AssociationConnector>
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
