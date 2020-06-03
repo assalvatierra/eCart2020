@@ -380,3 +380,10 @@ textarea {
 .normal-cursor {
     cursor: default;
 }
+
+/* Store Styles */
+
+.store-cart-status-icon {
+    vertical-align: sub;
+    width: 18px;
+}

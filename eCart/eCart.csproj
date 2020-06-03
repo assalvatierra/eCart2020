@@ -295,6 +295,9 @@
     <Content Include="img\placeholders\placeholder-images-product-3_large.png" />
     <Content Include="img\placeholders\placeholder-product.png" />
     <Content Include="img\placeholders\shopping-cart-colour-thumbnail.png" />
+    <Content Include="img\store\icons\cart-ok-40.png" />
+    <Content Include="img\store\icons\cart-process-40.png" />
+    <Content Include="img\store\icons\submit-48.png" />
     <Content Include="img\store\shopping-cart-24.png" />
     <Content Include="img\store\storefront.png" />
     <Content Include="Scripts\bootstrap.js" />
@@ -391,6 +394,7 @@
     <Content Include="Areas\Rider\Views\RiderDetails\Edit.cshtml" />
     <Content Include="Areas\Rider\Views\RiderDetails\_ModalPaymentAdd.cshtml" />
     <Content Include="Areas\Rider\Views\RiderDetails\DeliveredCarts.cshtml" />
+    <Content Include="Areas\Shopper\Views\CartDetails\Details.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />
     <Content Include="Scripts\DateRangePicker\moment.min.js" />

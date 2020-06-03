@@ -51,22 +51,6 @@
                         <h3> @cart.StoreDetail.Name </h3>
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-12">
-                        <span> Pickup Point: </span> <br />
-                        @if (cart.DeliveryType == "Delivery")
-                        {
-                            <a href="" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetailId')" id="pickupAddress-@cart.Id" value="0">
-                                Delivery
-                            </a>
-                        }
-                        else
-                        {
-                            <a href="" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetailId')" id="pickupAddress-@cart.Id" value="@cart.StorePickupPointId">
-                                @cart.StorePickupPoint.Address
-                            </a>
-                        }
-
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12">
                         <span> DateTime Pickup: </span>
                         <input type="text" name="pickup-date" value="@cart.DtPickup" class="date-link" onchange="dateChanged(@cart.Id)">
                         <span id="cartID" hidden> @cart.Id </span>
@@ -89,7 +73,6 @@
                                 {
                                     <span> On Pickup </span>
                                 }
-
                         </a>
                     </div>
                 </div>
@@ -152,7 +135,24 @@
             </div>
             <div class="row panel-footer" style="margin:0px;">
                 <div class="col-lg-10">
-                    <h4> Amount: <b class="text-success"> Php @subtotalAmount.ToString("0.00") </b> </h4>
+                    <h4>
+                        Amount: <b class="text-success"> Php @subtotalAmount.ToString("0.00") </b>
+                        <span class="text-muted" style="margin-left:20px;"> Pickup Point:  
+                            @if (cart.DeliveryType == "Delivery")
+                            { 
+                                <a href="" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetailId')" id="pickupAddress-@cart.Id" value="0">
+                                    Delivery
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetailId')" id="pickupAddress-@cart.Id" value="@cart.StorePickupPointId">
+                                    @cart.StorePickupPoint.Address
+                                </a>
+                            }
+                        </span>
+                    </h4>
+
                 </div>
                 <div class="col-lg-2">
                     @if (cart.CartStatusId == 1)

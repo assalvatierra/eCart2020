@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using eCartServices;
 using eCartModels;
 using Microsoft.AspNet.Identity;
+using System.Net;
 
 namespace eCart.Areas.Shopper.Controllers
 {
@@ -19,8 +20,29 @@ namespace eCart.Areas.Shopper.Controllers
             return View();
         }
 
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            CartDetail cartDetail = store.CartMgr.GetCartDetail((int)id);
+
+            ViewBag.StoreId = cartDetail.StoreDetailId;
+            ViewBag.Store = cartDetail.StoreDetail.Name;
+            ViewBag.PaymentDetails = store.CartMgr.GetCartPaymentDetails((int)id);
+
+            if (cartDetail == null)
+            {
+                return HttpNotFound();
+            }
+            return View(cartDetail);
+        }
+
         public PartialViewResult _CartSummary()
         {
+            var cart = GetCartDetails();
             if (GetUserId() != null && GetCartDetails() == null)
             {
                  List<CartDetail> cartDetails = new List<CartDetail>();
@@ -44,6 +66,7 @@ namespace eCart.Areas.Shopper.Controllers
         {
            
             var cartSession = (List<CartDetail>)Session["CARTDETAILS"];
+            ViewBag.cart = cartSession;
             return cartSession;
         }
 
@@ -100,6 +123,7 @@ namespace eCart.Areas.Shopper.Controllers
                 return false;
             }
         }
+
 
 
         [HttpGet]

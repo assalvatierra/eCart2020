@@ -25,7 +25,7 @@
         <thead>
             <tr style="font-weight:bold;">
                 <td> Cart&nbsp;Id </td>
-                <td> Status </td>
+                <td style="min-width:120px;"> Status </td>
                 <td> Shopper </td>
                 <td> Contact # </td>
                 <td> Delivery Type </td>
@@ -33,6 +33,7 @@
                 <td> Pickup Location </td>
                 <td> Total Items </td>
                 <td> Total Amount </td>
+                <td> Payment </td>
                 <td></td>
             </tr>
         </thead>
@@ -53,6 +54,20 @@
                         @cart.Id
                     </td>
                     <td>
+
+                        @if (cart.CartStatusId == 2) //processing
+                        {
+                            <img src="~/img/store/icons/submit-48.png" class="store-cart-status-icon" />
+                        }
+                        @if (cart.CartStatusId == 3) //processing
+                        {
+                            <img src="~/img/store/icons/cart-process-40.png" class="store-cart-status-icon" />
+                        }
+                        else if (cart.CartStatusId == 4) //active
+                        {
+                            <img src="~/img/store/icons/cart-ok-40.png" class="store-cart-status-icon" />
+                        }
+
                         @cart.CartStatu.Name
                     </td>
                     <td>
@@ -84,6 +99,13 @@
                         <span>
                             @amount.ToString("0.00")
                         </span>
+                    </td>
+                    <td>
+                        @if (cart.PaymentDetails.FirstOrDefault() != null)
+                        {
+                            @cart.PaymentDetails.LastOrDefault().Amount.ToString("0.00") <br />
+                            @cart.PaymentDetails.LastOrDefault().PaymentStatu.Name
+                        }
                     </td>
                     <td>
                         @Html.ActionLink("View Cart", "Details", "CartDetails", new { id = cart.Id }, new { @class="btn btn-primary" } )
