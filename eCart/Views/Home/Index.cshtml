@@ -3,8 +3,16 @@
 }
 
 <div class="jumbotron">
-    <h1>eCart Online Shopping</h1>
+    <h2>eCart Online Shopping</h2>
     <p class="lead"> <a href="~/Home/AboutHow"> How It Works? </a> </p>
+
+    <!-- Ready to Pickup Shopping Carts -->
+    @if (ViewBag.ReadyCarts != null ) { 
+        foreach (var cart in ViewBag.ReadyCarts as IEnumerable<eCartModels.CartDetail>)
+        {
+            @Html.ActionLink("You cart#" + cart.Id.ToString("0000") + " is now ready", "Details", "CartDetails", new { area = "Shopper", id = cart.Id }, new { @class = "label label-info" }) <br />
+        }
+    }
 </div>
 
 @{ Html.RenderAction("_StoreList"); }

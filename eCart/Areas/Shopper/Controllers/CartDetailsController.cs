@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using eCartServices;
 using eCartModels;
 using Microsoft.AspNet.Identity;
+using System.Net;
 
 namespace eCart.Areas.Shopper.Controllers
 {
@@ -17,6 +18,26 @@ namespace eCart.Areas.Shopper.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            CartDetail cartDetail = store.CartMgr.GetCartDetail((int)id);
+
+            ViewBag.StoreId = cartDetail.StoreDetailId;
+            ViewBag.Store = cartDetail.StoreDetail.Name;
+            ViewBag.PaymentDetails = store.CartMgr.GetCartPaymentDetails((int)id);
+
+            if (cartDetail == null)
+            {
+                return HttpNotFound();
+            }
+            return View(cartDetail);
         }
 
         public PartialViewResult _CartSummary()

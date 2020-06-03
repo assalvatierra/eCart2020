@@ -5,15 +5,14 @@
 }
 
 <div class="row">
-    <h1>@ViewBag.Store - Carts Details</h1>
-    @Html.ActionLink("Back to List", "Index", "Store", new { area = "Store" }, null)
+    <h1> Carts Details</h1>
 </div>
 
 <div class="panel row" style="padding:15px;">
     <div class="panel-body store-cart">
         <div class="row">
             <h3 class="col-lg-12">
-                Cart # : @Model.Id.ToString("0000")   &nbsp;
+                Cart # : @Model.Id.ToString("0000")    &nbsp;
             </h3>
             <div class="col-lg-4">
                 <p><span class="text-muted"> Status: </span> <span id="cart-status-text"> @Model.CartStatu.Name </span></p>
@@ -24,10 +23,6 @@
                     <button id="status-ready" class="btn btn-default" onclick="SetCartStatus(@Model.Id, 4, 'Ready')"> Ready </button>
                     <button id="status-delivered" class="btn btn-default" onclick="SetCartStatus(@Model.Id, 5, 'Delivered')"> Delivered </button>
                     <button id="status-cancel" class="btn btn-default" onclick="SetCartStatus(@Model.Id, 6, 'Cancelled')"> Cancel </button>
-                </div>
-                <div class="btn-group  pull-right">
-                    <button class="btn btn-default" data-target="#PaymentModal" data-toggle="modal"> Payment </button>
-                    @Html.ActionLink("History", "CartHistory", new { id = Model.Id }, new { @class = "btn btn-default" })
                 </div>
             </div>
         </div>
@@ -151,23 +146,12 @@
             </table>
 
         </div>
-        @Html.Partial("_PartialCartDelivery", ViewBag.CartDelivery as IEnumerable<eCartModels.CartDelivery>,
-            new ViewDataDictionary { { "PaymentReceiverList", ViewBag.PaymentReceiverList }, { "RiderList", ViewBag.RiderList }, { "DtPickup", Model.DtPickup },
-                { "CartId", Model.Id }, { "Address", Model.StorePickupPoint.Address } })
-
+      
     </div>
 </div>
 
 
-@Html.Partial("_ModalPayment", null, new ViewDataDictionary { { "PaymentReceiverList", ViewBag.PaymentReceiverList },
-    { "PaymentPartyList", ViewBag.PaymentPartyList }, { "PaymentStatusList", ViewBag.PaymentStatusList }, { "CartId", Model.Id } })
-
-
 @section Scripts{
-    <script src="~/Areas/Store/Scripts/CartDetails/ModalPayment.js"></script>
-    <script src="~/Areas/Store/Scripts/CartDetails/PartialCartDelivery.js"></script>
-    <script src="~/Areas/Store/Scripts/CartDetails/ModalCartDeliveryAdd.js"></script>
-    <script src="~/Areas/Store/Scripts/CartDetails/ModalCartDeliveryEdit.js"></script>
     <script>
     //on document ready
         $(function () {
@@ -204,15 +188,5 @@
             
         }
 
-    function SetCartStatus(cartId, statusId, status) {
-        $.get("/Store/CartDetails/SetCartStatus", { id: cartId, statusId, statusId }, (result) => {
-            console.log(result);
-            if (result) { //if res = true
-                $("#cart-status-text").text(status);
-                var statusID = statusId.toString(); // convert to string
-                UpdateCartStatusBtn(statusID);
-            }
-        });
-    }
     </script>
 }

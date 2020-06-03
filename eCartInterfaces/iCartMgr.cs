@@ -12,6 +12,7 @@ namespace eCartInterfaces
         StorePickupPoint GetStorePickup(int id);
         List<StorePickupPoint> GetStorePickupPoints(int storeId);
         List<CartDetail> getShopperCarts(int userId);
+        List<CartDetail> GetReadyShopperCarts(int userId);
         List<PaymentReceiver> GetPaymentRecievers();
         List<CartHistory> getCartHistory(int id);
         List<CartActivity> getCartDeliveryActivities(int id);

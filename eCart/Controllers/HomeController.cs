@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using eCartServices;
 using eCartModels;
+using Microsoft.AspNet.Identity;
 
 namespace eCart.Controllers
 {
@@ -13,7 +14,21 @@ namespace eCart.Controllers
         StoreFactory store = new StoreFactory();
 
         public ActionResult Index()
-        {            
+        {
+            var userId = HttpContext.User.Identity.GetUserId();
+
+            if (userId != null)
+            {
+                //get ready to pickup carts
+                var userDetailId = store.CartMgr.GetUserDetails(userId).Id;
+                var readyCarts = store.CartMgr.GetReadyShopperCarts(userDetailId);
+                ViewBag.ReadyCarts = readyCarts;
+            }
+            else
+            {
+                ViewBag.ReadyCarts = null;
+            }
+
             return View();
         }
 

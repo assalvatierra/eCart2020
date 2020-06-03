@@ -394,6 +394,7 @@
     <Content Include="Areas\Rider\Views\RiderDetails\Edit.cshtml" />
     <Content Include="Areas\Rider\Views\RiderDetails\_ModalPaymentAdd.cshtml" />
     <Content Include="Areas\Rider\Views\RiderDetails\DeliveredCarts.cshtml" />
+    <Content Include="Areas\Shopper\Views\CartDetails\Details.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />
     <Content Include="Scripts\DateRangePicker\moment.min.js" />

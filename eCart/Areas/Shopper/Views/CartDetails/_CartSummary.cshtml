@@ -5,7 +5,8 @@
     var cartSession = ViewBag.cart as List<eCartModels.CartDetail>;
 }
 
-@if(USER) { 
+@if (USER)
+{
     <div class="row">
         <hr />
         <div class="cart-shopper-panel" id="Cart-Summary">
@@ -45,9 +46,9 @@
         </div>
 
     </div>
+    <hr />
 }
 
-<hr />
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script>
 

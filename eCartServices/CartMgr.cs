@@ -368,9 +368,9 @@ namespace eCartServices
                 }
                 return OrderId;
             }
-            catch (Exception ex)
+            catch 
             {
-                throw ex;
+               
                 return 0;
             }
         }
@@ -569,6 +569,12 @@ namespace eCartServices
         public List<CartDetail> getShopperCarts(int userId)
         {
             var cartList =  cartdb.GetCartDetails().Where(s => s.UserDetailId == userId).OrderByDescending(s => s.Id).ToList();
+            return cartList;
+        }
+
+        public List<CartDetail> GetReadyShopperCarts(int userId)
+        {
+            var cartList = cartdb.GetCartDetails().Where(s => s.UserDetailId == userId && s.CartStatusId == 4 && s.DeliveryType == "Pickup").OrderByDescending(s => s.Id).ToList();
             return cartList;
         }
 
