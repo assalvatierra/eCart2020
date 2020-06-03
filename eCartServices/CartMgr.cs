@@ -195,12 +195,13 @@ namespace eCartServices
                 //no item found
                 return false;
             }
-            catch(Exception ex)
+            catch
             {
-                throw ex;
                 return false;
             }
         }
+
+
 
         public bool saveOrder(List<CartDetail> cartDetails, string userId)
         {

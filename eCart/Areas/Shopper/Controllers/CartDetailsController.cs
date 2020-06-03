@@ -21,6 +21,7 @@ namespace eCart.Areas.Shopper.Controllers
 
         public PartialViewResult _CartSummary()
         {
+            var cart = GetCartDetails();
             if (GetUserId() != null && GetCartDetails() == null)
             {
                  List<CartDetail> cartDetails = new List<CartDetail>();
@@ -44,6 +45,7 @@ namespace eCart.Areas.Shopper.Controllers
         {
            
             var cartSession = (List<CartDetail>)Session["CARTDETAILS"];
+            ViewBag.cart = cartSession;
             return cartSession;
         }
 
@@ -100,6 +102,7 @@ namespace eCart.Areas.Shopper.Controllers
                 return false;
             }
         }
+
 
 
         [HttpGet]

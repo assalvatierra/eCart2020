@@ -38,6 +38,10 @@ function AddtoCart_Submit(e, itemId, itemName, price) {
     $.post("/Shopper/CartDetails/AddToCart", data, (response) => {
         console.log(response);
         if (response == 'True') {
+
+            //added qty to item product 
+            $("#item-" + itemId).text("( " + qty + " Added ) ");
+
             //add item to cart summary at footer
             cartItem = "<div class='col-sm-2 cart-item'> " +
                 "<img src='" + itemImg + "' width='35' class='col-sm-4 img-thumbnail' style='height:50px;width:50px;'>" +
@@ -70,3 +74,4 @@ function RemoveItem(e, Id) {
     });
 
 }
+
