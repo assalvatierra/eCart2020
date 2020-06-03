@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Cart Payments</h2>
+
+@using (Html.BeginForm())
+{
+    <div style="display:flex;justify-content:center;">
+        <div class="panel bordered" style="width:30%;padding:10px 20px;">
+            <div class="form-group">
+                <label class="control-label"> Cart Id # : </label>
+                <input class="form-control input-sm" type="text" name="CartId" />
+                <div class="btn-group" style="margin:5px 0px;">
+                    <button class="btn btn-default" type="submit" value="Save"> Search </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

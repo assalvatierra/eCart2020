@@ -11,21 +11,21 @@ namespace eCart.Areas.Store.Controllers
 {
     public class StoreController : Controller
     {
-        StoreFactory storeFactory = new StoreFactory();
+        StoreFactory store = new StoreFactory();
 
         // GET: Store/Home
         public ActionResult Index(int? cartStatus)
         {
             if (HttpContext.User.Identity.IsAuthenticated)
             {
-                var storeMgr = storeFactory.StoreMgr;
+                var storeMgr = store.StoreMgr;
                 var userid = HttpContext.User.Identity.GetUserId();
 
-                var store = storeMgr.GetStoreDetailByLoginId(userid);
+                var storeDetail = storeMgr.GetStoreDetailByLoginId(userid);
 
-                if (store != null)
+                if (storeDetail != null)
                 {
-                    ViewBag.StoreId = store.Id;
+                    ViewBag.StoreId = storeDetail.Id;
                 }
                 else
                 {
@@ -40,24 +40,27 @@ namespace eCart.Areas.Store.Controllers
                     //cartlist
                     if (cartStatus == 1)
                     {
-                        cartList = storeMgr.getStoreActiveCarts(store.Id);
+                        cartList = storeMgr.getStoreActiveCarts(storeDetail.Id);
                     }
                     else if (cartStatus == 5)
                     {
-                        cartList = storeMgr.getStoreCarts(store.Id, (int)cartStatus);
+                        cartList = storeMgr.getStoreCarts(storeDetail.Id, (int)cartStatus);
                     }
                     else if (cartStatus == 6)
                     {
-                        cartList = storeMgr.getStoreCarts(store.Id, (int)cartStatus);
+                        cartList = storeMgr.getStoreCarts(storeDetail.Id, (int)cartStatus);
                     }
                 }
                 else
                 {
-                    cartList = storeMgr.getStoreActiveCarts(store.Id);
+                    cartList = storeMgr.getStoreActiveCarts(storeDetail.Id);
                 }
 
                 ViewBag.CartList = cartList;
-                return View(store);
+                ViewBag.PaymentReceiverList = store.RefDbLayer.GetPaymentReceivers().ToList();
+                ViewBag.PaymentStatusList = store.RefDbLayer.GetPaymentStatus().ToList();
+                ViewBag.PaymentPartyList = store.RefDbLayer.GetPaymentParties().ToList();
+                return View(storeDetail);
             }
             else
             {
@@ -72,18 +75,18 @@ namespace eCart.Areas.Store.Controllers
         {
             if (HttpContext.User.Identity.IsAuthenticated)
             {
-                var storeMgr = storeFactory.StoreMgr;
+                var storeMgr = store.StoreMgr;
                 var userid = HttpContext.User.Identity.GetUserId();
 
-                var store = storeMgr.GetStoreDetailByLoginId(userid);
+                var storeDetail = storeMgr.GetStoreDetailByLoginId(userid);
 
-                if (store != null)
+                if (storeDetail != null)
                 {
-                    ViewBag.StoreId = store.Id;
+                    ViewBag.StoreId = storeDetail.Id;
                 }
                
 
-                return PartialView(store);
+                return PartialView(storeDetail);
             }
 
             return PartialView();

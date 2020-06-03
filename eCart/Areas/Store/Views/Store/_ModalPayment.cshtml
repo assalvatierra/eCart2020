@@ -1,0 +1,76 @@
+﻿<!-- Change Pickup Location Modal -->
+<div id="PaymentModal" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="max-width:380px;">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"> Payment Transaction </h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-lg-offset-1">
+
+                    <div class="form-group">
+                        <p class="control-label"  > CartId: </p>
+                        <input class="form-control" type="text" style="padding-top:5px;" id="payment-cartId" disabled/>
+                    </div>
+
+                    <div class="form-group">
+                        <p class="control-label"> Date: </p>
+                        <input class="form-control" type="text" style="padding-top:5px;" id="payment-date" />
+                    </div>
+
+                    <div class="form-group">
+                        <p class="control-label"> Payment Party: </p>
+                        <div>
+                            <select class="form-control" id="payment-Party">
+                                @foreach (var party in ViewBag.PaymentPartyList as IEnumerable<eCartModels.PaymentParty>)
+                                {
+                                    <option value="@party.Id"> @party.Name </option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <p class="control-label">  Payment Party Info: </p>
+                        <input class="form-control" type="text" id="payment-partyInfo" />
+                    </div>
+
+                    <div class="form-group">
+                        <p class="control-label"> Payment Receiver: </p>
+                        <select class="form-control" id="payment-Recievers">
+                            @foreach (var receiver in ViewBag.PaymentReceiverList as IEnumerable<eCartModels.PaymentReceiver>)
+                            {
+                                <option value="@receiver.Id"> @receiver.Description </option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <p class="control-label"> Payment Receiver Info: </p>
+                        <input class="form-control" type="text" id="payment-receiverInfo" />
+                    </div>
+
+                    <div class="form-group">
+                        <p class="control-label"> Payment Status: </p>
+                        <select class="form-control" id="payment-status">
+                            @foreach (var status in ViewBag.PaymentStatusList as IEnumerable<eCartModels.PaymentStatus>)
+                            {
+                                <option value="@status.Id"> @status.Name </option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <p class="control-label">  Amount: </p>
+                        <input class="form-control" type="text" id="payment-amount" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="AddPaymentDetails()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
