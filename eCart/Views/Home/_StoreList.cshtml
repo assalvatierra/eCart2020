@@ -7,23 +7,26 @@
     @foreach (var item in Model)
     {
         <div class="col-sm-3 store-item">
-            
-            <a href="@Url.Action("Store", new { id = item.Id })">
-            @if (item.StoreImages.FirstOrDefault() != null)
-            {
-                var image = item.StoreImages.FirstOrDefault();
-                <img src="@image.ImageUrl" class="col-sm-6" style="width:50%;"  />
-            }
-            else
-            {
-                <img src="~/img/placeholders/placeholder-product.png" class="col-sm-6" style="width:50%;" />
-            }
-                <div class="col-sm-6">
-                    <h4> @item.Name </h4>
-                    <span class="badge badge-pill badge-primary"> @item.StoreCategory.Name </span>
-                    @*<br /><br /> @Html.ActionLink("View Products", "Products", "Merchant", new { area = "", id = item.Id }, null)*@
-                </div>
-            </a>
+            <div class="store-item">
+                <a href="@Url.Action("Store", new { id = item.Id })">
+                    <div class="col-lg-6 col-sm-4 col-xs-4">
+                        @if (item.StoreImages.FirstOrDefault() != null)
+                        {
+                            var image = item.StoreImages.FirstOrDefault();
+                            <img src="@image.ImageUrl" style="width:100%;" />
+                        }
+                        else
+                        {
+                            <img src="~/img/placeholders/placeholder-product.png" style="width:100%;" />
+                        }
+                                    </div>
+                    <div class="col-lg-6 col-sm-8 col-xs-8">
+                        <h4> @item.Name </h4>
+                        <span class="label label-success"> @item.StoreCategory.Name </span>
+                        @*<br /><br /> @Html.ActionLink("View Products", "Products", "Merchant", new { area = "", id = item.Id }, null)*@
+                    </div>
+                </a>
+            </div>
         </div>
     }
 
