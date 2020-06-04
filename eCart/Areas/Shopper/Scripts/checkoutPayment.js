@@ -18,9 +18,9 @@ function getPaymentReceivers(cartId) {
             }
 
             //add default
-            var button = "<button class='list-group-item' style='display:flex;' value='0' onclick='selectPayment(this, 0, " + cartId + ")' > " +
-                "<span style='margin:auto;'> Cash On Delivery </span></button>";
-            $("#Receiver-list").append(button);
+            //var button = "<button class='list-group-item' style='display:flex;' value='0' onclick='selectPayment(this, 0, " + cartId + ")' > " +
+            //    "<span style='margin:auto;'> Cash On Delivery </span></button>";
+            //$("#Receiver-list").append(button);
 
         } else {
             alert("Unable to load Payment Options.");

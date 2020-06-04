@@ -34,35 +34,6 @@
                     <img src="@cart.StoreDetail.StoreImages.FirstOrDefault().ImageUrl" style="width:60px;" />
                     <h3 style="flex:1;" class="pull-right"> @cart.StoreDetail.Name </h3>
                 </div>
-                <div class="cart-summary-pickup">
-                    <p>
-                        <span> Delivery Type </span>
-                        <a href=""> @cart.DeliveryType </a>
-                    </p>
-                    @*<span> Pickup Point: </span>
-                    <a href="" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetail.Id')" id="pickupAddress-@cart.Id" value="@cart.StorePickupPoint.Id">
-                        @cart.StorePickupPoint.Address
-                    </a>*@
-                </div>
-                <div class="cart-summary-pickup">
-                    <span> DateTime Pickup: </span>
-                    <p>
-                        <a href=""> @cart.DtPickup.ToString("MMM dd yyyy h:mm tt") </a>
-                    </p>
-                </div>
-                <div class="cart-summary-pickup">
-                    <span> Payment:</span>
-                    <a href="" id="paymentMode-@cart.StoreDetail.Id">
-                        @if (cart.PaymentDetails.FirstOrDefault() != null)
-                        {
-                            @cart.PaymentDetails.LastOrDefault().PaymentReceiver.Description
-                        }
-                        else
-                        {
-                            <p>On Pickup </p>
-                        }
-                    </a>
-                </div>
             </div>
             <table class="table">
                 <thead>
@@ -112,40 +83,61 @@
             </table>
         </div>
         <div class="row panel-footer" style="margin:0px;">
-            <div class="col-lg-8">
+            <div class="col-lg-3">
+                <h4> Amount: <b class="text-success"> Php @subtotalAmount.ToString("0.00") </b></h4>
+
+                @if (cart.PaymentDetails.FirstOrDefault() != null)
+                {
+
+                    <h5>
+                        Payment: <b class="text-success"> Php @cart.PaymentDetails.LastOrDefault().Amount.ToString("0.00") ( @cart.PaymentDetails.LastOrDefault().PaymentStatu.Name ) </b>
+                    </h5>
+                }
+            </div>
+            <div class="col-lg-7">
                 <h4>
-                    Amount: <b class="text-success"> Php @subtotalAmount.ToString("0.00") </b>
-                    <span class="text-muted" style="margin-left:20px;">
-                        Pickup Point:
+                    <span class="text-muted" >
+                        Pickup:
+
+                        <span class="date-link" >@cart.DtPickup.ToString("h:mm tt MMM dd yyyy")</span> -
+                        <span id="cartID" hidden> @cart.Id </span>
+
                         @if (cart.DeliveryType == "Delivery")
                         {
-                            <a href="" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetailId')" id="pickupAddress-@cart.Id" value="0">
+                            <a href="" class="pickup-location-link" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetailId')" id="pickupAddress-@cart.Id" value="0">
                                 Delivery
                             </a>
                         }
                         else
                         {
-                            <a href="" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetailId')" id="pickupAddress-@cart.Id" value="@cart.StorePickupPointId">
+                            <a href="" class="pickup-location-link" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetailId')" id="pickupAddress-@cart.Id" value="@cart.StorePickupPointId">
                                 @cart.StorePickupPoint.Address
                             </a>
                         }
+
                     </span>
                 </h4>
-                @if (cart.PaymentDetails.FirstOrDefault() != null)
-                {
+                <h5 >
+                    <span class="col-sm-6" style="padding-left:0px;">
+                        <span class="text-muted"> Payment: </span>
+                        @if (cart.PaymentDetails.FirstOrDefault() != null)
+                        {
+                            @cart.PaymentDetails.LastOrDefault().PaymentReceiver.Description
+                        }
+                        else
+                        {
+                            <span>On Pickup </span>
+                        }
+                    </span>
+                    <span  class="col-sm-6"  style="padding-left:0px;">
+                        <span  class="text-muted"> Delivery Type: </span>
+                        <span> @cart.DeliveryType </span>
+                    </span>
 
-                    <h4>
-                        Payment  <b class="text-success"> Php @cart.PaymentDetails.LastOrDefault().Amount.ToString("0.00") ( @cart.PaymentDetails.LastOrDefault().PaymentStatu.Name ) </b>
-                    </h4>
-                }
-            </div>
-            <div class="col-lg-2">
 
-                <h4 style="width:100%;" class="cart-status-text">
-                    Status:  @cart.CartStatu.Name
-                </h4>
+                </h5>
 
-            </div>
+            </div>  
             <div class="col-lg-2">
                 @if (cart.CartStatusId < 3)
                 {
@@ -153,6 +145,11 @@
                         Cancel Order
                     </button>
                 }
+
+
+                <h5 style="width:100%;" class="cart-status-text">
+                    Status:  @cart.CartStatu.Name
+                </h5>
             </div>
         </div>
     </div>

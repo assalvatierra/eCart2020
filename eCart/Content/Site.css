@@ -348,12 +348,17 @@ textarea {
 }
 
 
-
+.pickup-location-link {
+    color: #0066CC;
+    cursor: pointer;
+    background-color: whitesmoke;
+}
 
 .date-link {
     border: none;
     color: #0066CC;
     cursor: pointer;
+    background-color:whitesmoke;
 }
 
     .date-link:hover {
