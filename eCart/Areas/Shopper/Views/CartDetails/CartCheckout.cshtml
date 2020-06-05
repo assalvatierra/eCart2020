@@ -51,12 +51,12 @@
                         <h3> @cart.StoreDetail.Name </h3>
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-12">
-                        <span> DateTime Pickup: </span>
+                        @*<span> DateTime Pickup: </span>
                         <input type="text" name="pickup-date" value="@cart.DtPickup" class="date-link" onchange="dateChanged(@cart.Id)">
-                        <span id="cartID" hidden> @cart.Id </span>
+                        <span id="cartID" hidden> @cart.Id </span>*@
                     </div>
                     <div class="col-lg-3 col-md-5 col-sm-12">
-                        <span> Payment: </span> <br />
+                        @*<span> Payment: </span> <br />
                         <a href="" id="paymentMode-@cart.Id" data-toggle="modal" data-target="#paymentModal" onclick="getPaymentReceivers(@cart.Id)">
                             @if (cart.PaymentDetails != null)
                             {
@@ -73,7 +73,7 @@
                                 {
                                     <span> On Pickup </span>
                                 }
-                        </a>
+                        </a>*@
                     </div>
                 </div>
 
@@ -137,20 +137,47 @@
                 <div class="col-lg-10">
                     <h4>
                         Amount: <b class="text-success"> Php @subtotalAmount.ToString("0.00") </b>
-                        <span class="text-muted" style="margin-left:20px;"> Pickup Point:  
+
+                        <span class="text-muted" style="margin-left:20px;">
+                            Pickup:
+                            
+                        <input type="text" name="pickup-date" value="@cart.DtPickup" class="date-link" onchange="dateChanged(@cart.Id)"> -
+                        <span id="cartID" hidden> @cart.Id </span>
+
                             @if (cart.DeliveryType == "Delivery")
-                            { 
-                                <a href="" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetailId')" id="pickupAddress-@cart.Id" value="0">
+                            {
+                                <a href="" class="pickup-location-link" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetailId')" id="pickupAddress-@cart.Id" value="0">
                                     Delivery
                                 </a>
                             }
                             else
                             {
-                                <a href="" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetailId')" id="pickupAddress-@cart.Id" value="@cart.StorePickupPointId">
+                                <a href="" class="pickup-location-link" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetailId')" id="pickupAddress-@cart.Id" value="@cart.StorePickupPointId">
                                     @cart.StorePickupPoint.Address
                                 </a>
                             }
+
                         </span>
+
+                        <span style="margin-left:20px;">
+                           <span class="text-muted"> Payment: </span> 
+                            <a href="" id="paymentMode-@cart.Id" data-toggle="modal" data-target="#paymentModal" onclick="getPaymentReceivers(@cart.Id)">
+                                @if (cart.PaymentDetails != null)
+                                 {
+                                    switch (cart.PaymentDetails.LastOrDefault().PaymentReceiverId)
+                                    {
+                                        case 0: <text> At Store </text> break;
+                                        case 1: <text> Cash On Delivery </text> break;
+                                        case 2: <text> Bank Transfer  </text> break;
+                                        case 3: <text> Remittance </text> break;
+                                    }
+                                 }
+                                 else
+                                 {
+                                    <span> At Store </span>
+                                 }
+                                </a>
+                         </span>
                     </h4>
 
                 </div>
@@ -228,7 +255,7 @@
             timePickerIncrement: 1,
             autoUpdateInput: true,
             locale: {
-                format: 'MMM DD,YYYY h:mm A'
+                format: ' h:mm A MMM DD YYYY'
             },
         });
 
