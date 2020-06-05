@@ -13,6 +13,18 @@ namespace eCartServices
     {
         private iUserDb userDb = new UserDBLayer();
 
+        public bool AddUserApplication(UserApplication userApplication)
+        {
+            try
+            {
+                return userDb.AddUserApplication(userApplication);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public bool CheckUserDetailsExist(string userId)
         {
             try
@@ -30,6 +42,42 @@ namespace eCartServices
             }catch
             {
                 return false;
+            }
+        }
+
+        public bool EditUserApplication(UserApplication userApplication)
+        {
+            try
+            {
+                return userDb.EditUserApplication(userApplication);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public UserApplication GetUserApplication(int id)
+        {
+            try
+            {
+                return userDb.GetUserApplications().Where(a => a.Id == id).FirstOrDefault();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public List<UserApplication> GetUserApplicationsList(int userDetailId)
+        {
+            try
+            {
+                return userDb.GetUserApplications().Where(a => a.UserDetailId == userDetailId).ToList();
+            }
+            catch
+            {
+                return null;
             }
         }
 
@@ -70,6 +118,40 @@ namespace eCartServices
             }
         }
 
+        public bool HasStoreApplication(int userDetailId)
+        {
+            try
+            {
+                var applicationsList = GetUserApplicationsList(userDetailId);
+                
+                if (applicationsList.Where(a=>a.UserApplicationTypeId == 1).Count() > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
+        public bool HasRiderApplication(int userDetailId)
+        {
+            try
+            {
+                var applicationsList = GetUserApplicationsList(userDetailId);
+
+                if (applicationsList.Where(a => a.UserApplicationTypeId == 2).Count() > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

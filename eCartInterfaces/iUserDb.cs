@@ -11,5 +11,10 @@ namespace eCartInterfaces
     {
         string GetUserId(string email);
         IQueryable<UserDetail> GetUserDetails();
+        
+        IQueryable<UserApplication> GetUserApplications();
+        bool AddUserApplication(UserApplication userApplication);
+        bool EditUserApplication(UserApplication userApplication);
+
     }
 }

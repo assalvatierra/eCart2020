@@ -1,0 +1,66 @@
+﻿@model eCartModels.UserApplication
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>UserApplication</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DtApplied)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DtApplied)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Mobile)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Mobile)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserDetail.UserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserDetail.UserId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserApplicationStatu.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserApplicationStatu.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserApplicationType.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserApplicationType.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

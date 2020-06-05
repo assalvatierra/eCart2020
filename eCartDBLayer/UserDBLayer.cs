@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,41 @@ namespace eCartDBLayer
 {
     public class UserDBLayer : iUserDb
     {
-        ecartdbContainer db = new ecartdbContainer();
+        private ecartdbContainer db = new ecartdbContainer();
+
+        public bool AddUserApplication(UserApplication userApplication)
+        {
+            try
+            {
+
+                db.UserApplications.Add(userApplication);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool EditUserApplication(UserApplication userApplication)
+        {
+            try
+            {
+                db.Entry(userApplication).State = EntityState.Modified;
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public IQueryable<UserApplication> GetUserApplications()
+        {
+            return db.UserApplications;
+        }
 
         public IQueryable<UserDetail> GetUserDetails()
         {

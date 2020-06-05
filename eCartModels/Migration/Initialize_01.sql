@@ -11,6 +11,8 @@ insert into PaymentStatus("Name") values('Pending'),('Accepted'),('Cancelled');
 insert into RiderCashParties("Name","Operation") values('Shopper','Cash In'),('Store','Cash Out');
 insert into RiderStatus("Name") values ('Active'),('Inactive');
 insert into StorePaymentStatus([Name]) values ('Pending'),('Accepted');
+insert into UserApplicationStatus([Name]) values ('Pending'),('Accepted');
+insert into UserApplicationTypes([Name]) values ('Store'),('Rider');
 
 -- initialize cities
 insert into MasterCities("Name") values ('Davao'),('Tagum'),('Digos');

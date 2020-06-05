@@ -1,0 +1,48 @@
+﻿<!-- Change Pickup Location Modal -->
+<div id="StoreAppModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content" style="margin-left:-5px;width:350px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" onclick="OnModalClose();">&times;</button>
+                <h4 class="modal-title"> Store Application </h4>
+            </div>
+            <div class="modal-body" style="margin-left:20px;">
+                <div> Click Submit to complete the application </div>
+
+                <div class="form-group">
+                    <label class="control-label"> Email </label>
+                    <input class="form-control" name="userApp-email" id="userApp-email" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label"> Contact No. </label>
+                    <input class="form-control" name="userApp-mobile" id="userApp-mobile" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label"> Application Type </label>
+                    @*<input class="form-control" name="userApp-type" id="userApp-type" />*@
+                    @Html.DropDownList("AppTypes", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+
+                <div class="form-group" hidden>
+                    <label class="control-label"> UserDetailsId </label>
+                    <input class="form-control" name="userApp-userId" id="userApp-userId" />
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="SubmitStoreApp();"> Submit </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="CancelStoreApp();"> Cancel </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+   
+</script>

@@ -107,5 +107,15 @@ namespace eCartDbLayer
         {
             return db.UserDetails;
         }
+
+        public IQueryable<UserApplicationType> GetUserApplicationTypes()
+        {
+            return db.UserApplicationTypes;
+        }
+
+        public IQueryable<UserApplicationStatus> GetUserApplicationStatus()
+        {
+            return db.UserApplicationStatus;
+        }
     }
 }

@@ -337,6 +337,7 @@ textarea {
 .btn-primary {
     background-color: rgb(6, 158, 235);
     border-color: rgb(6, 158, 235);
+    margin-top:2px;
 }
 
     .btn-primary:hover {

@@ -76,3 +76,79 @@
         </div>
     </div>
 </div>
+
+<div class="panel bordered">
+    <div class="panel-body">
+        <h3> Other Accounts </h3>
+        <hr />
+
+        @if (ViewBag.hasStoreApplication)
+        {
+            <button class="btn btn-primary disabled">
+                Apply for Store Account
+            </button>
+        }
+        else
+        {
+            <button class="btn btn-primary" id="AddStoreAppBtn" onclick="PrepForApplication( 1,'@Model.Id','@Model.Email','@Model.Mobile' )">
+                Apply for Store Account
+            </button>
+        }
+
+
+        @if (ViewBag.hasRiderApplication)
+        {
+            <button class="btn btn-primary disabled">
+                Apply for Rider Account
+            </button>
+        }
+        else
+        {
+            <button class="btn btn-primary" id="AddRiderAppBtn" onclick="PrepForApplication( 2,'@Model.Id','@Model.Email','@Model.Mobile' )">
+                Apply for Rider Account
+            </button>
+        }
+    </div>
+</div>
+
+
+@Html.Partial("_ModalApplication", null, new ViewDataDictionary { { "AppTypes", ViewBag.AppTypes } })
+
+@section Scripts{
+    <script>
+        function PrepForApplication( type, userId, userEmail, userContact) {
+            $("#StoreAppModal").modal('show');
+            //prep form
+            $("#userApp-mobile").val(userContact);
+            $("#userApp-email").val(userEmail);
+            $("#userApp-userId").val(userId);
+            $("#AppTypes").val(type);
+        }
+
+
+        function SubmitStoreApp() {
+            var data = {
+                userId : $("#userApp-userId").val(),
+                email  : $("#userApp-email").val(),
+                mobile : $("#userApp-mobile").val(),
+                typeId : $("#AppTypes").val()
+            };
+
+            $.post("/Shopper/UserDetails/CreateAccountApp", data, (result) => {
+                console.log(result);
+                if (result == 'True') {
+                    $("#StoreAppModal").modal('hide');
+                    var typeId = $("#AppTypes").val();
+                    if (typeId == 1) {
+                        $('#AddStoreAppBtn').addClass('disabled');
+                    }
+                    if (typeId == 2) {
+                        $('#AddRiderAppBtn').addClass('disabled');
+                    }
+                } else {
+                    alert("Unable to Submit Application.");
+                }
+            });
+        }
+    </script>
+}

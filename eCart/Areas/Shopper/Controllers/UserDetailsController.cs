@@ -27,6 +27,9 @@ namespace eCart.Areas.Shopper.Controllers
                 return RedirectToAction("Error", "Accounts");
             }
 
+            ViewBag.AppTypes = new SelectList(store.RefDbLayer.GetUserApplicationTypes(), "Id", "Name");
+            ViewBag.hasStoreApplication = store.UserMgr.HasStoreApplication(userDetails.Id);
+            ViewBag.hasRiderApplication = store.UserMgr.HasRiderApplication(userDetails.Id);
             return View(userDetails);
         }
 
@@ -71,6 +74,32 @@ namespace eCart.Areas.Shopper.Controllers
             ViewBag.MasterCityId = new SelectList(store.RefDbLayer.GetMasterCities(), "Id", "Name", userDetail.MasterCityId);
             ViewBag.UserStatusId = new SelectList(store.RefDbLayer.GetUserStatusList(), "Id", "Name", userDetail.UserStatusId);
             return View(userDetail);
+        }
+
+        [HttpPost]
+        public bool CreateAccountApp(int userId, string email, string mobile, int typeId)
+        {
+            try
+            {
+
+                //create application
+                var newUserApplication = new UserApplication()
+                {
+                    DtApplied = DateTime.Now,
+                    Email = email,
+                    Mobile = mobile,
+                    UserDetailId = userId,
+                    UserApplicationTypeId = typeId,
+                    UserApplicationStatusId = 1 //pending
+                    
+                };
+
+                return store.UserMgr.AddUserApplication(newUserApplication);
+            }
+            catch
+            {
+                return false;
+            }
         }
 
     }

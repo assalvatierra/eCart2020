@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 06/03/2020 16:38:33
+-- Date Created: 06/05/2020 18:08:10
 -- Generated from EDMX file: C:\Users\VILLOSA\source\repos\eCart2020\eCartModels\ecartdb.edmx
 -- --------------------------------------------------
 
@@ -161,6 +161,24 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_CartDetailCartHistory]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[CartHistories] DROP CONSTRAINT [FK_CartDetailCartHistory];
 GO
+IF OBJECT_ID(N'[dbo].[FK_CartReleaseCartDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CartReleases] DROP CONSTRAINT [FK_CartReleaseCartDetail];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CartReleaseUserDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CartReleases] DROP CONSTRAINT [FK_CartReleaseUserDetail];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StorePickupPointCartRelease]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CartReleases] DROP CONSTRAINT [FK_StorePickupPointCartRelease];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserDetailUserApplication]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserApplications] DROP CONSTRAINT [FK_UserDetailUserApplication];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserApplicationStatusUserApplication]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserApplications] DROP CONSTRAINT [FK_UserApplicationStatusUserApplication];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserApplicationTypeUserApplication]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserApplications] DROP CONSTRAINT [FK_UserApplicationTypeUserApplication];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -282,6 +300,18 @@ IF OBJECT_ID(N'[dbo].[StoreKiosks]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[StoreKioskOrders]', 'U') IS NOT NULL
     DROP TABLE [dbo].[StoreKioskOrders];
+GO
+IF OBJECT_ID(N'[dbo].[CartReleases]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CartReleases];
+GO
+IF OBJECT_ID(N'[dbo].[UserApplicationStatus]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[UserApplicationStatus];
+GO
+IF OBJECT_ID(N'[dbo].[UserApplicationTypes]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[UserApplicationTypes];
+GO
+IF OBJECT_ID(N'[dbo].[UserApplications]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[UserApplications];
 GO
 
 -- --------------------------------------------------
@@ -654,6 +684,32 @@ CREATE TABLE [dbo].[CartReleases] (
 );
 GO
 
+-- Creating table 'UserApplicationStatus'
+CREATE TABLE [dbo].[UserApplicationStatus] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'UserApplicationTypes'
+CREATE TABLE [dbo].[UserApplicationTypes] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'UserApplications'
+CREATE TABLE [dbo].[UserApplications] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [DtApplied] datetime  NOT NULL,
+    [Email] nvarchar(30)  NOT NULL,
+    [Mobile] nchar(20)  NOT NULL,
+    [UserDetailId] int  NOT NULL,
+    [UserApplicationStatusId] int  NOT NULL,
+    [UserApplicationTypeId] int  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -895,6 +951,24 @@ GO
 -- Creating primary key on [Id] in table 'CartReleases'
 ALTER TABLE [dbo].[CartReleases]
 ADD CONSTRAINT [PK_CartReleases]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'UserApplicationStatus'
+ALTER TABLE [dbo].[UserApplicationStatus]
+ADD CONSTRAINT [PK_UserApplicationStatus]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'UserApplicationTypes'
+ALTER TABLE [dbo].[UserApplicationTypes]
+ADD CONSTRAINT [PK_UserApplicationTypes]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'UserApplications'
+ALTER TABLE [dbo].[UserApplications]
+ADD CONSTRAINT [PK_UserApplications]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -1665,6 +1739,51 @@ GO
 CREATE INDEX [IX_FK_StorePickupPointCartRelease]
 ON [dbo].[CartReleases]
     ([StorePickupPointId]);
+GO
+
+-- Creating foreign key on [UserDetailId] in table 'UserApplications'
+ALTER TABLE [dbo].[UserApplications]
+ADD CONSTRAINT [FK_UserDetailUserApplication]
+    FOREIGN KEY ([UserDetailId])
+    REFERENCES [dbo].[UserDetails]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_UserDetailUserApplication'
+CREATE INDEX [IX_FK_UserDetailUserApplication]
+ON [dbo].[UserApplications]
+    ([UserDetailId]);
+GO
+
+-- Creating foreign key on [UserApplicationStatusId] in table 'UserApplications'
+ALTER TABLE [dbo].[UserApplications]
+ADD CONSTRAINT [FK_UserApplicationStatusUserApplication]
+    FOREIGN KEY ([UserApplicationStatusId])
+    REFERENCES [dbo].[UserApplicationStatus]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_UserApplicationStatusUserApplication'
+CREATE INDEX [IX_FK_UserApplicationStatusUserApplication]
+ON [dbo].[UserApplications]
+    ([UserApplicationStatusId]);
+GO
+
+-- Creating foreign key on [UserApplicationTypeId] in table 'UserApplications'
+ALTER TABLE [dbo].[UserApplications]
+ADD CONSTRAINT [FK_UserApplicationTypeUserApplication]
+    FOREIGN KEY ([UserApplicationTypeId])
+    REFERENCES [dbo].[UserApplicationTypes]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_UserApplicationTypeUserApplication'
+CREATE INDEX [IX_FK_UserApplicationTypeUserApplication]
+ON [dbo].[UserApplications]
+    ([UserApplicationTypeId]);
 GO
 
 -- --------------------------------------------------
