@@ -11,5 +11,6 @@ namespace eCartInterfaces
     {
         string GetUserId(string email);
         UserDetail GetUserDetails(int id);
+        bool CheckUserDetailsExist(string userId);
     }
 }

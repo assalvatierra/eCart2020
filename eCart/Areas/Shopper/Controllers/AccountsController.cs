@@ -7,15 +7,14 @@ using System.Web.Security;
 using eCartModels;
 using eCartServices;
 using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
 
 namespace eCart.Areas.Shopper.Controllers
 {
     public class AccountsController : Controller
     {
-        ShopperContext sdb = new ShopperContext();
-
         //AccMgr accMgr = new AccMgr();
-        StoreFactory storeFactory = new StoreFactory();
+        StoreFactory store = new StoreFactory();
 
         //Authentication
         private readonly ecartdbContainer _dbContext = new ecartdbContainer();
@@ -54,146 +53,69 @@ namespace eCart.Areas.Shopper.Controllers
             return RedirectToAction("Login");
         }
 
+
+        // GET: Admin/UserDetails/Create
         public ActionResult Register()
         {
-            //ViewBag.UserStatusId = new SelectList(edb.UserStatus, "Id", "Name");
-            //ViewBag.MasterCityId = new SelectList(edb.MasterCities, "Id", "Name");
-            //ViewBag.MasterAreaId = new SelectList(edb.MasterAreas, "Id", "Name");
+            UserDetail user = new UserDetail();
+            user.UserId = HttpContext.User.Identity.GetUserId();
 
-            return View();
+            ViewBag.MasterAreaId = new SelectList(store.RefDbLayer.GetMasterAreas(), "Id", "Name");
+            ViewBag.MasterCityId = new SelectList(store.RefDbLayer.GetMasterCities(), "Id", "Name");
+            ViewBag.UserStatusId = new SelectList(store.RefDbLayer.GetUserStatusList(), "Id", "Name");
+            return View(user);
         }
 
+        // POST: Admin/UserDetails/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(AccountRegistration registration)
+        public ActionResult Register([Bind(Include = "Id,UserId,Name,Address,Email,Mobile,Remarks,UserStatusId,MasterCityId,MasterAreaId")] UserDetail userDetail)
         {
-            try
+            if (ModelState.IsValid && checkRegistrationFields(userDetail))
             {
-
-                if (ModelState.IsValid && checkRegistrationFields(registration))
+                if (store.AdminMgr.AddUserDetails(userDetail))
                 {
-                    if (checkEmail(registration.Username))
-                    {
-                        if (checkPassword(registration.Password, registration.Password2))
-                        {
-                            //var accMgr = storeFactory.AccMgr;
-
-                            ////create user
-                            //var userId = accMgr.CreateUser(registration.Username, registration.Password);
-
-                            //if (userId != "Error")
-                            //{
-                            //    //assign user role
-                            //    if (SetUserRoles(int.Parse(userId), SHOPPER))
-                            //    {
-                            //        //register account
-                            //        registration.UserId = userId;
-                            //        if (accMgr.RegisterAccount(registration))
-                            //        {
-                            //            // proceed to login
-                            //            return RedirectToAction("Login");
-                            //        }
-                            //        else
-                            //        {
-                            //            ModelState.AddModelError("", "Unable to register a new shopper account.");
-                            //        }
-                            //    }
-                            //}
-                        }
-                    }
+                    return RedirectToAction("Index", "Home",new { area = "" });
                 }
             }
-            catch (Exception) { };
 
-
-
-            //ViewBag.UserStatusId = new SelectList(edb.UserStatus, "Id", "Name", registration.UserStatusId);
-            //ViewBag.MasterCityId = new SelectList(edb.MasterCities, "Id", "Name", registration.MasterCityId);
-            //ViewBag.MasterAreaId = new SelectList(edb.MasterAreas, "Id", "Name", registration.MasterAreaId);
-            return View();
+            ViewBag.MasterAreaId = new SelectList(store.RefDbLayer.GetMasterAreas(), "Id", "Name", userDetail.MasterAreaId);
+            ViewBag.MasterCityId = new SelectList(store.RefDbLayer.GetMasterCities(), "Id", "Name", userDetail.MasterCityId);
+            ViewBag.UserStatusId = new SelectList(store.RefDbLayer.GetUserStatusList(), "Id", "Name", userDetail.UserStatusId);
+            return View(userDetail);
         }
 
-        public bool checkRegistrationFields(AccountRegistration registration)
+        public bool checkRegistrationFields(UserDetail userDetail)
         {
             bool isValid = true;
-            if (registration.Password.IsNullOrWhiteSpace() || registration.Password2.IsNullOrWhiteSpace())
-            {
-                ModelState.AddModelError("Password", "Password field is empty.");
-                isValid = false;
-            }
-            if (registration.Username.IsNullOrWhiteSpace())
-            {
-                ModelState.AddModelError("Username", "Username field is empty.");
-                isValid = false;
-            }
-
-            if (registration.Name.IsNullOrWhiteSpace())
+            if (userDetail.Name.IsNullOrWhiteSpace())
             {
                 ModelState.AddModelError("Name", "Name field is empty.");
                 isValid = false;
             }
-            if (registration.Address.IsNullOrWhiteSpace())
+            if (userDetail.Address.IsNullOrWhiteSpace())
             {
                 ModelState.AddModelError("Address", "Address field is empty.");
                 isValid = false;
             }
-            if (registration.Email.IsNullOrWhiteSpace())
+            if (userDetail.Email.IsNullOrWhiteSpace())
             {
                 ModelState.AddModelError("Email", "Email field is empty.");
                 isValid = false;
             }
-            if (registration.Mobile.IsNullOrWhiteSpace())
+            if (userDetail.Mobile.IsNullOrWhiteSpace())
             {
                 ModelState.AddModelError("Mobile", "Mobile field is empty.");
                 isValid = false;
             }
-            if (registration.Email.IsNullOrWhiteSpace())
+            if (userDetail.Email.IsNullOrWhiteSpace())
             {
                 ModelState.AddModelError("Email", "Email field is empty.");
                 isValid = false;
             }
             return isValid;
-        }
-
-        public bool checkPassword(string pass1, string pass2)
-        {
-            if (!pass1.IsNullOrWhiteSpace() || !pass2.IsNullOrWhiteSpace())
-            {
-                if (pass1 == pass2)
-                {
-                    return true;
-                }
-                else
-                {
-                    ModelState.AddModelError("Password", "Passwords does not match.");
-                }
-            }
-            else
-            {
-
-                ModelState.AddModelError("Password", "Password field is empty");
-            }
-            return false;
-        }
-
-        public bool checkEmail(string username)
-        {
-            if (!username.IsNullOrWhiteSpace())
-            {
-
-                //var isUsernameExist = edb.Users.Any(u => u.Username.ToLower() == username.ToLower());
-                //if (!isUsernameExist)
-                //{
-                //    return true;
-                //}
-                //else
-                //{
-                //    ModelState.AddModelError("Username", "Username already exists");
-                //}
-
-                ModelState.AddModelError("Username", "Username is empty");
-            }
-            return false;
         }
 
         public bool CreateCart()
@@ -243,55 +165,6 @@ namespace eCart.Areas.Shopper.Controllers
                 return 0;
             }
 
-        }
-
-        public bool SetUserRoles(int userId, int roleId)
-        {
-            try
-            {
-                //if (edb.UserRolesMappings.Any(r => r.UserId == userId && r.RoleId == roleId))
-                //{
-                //    return true;
-                //}
-
-                //UserRolesMapping userRolesMapping = new UserRolesMapping()
-                //{
-                //    RoleId = roleId,
-                //    UserId = userId
-                //};
-                //edb.UserRolesMappings.Add(userRolesMapping);
-                //edb.SaveChanges();
-                return true;
-            }
-            catch (Exception)
-            {
-                ModelState.AddModelError(" ", "Error Creating new Shopper");
-                return false;
-            }
-        }
-
-        public bool checkUserRole(int userId, int roleId)
-        {
-            try
-            {
-                //if (edb.UserRolesMappings.Any(r => r.UserId == userId && r.RoleId == roleId))
-                //{
-                //    return true;
-                //}
-
-                ////check if user is admin
-                //if (edb.UserRolesMappings.Any(r => r.UserId == userId && r.RoleId == 1))
-                //{
-                //    return true;
-                //}
-
-                ModelState.AddModelError("Password", "User is not a Shopper");
-                return false;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
         }
 
 

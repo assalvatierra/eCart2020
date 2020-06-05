@@ -319,7 +319,6 @@
     <Content Include="Areas\Store\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Store\Views\Store\NoUserStore.cshtml" />
     <Content Include="Areas\Shopper\Views\CartDetails\PendingCarts.cshtml" />
-    <Content Include="Areas\Shopper\Views\Accounts\Register.cshtml" />
     <Content Include="Areas\Shopper\Views\UserDetails\Index.cshtml" />
     <Content Include="Areas\Shopper\Views\Kiosk\Index.cshtml" />
     <Content Include="Areas\Shopper\Views\Kiosk\_CartSummary.cshtml" />
@@ -402,6 +401,7 @@
     <Content Include="Areas\Store\Views\Store\_ModalPayment.cshtml" />
     <Content Include="Areas\Store\Views\CartDetails\CartRelease.cshtml" />
     <Content Include="Areas\Store\Views\CartDetails\_ModalCartRelease.cshtml" />
+    <Content Include="Areas\Shopper\Views\Accounts\Register.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />
     <Content Include="Scripts\DateRangePicker\moment.min.js" />
