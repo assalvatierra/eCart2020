@@ -402,6 +402,7 @@
     <Content Include="Areas\Store\Views\CartDetails\CartRelease.cshtml" />
     <Content Include="Areas\Store\Views\CartDetails\_ModalCartRelease.cshtml" />
     <Content Include="Areas\Shopper\Views\Accounts\Register.cshtml" />
+    <Content Include="Areas\Shopper\Views\UserDetails\Edit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />
     <Content Include="Scripts\DateRangePicker\moment.min.js" />

@@ -45,6 +45,18 @@ namespace eCartServices
             }
         }
 
+        public UserDetail GetUserDetailsbyUserId(string userId)
+        {
+            try
+            {
+                return userDb.GetUserDetails().Where(u => u.UserId == userId).FirstOrDefault();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public string GetUserId(string email)
         {
             try
