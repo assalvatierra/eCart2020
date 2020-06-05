@@ -25,6 +25,7 @@ namespace eCart.Areas.Store.Controllers
 
             var storeKioskOrders = store.CartMgr.GetStoreKioskOrderList((int)id); 
             ViewBag.StoreId = id;
+
             return View(storeKioskOrders.ToList());
         }
 

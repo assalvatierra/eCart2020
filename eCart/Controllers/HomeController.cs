@@ -19,8 +19,16 @@ namespace eCart.Controllers
 
             if (userId != null)
             {
+                var isUserExists = store.UserMgr.CheckUserDetailsExist(userId);
+                var result = !isUserExists;
+                if (result)
+                {
+                    return RedirectToAction("Register", "Accounts", new { area = "Shopper" });
+                }
+
                 //get ready to pickup carts
                 var userDetailId = store.CartMgr.GetUserDetails(userId).Id;
+
                 var readyCarts = store.CartMgr.GetReadyShopperCarts(userDetailId);
                 ViewBag.ReadyCarts = readyCarts;
             }

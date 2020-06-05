@@ -13,6 +13,26 @@ namespace eCartServices
     {
         private iUserDb userDb = new UserDBLayer();
 
+        public bool CheckUserDetailsExist(string userId)
+        {
+            try
+            {
+                var userDetails = userDb.GetUserDetails().Where(u => u.UserId == userId).FirstOrDefault();
+                if (userDetails != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }catch
+            {
+                return false;
+            }
+        }
+
         public UserDetail GetUserDetails(int id)
         {
             try

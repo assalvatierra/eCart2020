@@ -21,7 +21,7 @@ namespace eCart.Areas.Shopper.Controllers
                 return RedirectToAction("PageError");
 
             if (!HttpContext.User.Identity.IsAuthenticated)
-                return RedirectToAction("login", "account", new { area = "" });
+                return RedirectToAction("login", "account", new { area = "" }); 
 
             var storeMgr = store.StoreMgr;
             var userid = HttpContext.User.Identity.GetUserId();
@@ -31,6 +31,9 @@ namespace eCart.Areas.Shopper.Controllers
 
             int storeId = (int)storedetail.Id;
             Session["STOREID"] = storeId;
+
+            if (storeId == 0)
+                return RedirectToAction("PageError");
 
             var storeKiosks = storeMgr.GetStoreKiosks(storeId);
 
@@ -141,9 +144,13 @@ namespace eCart.Areas.Shopper.Controllers
         public ActionResult SelectKiosk()
         {
             var storeMgr = store.StoreMgr;
+
+            if (!HttpContext.User.Identity.IsAuthenticated)
+                return RedirectToAction("login", "account", new { area = "" });
+
             var userid = HttpContext.User.Identity.GetUserId();
             var storedetail = storeMgr.GetStoreDetailByLoginId(userid);
-            if (store == null)
+            if (storedetail == null)
                 return RedirectToAction("PageError");
 
             var kioskList = store.CartMgr.GetStoreKioskList(storedetail.Id);
