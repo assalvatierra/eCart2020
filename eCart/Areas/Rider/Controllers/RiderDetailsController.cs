@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using eCartModels;
 using eCartServices;
+using Microsoft.AspNet.Identity;
 
 namespace eCart.Areas.Rider.Controllers
 {
@@ -17,17 +18,25 @@ namespace eCart.Areas.Rider.Controllers
         private StoreFactory store = new StoreFactory();
 
         // GET: Rider/RiderDetails
-        public ActionResult Index(int? id)
+        public ActionResult Index()
         {
-            if (id == null)
+            var riderMgr = store.RiderMgr;
+            var userid = HttpContext.User.Identity.GetUserId();
+
+            var riderDetail = riderMgr.GetRiderDetailByLoginId(userid);
+
+            if (riderDetail != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                ViewBag.RiderId = riderDetail.Id;
+            }
+            else
+            {
+                return RedirectToAction("NoUserStore");
             }
 
-            var rider = store.RiderMgr.GetRiderDetails((int)id);
-            ViewBag.Rider = rider;
+            ViewBag.Rider = riderDetail;
 
-            var riderCarts = rider.CartDeliveries;
+            var riderCarts = riderDetail.CartDeliveries;
             return View(riderCarts.ToList());
         }
 

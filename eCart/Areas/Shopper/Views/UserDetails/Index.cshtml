@@ -84,9 +84,7 @@
 
         @if (ViewBag.hasStoreApplication)
         {
-            <button class="btn btn-primary disabled">
-                Apply for Store Account
-            </button>
+            @Html.ActionLink("Go to Store Account", "Index", "Store", new { @area = "Store" }, new { @class= "btn btn-primary"});
         }
         else
         {
@@ -98,9 +96,8 @@
 
         @if (ViewBag.hasRiderApplication)
         {
-            <button class="btn btn-primary disabled">
-                Apply for Rider Account
-            </button>
+
+            @Html.ActionLink("Go to Rider Account", "Index", "RiderDetails", new { @area = "Rider" }, new { @class = "btn btn-primary" });
         }
         else
         {

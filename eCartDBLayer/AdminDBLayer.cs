@@ -601,7 +601,7 @@ namespace eCartDBLayer
 
         #endregion
 
-        #region Item Image
+        #region Store Kiosks
 
 
         public IQueryable<StoreKiosk> GetStoreKiosks()
@@ -653,6 +653,60 @@ namespace eCartDBLayer
             }
         }
 
+
+        #endregion
+
+        #region User Applications
+
+
+        public IQueryable<UserApplication> GetUserApplications()
+        {
+            return db.UserApplications;
+        }
+
+        public bool AddUserApplication(UserApplication userApplication)
+        {
+            try
+            {
+                db.UserApplications.Add(userApplication);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
+        public bool EditUserApplication(UserApplication userApplication)
+        {
+            try
+            {
+                db.Entry(userApplication).State = EntityState.Modified;
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+        public bool RemoveUserApplication(UserApplication userApplication)
+        {
+            try
+            {
+                db.UserApplications.Remove(userApplication);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
         #endregion
 

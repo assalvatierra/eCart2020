@@ -410,6 +410,8 @@
     <Content Include="Areas\Admin\Views\UserApplications\Details.cshtml" />
     <Content Include="Areas\Admin\Views\UserApplications\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\UserApplications\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\UserApplications\CreateStore.cshtml" />
+    <Content Include="Areas\Admin\Views\UserApplications\CreateRider.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />
     <Content Include="Scripts\DateRangePicker\moment.min.js" />

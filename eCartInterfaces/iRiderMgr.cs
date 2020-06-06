@@ -15,6 +15,7 @@ namespace eCartInterfaces
         bool EditRiderDetails(RiderDetail riderDetail);
         bool RemoveRiderDetails(RiderDetail riderDetail);
         RiderDetail GetRiderDetails(int id);
+        RiderDetail GetRiderDetailByLoginId(string loginId);
         List<RiderDetail> GetRiderDetailsList();
 
         void AddCartPayment(RiderCashDetail cashDetail);

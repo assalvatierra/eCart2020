@@ -161,5 +161,10 @@ namespace eCartServices
         {
             return rdb.GetRiderCashDetails().Where(s => s.Id == id).OrderByDescending(s => s.Id).FirstOrDefault();
         }
+
+        public RiderDetail GetRiderDetailByLoginId(string loginId)
+        {
+            return rdb.GetRiderDetails().Where(r=>r.UserId == loginId).FirstOrDefault();
+        }
     }
 }
