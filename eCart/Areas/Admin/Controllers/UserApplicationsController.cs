@@ -15,12 +15,11 @@ namespace eCart.Areas.Admin.Controllers
     public class UserApplicationsController : Controller
     {
         private StoreFactory store = new StoreFactory();
-        private ecartdbContainer db = new ecartdbContainer();
 
         // GET: Admin/UserApplications
         public ActionResult Index()
         {
-            var userApplications = db.UserApplications.Include(u => u.UserDetail).Include(u => u.UserApplicationStatu).Include(u => u.UserApplicationType);
+            var userApplications = store.AdminMgr.GetUserApplicationList(); 
             return View(userApplications.ToList());
         }
 
@@ -31,7 +30,8 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserApplication userApplication = db.UserApplications.Find(id);
+
+            UserApplication userApplication = store.AdminMgr.GetUserApplication((int)id);
             if (userApplication == null)
             {
                 return HttpNotFound();
@@ -42,9 +42,9 @@ namespace eCart.Areas.Admin.Controllers
         // GET: Admin/UserApplications/Create
         public ActionResult Create()
         {
-            ViewBag.UserDetailId = new SelectList(db.UserDetails, "Id", "UserId");
-            ViewBag.UserApplicationStatusId = new SelectList(db.UserApplicationStatus, "Id", "Name");
-            ViewBag.UserApplicationTypeId = new SelectList(db.UserApplicationTypes, "Id", "Name");
+            ViewBag.UserDetailId = new SelectList(store.RefDbLayer.GetUserDetails(), "Id", "UserId");
+            ViewBag.UserApplicationStatusId = new SelectList(store.RefDbLayer.GetUserApplicationStatus(), "Id", "Name");
+            ViewBag.UserApplicationTypeId = new SelectList(store.RefDbLayer.GetUserApplicationTypes(), "Id", "Name");
             return View();
         }
 
@@ -57,14 +57,13 @@ namespace eCart.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.UserApplications.Add(userApplication);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if(store.AdminMgr.AddUserApplication(userApplication))
+                    return RedirectToAction("Index");
             }
 
-            ViewBag.UserDetailId = new SelectList(db.UserDetails, "Id", "UserId", userApplication.UserDetailId);
-            ViewBag.UserApplicationStatusId = new SelectList(db.UserApplicationStatus, "Id", "Name", userApplication.UserApplicationStatusId);
-            ViewBag.UserApplicationTypeId = new SelectList(db.UserApplicationTypes, "Id", "Name", userApplication.UserApplicationTypeId);
+            ViewBag.UserDetailId = new SelectList(store.RefDbLayer.GetUserDetails(), "Id", "UserId", userApplication.UserDetailId);
+            ViewBag.UserApplicationStatusId = new SelectList(store.RefDbLayer.GetUserApplicationStatus(), "Id", "Name", userApplication.UserApplicationStatusId);
+            ViewBag.UserApplicationTypeId = new SelectList(store.RefDbLayer.GetUserApplicationTypes(), "Id", "Name", userApplication.UserApplicationTypeId);
             return View(userApplication);
         }
 
@@ -75,14 +74,14 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserApplication userApplication = db.UserApplications.Find(id);
+            UserApplication userApplication = store.AdminMgr.GetUserApplication((int)id);
             if (userApplication == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.UserDetailId = new SelectList(db.UserDetails, "Id", "UserId", userApplication.UserDetailId);
-            ViewBag.UserApplicationStatusId = new SelectList(db.UserApplicationStatus, "Id", "Name", userApplication.UserApplicationStatusId);
-            ViewBag.UserApplicationTypeId = new SelectList(db.UserApplicationTypes, "Id", "Name", userApplication.UserApplicationTypeId);
+            ViewBag.UserDetailId = new SelectList(store.RefDbLayer.GetUserDetails(), "Id", "UserId", userApplication.UserDetailId);
+            ViewBag.UserApplicationStatusId = new SelectList(store.RefDbLayer.GetUserApplicationStatus(), "Id", "Name", userApplication.UserApplicationStatusId);
+            ViewBag.UserApplicationTypeId = new SelectList(store.RefDbLayer.GetUserApplicationTypes(), "Id", "Name", userApplication.UserApplicationTypeId);
             return View(userApplication);
         }
 
@@ -95,13 +94,12 @@ namespace eCart.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(userApplication).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (store.AdminMgr.EditUserApplication(userApplication))
+                    return RedirectToAction("Index");
             }
-            ViewBag.UserDetailId = new SelectList(db.UserDetails, "Id", "UserId", userApplication.UserDetailId);
-            ViewBag.UserApplicationStatusId = new SelectList(db.UserApplicationStatus, "Id", "Name", userApplication.UserApplicationStatusId);
-            ViewBag.UserApplicationTypeId = new SelectList(db.UserApplicationTypes, "Id", "Name", userApplication.UserApplicationTypeId);
+            ViewBag.UserDetailId = new SelectList(store.RefDbLayer.GetUserDetails(), "Id", "UserId", userApplication.UserDetailId);
+            ViewBag.UserApplicationStatusId = new SelectList(store.RefDbLayer.GetUserApplicationStatus(), "Id", "Name", userApplication.UserApplicationStatusId);
+            ViewBag.UserApplicationTypeId = new SelectList(store.RefDbLayer.GetUserApplicationTypes(), "Id", "Name", userApplication.UserApplicationTypeId);
             return View(userApplication);
         }
 
@@ -112,7 +110,7 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserApplication userApplication = db.UserApplications.Find(id);
+            UserApplication userApplication = store.AdminMgr.GetUserApplication((int)id);
             if (userApplication == null)
             {
                 return HttpNotFound();
@@ -125,17 +123,18 @@ namespace eCart.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            UserApplication userApplication = db.UserApplications.Find(id);
-            db.UserApplications.Remove(userApplication);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            UserApplication userApplication = store.AdminMgr.GetUserApplication((int)id);
+
+            if (store.AdminMgr.RemoveUserApplication(userApplication))
+                return RedirectToAction("Index");
+            return View(userApplication);
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                store.AdminMgr.DbDispose();
             }
             base.Dispose(disposing);
         }
@@ -146,7 +145,7 @@ namespace eCart.Areas.Admin.Controllers
         // GET: Admin/StoreDetails/Create
         public ActionResult CreateStore(int id)
         {
-            var userAppDetails = db.UserApplications.Find(id);
+            var userAppDetails = store.AdminMgr.GetUserApplication(id);
 
             StoreDetail newStore = new StoreDetail()
             {

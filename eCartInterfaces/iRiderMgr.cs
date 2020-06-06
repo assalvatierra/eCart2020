@@ -29,5 +29,8 @@ namespace eCartInterfaces
         List<RiderDetail> GetActiveRiders();
 
         void setCartStatusDelivered(int id);
+
+        List<CartDelivery> GetActiveDeliveries(string userId);
+        List<CartDelivery> GetDeliveredDeliveries(string userId);
     }
 }
