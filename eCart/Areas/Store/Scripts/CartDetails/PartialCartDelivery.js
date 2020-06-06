@@ -24,11 +24,11 @@ function GetDeliveryHistory(deliveryId) {
 function PopulateDeliveryHistory(data) {
 
     if (data.length > 0) {
-        $("#delivery-history").remove();
+        $("#delivery-history-list").children().remove();
     }
 
     for (var i = 0; i < data.length; i++) {
-        let list = "<button class='list-group-item' > " + data[i]["Date"] + " - " + data[i]["Activity"] + " </button>";
-        $("#delivery-history").append(list)
+        let list = "<button class='list-group-item' > " + data[i]["Date"] + " - <b> " + data[i]["Activity"] + "</b> </button>";
+        $("#delivery-history-list").append(list)
     }
 }

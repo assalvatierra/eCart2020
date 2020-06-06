@@ -14,7 +14,6 @@ namespace eCart.Areas.Rider.Controllers
 {
     public class RiderDetailsController : Controller
     {
-        private ecartdbContainer db = new ecartdbContainer();
         private StoreFactory store = new StoreFactory();
 
         // GET: Rider/RiderDetails
@@ -31,13 +30,24 @@ namespace eCart.Areas.Rider.Controllers
             }
             else
             {
-                return RedirectToAction("NoUserStore");
+                return RedirectToAction("NoUserRider");
             }
 
             ViewBag.Rider = riderDetail;
 
-            var riderCarts = riderDetail.CartDeliveries;
-            return View(riderCarts.ToList());
+            var cartDeliveries = riderDetail.CartDeliveries.ToList();
+
+
+            var deliveredList = new List<int>();
+            cartDeliveries.ForEach(c => {
+                if (c.CartDetail.CartStatusId < 5)
+                {
+                    deliveredList.Add(c.Id);
+                }
+            });
+
+
+            return View(cartDeliveries.Where(c => deliveredList.Contains(c.Id)).ToList());
         }
 
         // GET: Rider/RiderDetails/Details/5
@@ -47,7 +57,7 @@ namespace eCart.Areas.Rider.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RiderDetail riderDetail = db.RiderDetails.Find(id);
+            RiderDetail riderDetail = store.RiderMgr.GetRiderDetails((int)id);
             if (riderDetail == null)
             {
                 return HttpNotFound();
@@ -64,12 +74,25 @@ namespace eCart.Areas.Rider.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            RiderDetail riderDetail = store.RiderMgr.GetRiderDetails((int)id);
-            if (riderDetail == null)
+            var cartDeliveries = store.RiderMgr.GetRiderDetails((int)id).CartDeliveries.ToList();
+
+            if (cartDeliveries == null)
             {
                 return HttpNotFound();
             }
-            return View(riderDetail);
+
+            ViewBag.Rider = store.RiderMgr.GetRiderDetails((int)id);
+
+            var deliveredList = new List<int>();
+            cartDeliveries.ForEach(c=> {
+                if (c.CartDetail.CartStatusId == 5)
+                {
+                    deliveredList.Add(c.Id);
+                }
+            });
+
+
+            return View(cartDeliveries.Where(c=> deliveredList.Contains(c.Id)).ToList());
         }
 
         // GET: Rider/RiderDetails/Create
@@ -216,6 +239,11 @@ namespace eCart.Areas.Rider.Controllers
                 store.RiderMgr.AddCartHistory(cartId, 5);
                 store.RiderMgr.setCartStatusDelivered(cartId);
             }
+        }
+
+        public ActionResult NoUserRider()
+        {
+            return View();
         }
     }
 }

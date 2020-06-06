@@ -6,6 +6,7 @@
 }
 
 <h2>Pending Carts</h2>
+@Html.ActionLink("Back to Account Details", "Index","UserDetails")
 
 <div class="panel bordered">
     <div class="panel-body">
@@ -96,10 +97,10 @@
             </div>
             <div class="col-lg-7">
                 <h4>
-                    <span class="text-muted" >
+                    <span class="text-muted">
                         Pickup:
 
-                        <span class="date-link" >@cart.DtPickup.ToString("h:mm tt MMM dd yyyy")</span> -
+                        <span class="date-link">@cart.DtPickup.ToString("h:mm tt MMM dd yyyy")</span> -
                         <span id="cartID" hidden> @cart.Id </span>
 
                         @if (cart.DeliveryType == "Delivery")
@@ -117,27 +118,29 @@
 
                     </span>
                 </h4>
-                <h5 >
+                <h5>
                     <span class="col-sm-6" style="padding-left:0px;">
                         <span class="text-muted"> Payment: </span>
                         @if (cart.PaymentDetails.FirstOrDefault() != null)
                         {
-                            @cart.PaymentDetails.LastOrDefault().PaymentReceiver.Description
+                            <span class="text-primary">
+                            @cart.PaymentDetails.LastOrDefault().PaymentReceiver.Description 
+                            </span>
                         }
                         else
                         {
-                            <span>On Pickup </span>
+                            <span class="text-primary">On Pickup </span>
                         }
                     </span>
-                    <span  class="col-sm-6"  style="padding-left:0px;">
-                        <span  class="text-muted"> Delivery Type: </span>
-                        <span> @cart.DeliveryType </span>
+                    <span class="col-sm-6" style="padding-left:0px;">
+                        <span class="text-muted"> Delivery Type: </span>
+                        <span class="text-primary"> @cart.DeliveryType </span>
                     </span>
 
 
                 </h5>
 
-            </div>  
+            </div>
             <div class="col-lg-2">
                 @if (cart.CartStatusId < 3)
                 {
@@ -146,9 +149,9 @@
                     </button>
                 }
 
-
-                <h5 style="width:100%;" class="cart-status-text">
-                    Status:  @cart.CartStatu.Name
+              
+                <h5 style="width:100%;" class="cart-status-text text-primary">
+                    <span style="color:black;"> Status: </span>  @cart.CartStatu.Name
                 </h5>
             </div>
         </div>
@@ -158,7 +161,7 @@
 
 
 <script>
-    function CancelOrder(e,cartId) {
+    function CancelOrder(e, cartId) {
         $.get("/Shopper/CartDetails/CancelCart", { cartId: cartId }, (response) => {
             console.log(response);
             if (response == "Order Cancelled") {

@@ -15,25 +15,22 @@
         <table class="table">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.MasterArea.Name)
+                     Store&nbsp;Name
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.MasterCity.Name)
+                    Area
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.StoreCategory.Name)
+                    City
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.StoreStatu.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LoginId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
+                    Category
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th>
+                    Status
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Remarks)
@@ -45,6 +42,9 @@
             {
                 <tr>
                     <td>
+                        <span class="table-data-primary-text text-primary">@Html.DisplayFor(modelItem => item.Name)</span>
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.MasterArea.Name)
                     </td>
                     <td>
@@ -54,16 +54,10 @@
                         @Html.DisplayFor(modelItem => item.StoreCategory.Name)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.StoreStatu.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LoginId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StoreStatu.Name)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Remarks)

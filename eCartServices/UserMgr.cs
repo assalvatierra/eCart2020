@@ -153,5 +153,34 @@ namespace eCartServices
                 return false;
             }
         }
+
+        public bool IsApplicationAccepted(int userDetailId, int apptypeId)
+        {
+
+            try
+            {
+                var applicationsList = GetUserApplicationsList(userDetailId);
+                if (applicationsList == null)
+                {
+                    return false;
+                }
+
+                var StoreAppList = applicationsList.Where(a => a.UserApplicationTypeId == apptypeId);
+                if (StoreAppList.Count() > 0)
+                {
+                    var AcceptedRiderApp = StoreAppList.Where(a=>a.UserApplicationStatusId == 2).FirstOrDefault();
+                    if (AcceptedRiderApp != null)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
     }
 }

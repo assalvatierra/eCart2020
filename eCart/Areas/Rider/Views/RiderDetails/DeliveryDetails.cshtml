@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "DeliveryDetails";
-    var Payments = ViewBag.RiderCashDetails as eCart.Models.RiderCashDetail;
+    var Payments = ViewBag.RiderCashDetails as eCartModels.RiderCashDetail;
     var havePayment = Payments != null ? true : false;
 }
 <div class="row panel bordered">
@@ -10,15 +10,15 @@
     <div class="panel-body">
         <div class="col-lg-12">
             <div class="row">
-                <h2 class="col-lg-12"> Delivery Details </h2>
+                <h2 class="col-lg-12"> Delivery Details : <span class="text-muted"> Cart # @Model.CartDetailId.ToString("#0000") </span> </h2>
                 <div class="col-lg-12"> @Html.ActionLink("Back to List", "Index", new { area = "Rider", id = Model.RiderDetailId })</div>
                 <p class="col-lg-4"> Delivery Status: <b> @ViewBag.DeliveryStatus </b> </p>
 
                 <div class="col-lg-8">
                     <div class="btn-group">
-                        <button class="btn btn-default" onclick="UpdateStatus(@Model.Id, 2 )"> Item Pickup </button>
-                        <button class="btn btn-default" onclick="UpdateStatus(@Model.Id, 3 )"> In-Transit </button>
-                        <button class="btn btn-default" onclick="UpdateStatus(@Model.Id, 4 )"> Delivered </button>
+                        <button class="btn btn-default" id="status-item-pickup" onclick="UpdateStatus(@Model.Id, 2 )"> Item Pickup </button>
+                        <button class="btn btn-default" id="status-item-transit" onclick="UpdateStatus(@Model.Id, 3 )"> In-Transit </button>
+                        <button class="btn btn-default" id="status-item-delivered" onclick="UpdateStatus(@Model.Id, 4 )"> Delivered </button>
                     </div>
                 </div>
             </div>
@@ -99,7 +99,7 @@
         <!-- Delivery Actions -->
         <div class="col-lg-12">
             <div class="pull-right">
-                <button class="btn btn-primary" data-target="#paymentModal" data-toggle="modal" > Add Payment </button>
+                <button class="btn btn-primary" data-target="#paymentModal" data-toggle="modal"> Add Payment </button>
             </div>
         </div>
     </div>
@@ -108,12 +108,80 @@
 @Html.Partial("_ModalPaymentAdd", null, new ViewDataDictionary { { "RiderDetailId" , Model.RiderDetailId }, { "CartDetailID", Model.CartDetailId },
     { "RiderCashParty" , ViewBag.RiderCashParty } ,{  "havePayment", havePayment } })
 
+@section Scripts{
+    <script>
 
-<script>
+        $(document).ready(() => {
+            Getstatus();
+        });
+
+        function Getstatus() {
+            console.log("updating status : " + '@ViewBag.DeliveryStatus');
+            switch ('@ViewBag.DeliveryStatus') {
+                case 'Item Pickup':
+                    $("#status-item-pickup").addClass('btn-primary');
+                    $("#status-item-pickup").siblings().removeClass('btn-primary');
+                    break;
+                case 'In-Transit':
+                    $("#status-item-transit").addClass('btn-primary');
+                    $("#status-item-transit").siblings().removeClass('btn-primary');
+                    break;
+                case 'Delivered':
+                    $("#status-item-delivered").addClass('btn-primary');
+                    $("#status-item-delivered").siblings().removeClass('btn-primary');
+                    break;
+                default:
+                break;
+            }
+        }
+
     function UpdateStatus(deliveryId, statusId) {
 
-        $.post("/Rider/RiderDetails/UpdateStatus", { id: deliveryId, statusId: statusId }).then(()=>{
+        $.post("/Rider/RiderDetails/UpdateStatus", { id: deliveryId, statusId: statusId }).then(() => {
             window.location.reload();
         });
     }
-</script>
+
+
+    //payment
+
+    $('#DtCash').daterangepicker({
+        singleDatePicker: true,
+        startDate: moment(),
+        showDropdowns: true,
+        timePicker: true,
+        timePicker24Hour: false,
+        timePickerIncrement: 10,
+        autoUpdateInput: true,
+        locale: {
+            format: 'MMM DD,YYYY h:mm A'
+        },
+    });
+
+    function AddPayment() {
+        var date = {
+            riderDetailId: $("#RiderDetailId").val(),
+            cartDetailId: $("#CartDetailId").val(),
+            riderCashPartyId: $("#RiderCashParty option:selected").val(),
+            dtCash: $("#DtCash").val(),
+            amount: $("#Amount").val()
+        }
+
+        var result = $.post("/Rider/RiderDetails/AddPayment", date).then(() => {
+            updateTablePayment($("#Amount").val());
+        });
+
+        console.log(result);
+    }
+
+    function updateTablePayment(amount) {
+        console.log("adding payment");
+
+        $("#payment-row").remove();
+        var payment = "<tr><td colspan='2'> <b style='float:right;'> Payment:</b> </td> " +
+            "<td> <span style='color:dodgerblue; font-size:20px;font-weight:bold;'>Php " + amount + "</span> </td>" +
+            "</tr>";
+        $("#table-delivery").append(payment);
+    }
+    </script>
+    }

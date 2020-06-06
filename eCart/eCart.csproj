@@ -412,6 +412,9 @@
     <Content Include="Areas\Admin\Views\UserApplications\Index.cshtml" />
     <Content Include="Areas\Admin\Views\UserApplications\CreateStore.cshtml" />
     <Content Include="Areas\Admin\Views\UserApplications\CreateRider.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Rider\Views\RiderDetails\NoUserRider.cshtml" />
+    <Content Include="Areas\Shopper\Views\Kiosk\PageError.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />
     <Content Include="Scripts\DateRangePicker\moment.min.js" />
@@ -467,7 +470,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\Rider\Data\" />
     <Folder Include="Areas\Shopper\Data\" />
     <Folder Include="Areas\Store\Data\" />

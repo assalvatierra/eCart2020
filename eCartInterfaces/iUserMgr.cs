@@ -20,5 +20,6 @@ namespace eCartInterfaces
         bool EditUserApplication(UserApplication userApplication);
         bool HasStoreApplication(int userDetailId);
         bool HasRiderApplication(int userDetailId);
+        bool IsApplicationAccepted(int userDetailId, int apptypeId);
     }
 }

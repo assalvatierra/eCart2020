@@ -26,14 +26,14 @@
             <div class="col-lg-2 pull-right">
                 <div class="btn-group-vertical">
                     @Html.ActionLink("Profile", "Details", new { id = Rider.Id }, new { @class = "btn btn-default" })
-                    @Html.ActionLink("Delivered Carts", "DeliveredCarts", new { id = Rider.Id }, new { @class = "btn btn-default" })
+                    @Html.ActionLink("Active Carts", "Index",null, new { @class = "btn btn-default" })
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
                 <hr />
-                <h4><b> Active Carts For Delivery </b></h4>
+                <h4><b> Delivered Carts </b></h4>
                 <table class="table bordered">
                     <thead>
                         <tr>

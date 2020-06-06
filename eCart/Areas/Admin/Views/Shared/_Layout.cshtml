@@ -16,15 +16,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("eCarts", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("eCart", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Dashboard", "Index", "Dashboard", new { area = "Admin" }, null)</li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                   
                 </ul>
+                @Html.Partial("_LoginPartial", new { area = "" })
             </div>
         </div>
     </div>

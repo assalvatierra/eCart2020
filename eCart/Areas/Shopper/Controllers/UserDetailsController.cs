@@ -1,5 +1,6 @@
 ﻿using eCartModels;
 using eCartServices;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,8 @@ namespace eCart.Areas.Shopper.Controllers
             ViewBag.AppTypes = new SelectList(store.RefDbLayer.GetUserApplicationTypes(), "Id", "Name");
             ViewBag.hasStoreApplication = store.UserMgr.HasStoreApplication(userDetails.Id);
             ViewBag.hasRiderApplication = store.UserMgr.HasRiderApplication(userDetails.Id);
+            ViewBag.IsStoreAppAccepted = store.UserMgr.IsApplicationAccepted(userDetails.Id, 1);
+            ViewBag.IsRiderAppAccepted = store.UserMgr.IsApplicationAccepted(userDetails.Id, 2);
             return View(userDetails);
         }
 
@@ -63,11 +66,15 @@ namespace eCart.Areas.Shopper.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (store.AdminMgr.EditUserDetails(userDetail))
+                if (CheckUserRegFields(userDetail))
                 {
-                    return RedirectToAction("Index");
-                }
 
+                    if (store.AdminMgr.EditUserDetails(userDetail))
+                    {
+                        return RedirectToAction("Index");
+                    }
+
+                }
             }
 
             ViewBag.MasterAreaId = new SelectList(store.RefDbLayer.GetMasterAreas(), "Id", "Name", userDetail.MasterAreaId);
@@ -102,5 +109,41 @@ namespace eCart.Areas.Shopper.Controllers
             }
         }
 
+
+        public bool CheckUserRegFields(UserDetail userDetail)
+        {
+            bool isValid = true;
+            if (userDetail.Name.IsNullOrWhiteSpace())
+            {
+                ModelState.AddModelError("Name", "Name field is empty.");
+                isValid = false;
+            }
+
+            if (userDetail.Address.IsNullOrWhiteSpace())
+            {
+                ModelState.AddModelError("Address", "Address field is empty.");
+                isValid = false;
+            }
+
+            if (userDetail.UserId.IsNullOrWhiteSpace())
+            {
+                ModelState.AddModelError("UserId", "UserId field is empty.");
+                isValid = false;
+            }
+
+            if (userDetail.Mobile.IsNullOrWhiteSpace())
+            {
+                ModelState.AddModelError("Mobile", "Mobile field is empty.");
+                isValid = false;
+            }
+
+            if (userDetail.Email.IsNullOrWhiteSpace())
+            {
+                ModelState.AddModelError("Email", "Email field is empty.");
+                isValid = false;
+            }
+
+            return isValid;
+        }
     }
 }
