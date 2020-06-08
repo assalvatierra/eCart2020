@@ -11,7 +11,7 @@ function getPickupPoints(cartId, StoreId) {
         if (result.length > 0) {
             for (var i = 0; i < result.length; i++) {
                 var location = "<li type='button' class='list-group-item btn btn-default' value='" + result[i]['Id'] + "'" +
-                    " onclick='UpdatePickupLocation(" + cartId + "," + result[i]['Id'] + ")' >" + result[i]['Address'] + "</li>";
+                    " onclick='UpdatePickupLocation(" + cartId + "," + result[i]['Id'] + ")' > " + result[i]['Address'] + "</li>";
                 $("#pickupLocList").append(location);
             }
         } else {
@@ -41,7 +41,7 @@ function updateLocationText(cartId, pickupPointId) {
     if ((cartId != 0 || cartId != null) && (pickupPointId != 0 || pickupPointId != null)) {
         $.getJSON('/Shopper/CartDetails/GetStorePickupAddress', { id: pickupPointId }, (address) => {
             $("#pickupAddress-" + cartId).val(pickupPointId);
-            $("#pickupAddress-" + cartId).text(address);
+            $("#pickupAddress-" + cartId).text(" - " + address);
             $("#pickupModal").modal('hide');
         });
     } else {

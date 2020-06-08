@@ -78,7 +78,7 @@ textarea {
     padding: 5px;
     margin-right: 5px;
     margin-top: 5px;
-    min-height: 130px;
+    /*min-height: 130px;*/
     border-radius: 25px;
 }
 
@@ -309,6 +309,17 @@ textarea {
     color: gray;
 }
 
+.cart-summary-item-td {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.cart-summary-pickup-text {
+    font-size:18px;
+    padding:0px;
+}
+
 
 /*Login-Resgister*/
 .register-panel {
@@ -349,7 +360,7 @@ textarea {
     }
 
 .btn{
-    margin-top:2px;
+    margin-top:1px;
 }
 
 .pill-active {
@@ -445,7 +456,6 @@ textarea {
 
 
 
-
 @media only screen and (max-width:1020px ) {
     .add-to-Cart {
         display: block;
@@ -485,5 +495,9 @@ textarea {
 
     .link-other-store {
         width: 75%;
+    }
+
+    .cart-summary-item-td img{
+        display:none;
     }
 }

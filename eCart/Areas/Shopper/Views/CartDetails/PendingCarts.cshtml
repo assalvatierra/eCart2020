@@ -6,7 +6,7 @@
 }
 
 <h2>Pending Carts</h2>
-@Html.ActionLink("Back to Account Details", "Index","UserDetails")
+@Html.ActionLink("Back to Account Details", "Index", "UserDetails")
 
 <div class="panel bordered">
     <div class="panel-body">
@@ -32,7 +32,7 @@
 
             <div class="cart-summary-store">
                 <div class="pull-left" style="display:flex;flex-direction:row;">
-                    <img src="@cart.StoreDetail.StoreImages.FirstOrDefault().ImageUrl" style="width:60px;" />
+                    <img src="@cart.StoreDetail.StoreImages.FirstOrDefault().ImageUrl" style="width:60px;margin:10px 20px;" />
                     <h3 style="flex:1;" class="pull-right"> @cart.StoreDetail.Name </h3>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                         var subtotal = qty * unitprice;
                         subtotalAmount += subtotal;
                         <tr>
-                            <td style="display:flex;flex-direction:row;">
+                            <td class="cart-summary-item-td" style="display:flex;flex-direction:row;">
                                 @if (item.StoreItem.ItemMaster.ItemImages.FirstOrDefault() != null)
                                 {
                                     var image = item.StoreItem.ItemMaster.ItemImages.FirstOrDefault();
@@ -124,32 +124,30 @@
                         @if (cart.PaymentDetails.FirstOrDefault() != null)
                         {
                             <span class="text-primary">
-                            @cart.PaymentDetails.LastOrDefault().PaymentReceiver.Description 
+                                @cart.PaymentDetails.LastOrDefault().PaymentReceiver.Description
                             </span>
                         }
                         else
                         {
-                            <span class="text-primary">On Pickup </span>
+                            <span class="text-primary"> At Store </span>
                         }
                     </span>
-                    <span class="col-sm-6" style="padding-left:0px;">
+                    <span class="col-sm-6 col-xs-12" style="padding-left:0px;">
                         <span class="text-muted"> Delivery Type: </span>
                         <span class="text-primary"> @cart.DeliveryType </span>
                     </span>
-
-
                 </h5>
 
             </div>
             <div class="col-lg-2">
                 @if (cart.CartStatusId < 3)
                 {
-                    <button class="btn btn-warning" style="width:100%;" onclick="CancelOrder(this,@cart.Id)">
+                    <button class="btn btn-warning" style="width:100%;margin-top:15px;" onclick="CancelOrder(this,@cart.Id)">
                         Cancel Order
                     </button>
                 }
 
-              
+
                 <h5 style="width:100%;" class="cart-status-text text-primary">
                     <span style="color:black;"> Status: </span>  @cart.CartStatu.Name
                 </h5>
@@ -159,19 +157,6 @@
     totalAmount += subtotalAmount;
 }
 
-
-<script>
-    function CancelOrder(e, cartId) {
-        $.get("/Shopper/CartDetails/CancelCart", { cartId: cartId }, (response) => {
-            console.log(response);
-            if (response == "Order Cancelled") {
-                $(e).attr("disabled", "disabled");
-                $(e).parent().siblings('.col-lg-2').children('.cart-status-text').text("Cancelled");
-            } else {
-                alert(response);
-            }
-        });
-
-
-    }
-</script>
+@section Scripts{
+    <script src="~/Areas/Shopper/Scripts/pendingCarts.js"> </script>
+}

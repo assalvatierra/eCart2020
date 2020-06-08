@@ -225,6 +225,7 @@
     <Content Include="Areas\Shopper\Scripts\checkout.js" />
     <Content Include="Areas\Shopper\Scripts\checkoutPayment.js" />
     <Content Include="Areas\Shopper\Scripts\checkoutPickup.js" />
+    <Content Include="Areas\Shopper\Scripts\pendingCarts.js" />
     <Content Include="Areas\Store\Scripts\CartDetails\CartStatus.js" />
     <Content Include="Areas\Store\Scripts\CartDetails\ModalCartDeliveryAdd.js" />
     <Content Include="Areas\Store\Scripts\CartDetails\ModalCartDeliveryEdit.js" />
