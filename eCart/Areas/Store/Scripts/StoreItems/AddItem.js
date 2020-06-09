@@ -12,7 +12,7 @@ function PrepAddItemModal() {
 
     $.get('/Store/StoreItems/GetItemCategoryGroups', null,
         (result) => {
-            //console.log(result);
+            console.log(result);
             for (let i = 0; i < result.length; i++) {
                 let category = "<button class='list-group-item' value='" + result[i]['Id'] + "' onclick='AddItemCatGroupSelect(this);'> " + result[i]['Name'] + " </button>";
 
@@ -20,7 +20,7 @@ function PrepAddItemModal() {
             }
 
             if (result.length == 0) {
-                $('#addItem-category-group').append("<p> No Item Found</p>");
+                $('#addItem-category-group').append("<button class='list-group-item disabled'> No Category Group Found </button>");
             }
         }
     );
@@ -36,10 +36,10 @@ function AddItemCatGroupSelect(e) {
     $(e).addClass('active');
 
     var catgroupId = $('#addItem-category-group').find('.active').val();
-    //console.log(catgroupId);
+    console.log(catgroupId);
     $.get('/Store/StoreItems/GetItemCategoriesById', { id: catgroupId },
         (result) => {
-            //console.log(result);
+            console.log(result);
             for (let i = 0; i < result.length; i++) {
                 let category = "<button class='list-group-item' value='" + result[i]['Id'] + "' onclick='AddItemCatSelect(this);'> " + result[i]['Name'] + " </button>";
 
@@ -47,8 +47,12 @@ function AddItemCatGroupSelect(e) {
             }
 
             if (result.length == 0) {
-                $('#addItem-category-list').append("<p> No Item Found</p>");
+                $('#addItem-category-list').append("<button class='list-group-item disabled'> No Category Found </button>");
             }
+
+
+            let backLink = "<button class='list-group-item' onclick='BackToCatGroup();'> Back </button>";
+            $('#addItem-category-list').append(backLink);
         }
     );
     //console.log(res);
@@ -77,10 +81,34 @@ function AddItemCatSelect(e) {
             }
 
             if (result.length == 0) {
-                $('#addItem-list').append("<p> No Item Found</p>");
+                $('#addItem-list').append("<button class='list-group-item disabled'> No Item Found </p>");
             }
+
+            let backLink = "<button class='list-group-item' onclick='BackToCatList();'> Back </button>";
+            $('#addItem-list').append(backLink);
         }
     );
+}
+
+function BackToCatGroup() {
+    PrepAddItemModal();
+    ResetCatSelections();
+}
+
+function BackToCatList() {
+    $('#addItem-list').hide();
+    $('#addItem-category-list').show();
+    $('#addItem-category-list').children().removeClass('active');
+}
+
+
+function ResetCatSelections() {
+    $('#addItem-category-group').children().removeClass('active');
+    $('#addItem-category-list').hide();
+    $('#addItem-category-list').children().removeClass('active');
+    $('#addItem-list').hide();
+    $('#addItem-list').siblings().removeClass('active');
+    $('#addItem-price').hide();
 }
 
 function AddItemSelect(e) {
@@ -90,6 +118,7 @@ function AddItemSelect(e) {
     //set selected as active
     $(e).addClass('active');
 }
+
 
 
 function AddItemSubmit(storeId) {

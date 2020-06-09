@@ -436,7 +436,7 @@ namespace eCartServices
         {
             try
             {
-                var itemCategories = storeDb.GetItemCategories().Where(c=>c.Id == itemCatGroupId).ToList();
+                var itemCategories = storeDb.GetItemCategories().Where(c=>c.ItemCatGroupId == itemCatGroupId).ToList();
                
                 return itemCategories;
             }

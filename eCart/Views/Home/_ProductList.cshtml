@@ -31,7 +31,7 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <h1> Store Items </h1>
+        @*<h1> Store Items </h1>*@
     </div>
 
     @foreach (var item in Model)
@@ -56,18 +56,18 @@
                     <div class="col-lg-12 col-sm-12 col-xs-12">
                         <div style="margin-top:10px;">
                             <span class="text-primary" style="font-size:10px;"> @item.StoreDetail.Name </span>
-                            <h4 style="margin-top:3px;">
+                            <p class="store-item-name">
 
-                                @if (item.ItemMaster.Name.Length < 17)
+                                @if (item.ItemMaster.Name.Length < 20)
                                 {
                                     @item.ItemMaster.Name
                                 }
                                 else
                                 {
-                                    @item.ItemMaster.Name.Substring(0, 17)
+                                    @item.ItemMaster.Name.Substring(0, 20)
                                     <text>... </text>
                                 }
-                            </h4>
+                            </p>
                             <b class="text-success"> Php @item.UnitPrice.ToString("0.00") </b>
 
                             <span class="text-muted" id="item-@item.Id" style="font-size:10px;">  </span>

@@ -149,7 +149,8 @@ namespace eCart.Areas.Admin.Controllers
 
             StoreDetail newStore = new StoreDetail()
             {
-                LoginId = userAppDetails.UserDetail.UserId
+                LoginId = userAppDetails.UserDetail.UserId,
+                Remarks = " "
             };
 
             ViewBag.MasterAreaId = new SelectList(store.RefDbLayer.GetMasterAreas(), "Id", "Name");

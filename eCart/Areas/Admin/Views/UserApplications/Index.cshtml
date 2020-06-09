@@ -16,7 +16,7 @@
         <table class="table">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.DtApplied)
+                    Date Applied
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Email)
@@ -25,13 +25,13 @@
                     @Html.DisplayNameFor(model => model.Mobile)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.UserDetail.Name)
+                    User
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.UserApplicationStatu.Name)
+                    Status
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.UserApplicationType.Name)
+                    Type
                 </th>
                 <th></th>
             </tr>
@@ -59,12 +59,11 @@
                     </td>
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @*@Html.ActionLink("Details", "Details", new { id = item.Id }) |*@
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }) 
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
 
                         @if (item.UserApplicationStatusId == 2)
                         {
-
                         }
                         else
                         {

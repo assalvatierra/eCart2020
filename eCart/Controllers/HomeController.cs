@@ -99,11 +99,8 @@ namespace eCart.Controllers
                 ViewBag.StoreImg = storeDetails.StoreImages.FirstOrDefault() != null ? storeDetails.StoreImages.FirstOrDefault().ImageUrl : defaultImg;
 
                 //Get next suggested Store
-                StoreDetail storeDetail = new StoreDetail();
-                do
-                {
-                    storeDetail = storeMgr.getRandomStore();
-                } while (storeDetail.Id == id);
+                StoreDetail storeDetail;
+               storeDetail = storeMgr.getRandomStore();
 
                 ViewBag.nextStoreId = storeDetail.Id;
                 ViewBag.nextStore = storeDetail.Name;
