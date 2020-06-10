@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -119,12 +120,24 @@ namespace eCartDbLayer
             return db.UserApplicationStatus;
         }
 
-        public IQueryable<string> GetAspNetUsers()
+        public List<IdentityUSer> GetAspNetUsers()
         {
             var context = new IdentityDbContext();
+            var users = context.Users.Select(u => new { u.Id, u.UserName, u.Email });
 
-            var users = context.Users.Select(u=> u.Id );
-            return users;
+            List<IdentityUSer> userList = new List<IdentityUSer>();
+            foreach (var utmp in users)
+            {
+                userList.Add(new IdentityUSer()
+                {
+                    UserName = utmp.UserName,
+                    LoginId = utmp.Id,
+                    Email = utmp.Email
+                });
+            }
+            return userList;
+
         }
     }
+
 }

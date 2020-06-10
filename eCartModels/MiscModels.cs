@@ -66,4 +66,10 @@ namespace eCartModels
         public string ImageUrl { get; set; }
     }
 
+    public class IdentityUSer
+    {
+        public string LoginId;
+        public string UserName;
+        public string Email;
+    }
 }
