@@ -40,7 +40,8 @@ namespace eCart.Areas.Store.Controllers
                     //cartlist
                     if (cartStatus == 1)
                     {
-                        cartList = storeMgr.getStoreActiveCarts(storeDetail.Id);
+                        cartList.AddRange(storeMgr.getStoreActiveKioskOrders(storeDetail.Id));
+                        cartList.AddRange(storeMgr.getStoreActiveCarts(storeDetail.Id));
                     }
                     else if (cartStatus == 5)
                     {
@@ -53,9 +54,9 @@ namespace eCart.Areas.Store.Controllers
                 }
                 else
                 {
-                    cartList = storeMgr.getStoreActiveCarts(storeDetail.Id);
+                    cartList.AddRange(storeMgr.getStoreActiveKioskOrders(storeDetail.Id));
+                    cartList.AddRange(storeMgr.getStoreActiveCarts(storeDetail.Id));
                 }
-
                 ViewBag.CartList = cartList;
                 ViewBag.PaymentReceiverList = store.RefDbLayer.GetPaymentReceivers().ToList();
                 ViewBag.PaymentStatusList = store.RefDbLayer.GetPaymentStatus().ToList();
@@ -92,6 +93,11 @@ namespace eCart.Areas.Store.Controllers
 
             return PartialView();
 
+        }
+
+        public string getKioskOrderName(int id)
+        {
+            return store.StoreMgr.GetKioskOrder(id).Customer;
         }
 
         public ActionResult NoUserStore()

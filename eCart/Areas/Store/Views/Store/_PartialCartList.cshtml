@@ -14,8 +14,8 @@
 
     <div class="col-lg-offset-5 col-lg-3" style="margin-top:5px;">
         <div class="btn-group">
-            <a class="btn btn-default active" > Online Orders </a>
-            <a class="btn btn-default" href="@Url.Action("Index", "StoreKioskOrders", new { id = ViewBag.StoreId })"> Kiosk Orders </a>
+            @*<a class="btn btn-default active" > Online Orders </a>*@
+            @*<a class="btn btn-default" href="@Url.Action("Index", "StoreKioskOrders", new { id = ViewBag.StoreId })"> Kiosk Orders </a>*@
         </div>
     </div>
 </div>
@@ -71,22 +71,52 @@
                         @cart.CartStatu.Name
                     </td>
                     <td>
-                        @cart.UserDetail.Name
+                        @if (cart.DeliveryType == "Kiosk")
+                        {
+                            Html.RenderAction("getKioskOrderName", new { id = cart.Id });
+                        }
+                        else
+                        {
+                            @cart.UserDetail.Name
+                        }
                     </td>
                     <td>
-                        @cart.UserDetail.Mobile
+
+                        @if (cart.DeliveryType == "Kiosk")
+                        {
+                           
+                        }
+                        else
+                        {
+                            @cart.UserDetail.Mobile
+                        }
                     </td>
                     <td>
                         @cart.DeliveryType
                     </td>
                     <td>
-                        @cart.DtPickup.ToString("MMM dd yyyy h:mm tt")
+                        @if (cart.DeliveryType == "Kiosk")
+                        {
+
+                        }
+                        else
+                        {
+                            @cart.UserDetail.Name
+                        }
                     </td>
                     <td>
                         @cart.CartItems.Count()
                     </td>
                     <td>
-                        @cart.StorePickupPoint.Address
+                        @if (cart.DeliveryType == "Kiosk")
+                        {
+
+                        }
+                        else
+                        {
+                            @cart.StorePickupPoint.Address
+                        }
+
                     </td>
                     <td>
                         @{decimal amount = 0;}

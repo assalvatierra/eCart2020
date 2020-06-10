@@ -37,5 +37,9 @@ namespace eCartInterfaces
         IQueryable<StorePickupPartner> GetStorePickupPartners();
         bool AddStorePickupPartner(StorePickupPartner pickupPartner);
         bool RemoveStorePickupPartner(StorePickupPartner pickupPartner);
+
+        //kiosk order
+        IQueryable<StoreKiosk> GetStoreKiosks();
+        IQueryable<StoreKioskOrder> GetStoreKioskOrders();
     }
 }

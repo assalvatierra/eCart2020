@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using eCartModels;
 using eCartServices;
 using Microsoft.Ajax.Utilities;
@@ -43,6 +44,8 @@ namespace eCart.Areas.Admin.Controllers
         // GET: Admin/StoreDetails/Create
         public ActionResult Create()
         {
+
+            ViewBag.LoginId = new SelectList(store.RefDbLayer.GetAspNetUsers().ToList());
             ViewBag.MasterAreaId = new SelectList(store.RefDbLayer.GetMasterAreas(), "Id", "Name");
             ViewBag.MasterCityId = new SelectList(store.RefDbLayer.GetMasterCities(), "Id", "Name");
             ViewBag.StoreCategoryId = new SelectList(store.RefDbLayer.GetStoreCategories(), "Id", "Name");
@@ -67,6 +70,7 @@ namespace eCart.Areas.Admin.Controllers
 
             }
 
+            ViewBag.LoginId = new SelectList(store.RefDbLayer.GetAspNetUsers().ToList(), storeDetail.LoginId);
             ViewBag.MasterAreaId = new SelectList(store.RefDbLayer.GetMasterAreas(), "Id", "Name", storeDetail.MasterAreaId);
             ViewBag.MasterCityId = new SelectList(store.RefDbLayer.GetMasterCities(), "Id", "Name", storeDetail.MasterCityId);
             ViewBag.StoreCategoryId = new SelectList(store.RefDbLayer.GetStoreCategories(), "Id", "Name", storeDetail.StoreCategoryId);
@@ -86,6 +90,8 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.LoginId = new SelectList(store.RefDbLayer.GetAspNetUsers().ToList(), storeDetail.LoginId);
             ViewBag.MasterAreaId = new SelectList(store.RefDbLayer.GetMasterAreas(), "Id", "Name", storeDetail.MasterAreaId);
             ViewBag.MasterCityId = new SelectList(store.RefDbLayer.GetMasterCities(), "Id", "Name", storeDetail.MasterCityId);
             ViewBag.StoreCategoryId = new SelectList(store.RefDbLayer.GetStoreCategories(), "Id", "Name", storeDetail.StoreCategoryId);
@@ -108,6 +114,7 @@ namespace eCart.Areas.Admin.Controllers
                     return RedirectToAction("Index");
                 }
             }
+            ViewBag.LoginId = new SelectList(store.RefDbLayer.GetAspNetUsers().ToList(), storeDetail.LoginId);
             ViewBag.MasterAreaId = new SelectList(store.RefDbLayer.GetMasterAreas(), "Id", "Name", storeDetail.MasterAreaId);
             ViewBag.MasterCityId = new SelectList(store.RefDbLayer.GetMasterCities(), "Id", "Name", storeDetail.MasterCityId);
             ViewBag.StoreCategoryId = new SelectList(store.RefDbLayer.GetStoreCategories(), "Id", "Name", storeDetail.StoreCategoryId);

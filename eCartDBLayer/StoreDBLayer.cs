@@ -299,7 +299,20 @@ namespace eCartDbLayer
         }
 
 
+
         #endregion
 
+        #region kiosk
+
+        public IQueryable<StoreKiosk> GetStoreKiosks()
+        {
+            return sdb.storeKiosks;
+        }
+
+        public IQueryable<StoreKioskOrder> GetStoreKioskOrders()
+        {
+            return sdb.storeKioskOrders;
+        }
+        #endregion
     }
 }

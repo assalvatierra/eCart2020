@@ -61,9 +61,10 @@
                         @Html.DisplayFor(modelItem => item.CartDetail.DeliveryType)
                     </td>
                     <td>
-                        @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })*@
+                        @Html.ActionLink("View Cart", "Details", "CartDetails", new { area ="store", id = item.Id },null)
+                        @* @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })*@
                         @* @Html.ActionLink("Details", "Details", new { id = item.Id })
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                           @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
                     </td>
                 </tr>
             }

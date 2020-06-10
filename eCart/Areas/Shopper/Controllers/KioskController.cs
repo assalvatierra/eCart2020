@@ -186,6 +186,7 @@ namespace eCart.Areas.Shopper.Controllers
 
                 var userId = GetUserId();
                 cartSession.FirstOrDefault().StoreDetail = null;
+                cartSession.FirstOrDefault().DeliveryType = "Kiosk";
                 cartSession.FirstOrDefault().UserDetailId = store.CartMgr.GetUserDetails(userId).Id;
                 var cartId = store.CartMgr.SaveKioskOrder(cartSession, userId, id);
                 if (cartId > 0)

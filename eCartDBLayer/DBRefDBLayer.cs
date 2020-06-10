@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using eCartModels;
 using eCartInterfaces;
-
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace eCartDbLayer
 {
     public class DBRefDBLayer: iDBRefDBLayer
     {
+        ecartdbContainer edb = new ecartdbContainer();
         DBRefContext db = new DBRefContext();
 
         public IQueryable<MasterCity> GetMasterCities()
@@ -116,6 +117,14 @@ namespace eCartDbLayer
         public IQueryable<UserApplicationStatus> GetUserApplicationStatus()
         {
             return db.UserApplicationStatus;
+        }
+
+        public IQueryable<string> GetAspNetUsers()
+        {
+            var context = new IdentityDbContext();
+
+            var users = context.Users.Select(u=> u.Id );
+            return users;
         }
     }
 }

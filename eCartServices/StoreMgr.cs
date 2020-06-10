@@ -211,7 +211,15 @@ namespace eCartServices
 
         public List<CartDetail> getStoreActiveCarts(int id)
         {
-            var storeCarts = db.CartDetails.Where(s => s.StoreDetailId == id && s.CartStatusId <= 5); //active
+            var storeCarts = db.CartDetails.Where(s => s.StoreDetailId == id && s.CartStatusId <= 5 && s.DeliveryType == "Pickup"); //active
+
+            return storeCarts.ToList();
+        }
+
+
+        public List<CartDetail> getStoreActiveKioskOrders(int id)
+        {
+            var storeCarts = db.CartDetails.Where(s => s.StoreDetailId == id && s.CartStatusId <= 5 && s.DeliveryType == "Kiosk"); //active
 
             return storeCarts.ToList();
         }
@@ -545,6 +553,11 @@ namespace eCartServices
             {
                 return false;
             }
+        }
+
+        public StoreKioskOrder GetKioskOrder(int cartId)
+        {
+            return storeDb.GetStoreKioskOrders().Where(k => k.CartDetailId == cartId).FirstOrDefault();
         }
 
 

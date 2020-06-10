@@ -14,11 +14,13 @@ namespace eCartInterfaces
         List<StoreItem> getFeaturedItems();
         List<StoreItem> getStoreItems(int id);
         List<CartDetail> getStoreActiveCarts(int id);
+        List<CartDetail> getStoreActiveKioskOrders(int id);
         List<CartDetail> getStoreCarts(int id, int cartStatus);
         StoreDetail  getStoreDetails(int id);
         StoreItem getStoreItem(int id);
         StorePickupPoint getDefaultPickupPoint(int StoreId);
         StoreDetail getRandomStore();
+        StoreKioskOrder GetKioskOrder(int cartId);
 
         //store Pickup Point
         List<StorePickupPoint> GetStorePickupPoints();
