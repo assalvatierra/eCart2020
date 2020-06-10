@@ -245,6 +245,21 @@
       <End Role="StorePickupPoint" EntitySet="StorePickupPoints" />
       <End Role="CartRelease" EntitySet="CartReleases" />
     </AssociationSet>
+    <EntitySet Name="UserApplicationStatus" EntityType="ecartdb.UserApplicationStatus" />
+    <EntitySet Name="UserApplicationTypes" EntityType="ecartdb.UserApplicationType" />
+    <EntitySet Name="UserApplications" EntityType="ecartdb.UserApplication" />
+    <AssociationSet Name="UserDetailUserApplication" Association="ecartdb.UserDetailUserApplication">
+      <End Role="UserDetail" EntitySet="UserDetails" />
+      <End Role="UserApplication" EntitySet="UserApplications" />
+    </AssociationSet>
+    <AssociationSet Name="UserApplicationStatusUserApplication" Association="ecartdb.UserApplicationStatusUserApplication">
+      <End Role="UserApplicationStatus" EntitySet="UserApplicationStatus" />
+      <End Role="UserApplication" EntitySet="UserApplications" />
+    </AssociationSet>
+    <AssociationSet Name="UserApplicationTypeUserApplication" Association="ecartdb.UserApplicationTypeUserApplication">
+      <End Role="UserApplicationType" EntitySet="UserApplicationTypes" />
+      <End Role="UserApplication" EntitySet="UserApplications" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="UserDetail">
     <Key>
@@ -265,6 +280,7 @@
     <NavigationProperty Name="CartDetails" Relationship="ecartdb.UserDetailCartDetail" FromRole="UserDetail" ToRole="CartDetail" />
     <NavigationProperty Name="MasterArea" Relationship="ecartdb.MasterAreaUserDetail" FromRole="UserDetail" ToRole="MasterArea" />
     <NavigationProperty Name="CartReleases" Relationship="ecartdb.CartReleaseUserDetail" FromRole="UserDetail" ToRole="CartRelease" />
+    <NavigationProperty Name="UserApplications" Relationship="ecartdb.UserDetailUserApplication" FromRole="UserDetail" ToRole="UserApplication" />
   </EntityType>
   <EntityType Name="StoreDetail">
     <Key>
@@ -1323,6 +1339,73 @@
       </Principal>
       <Dependent Role="CartRelease">
         <PropertyRef Name="StorePickupPointId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="UserApplicationStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <NavigationProperty Name="UserApplications" Relationship="ecartdb.UserApplicationStatusUserApplication" FromRole="UserApplicationStatus" ToRole="UserApplication" />
+  </EntityType>
+  <EntityType Name="UserApplicationType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <NavigationProperty Name="UserApplications" Relationship="ecartdb.UserApplicationTypeUserApplication" FromRole="UserApplicationType" ToRole="UserApplication" />
+  </EntityType>
+  <EntityType Name="UserApplication">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DtApplied" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Mobile" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="UserDetail" Relationship="ecartdb.UserDetailUserApplication" FromRole="UserApplication" ToRole="UserDetail" />
+    <Property Name="UserDetailId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="UserApplicationStatu" Relationship="ecartdb.UserApplicationStatusUserApplication" FromRole="UserApplication" ToRole="UserApplicationStatus" />
+    <Property Name="UserApplicationStatusId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="UserApplicationType" Relationship="ecartdb.UserApplicationTypeUserApplication" FromRole="UserApplication" ToRole="UserApplicationType" />
+    <Property Name="UserApplicationTypeId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="UserDetailUserApplication">
+    <End Type="ecartdb.UserDetail" Role="UserDetail" Multiplicity="1" />
+    <End Type="ecartdb.UserApplication" Role="UserApplication" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserApplication">
+        <PropertyRef Name="UserDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserApplicationStatusUserApplication">
+    <End Type="ecartdb.UserApplicationStatus" Role="UserApplicationStatus" Multiplicity="1" />
+    <End Type="ecartdb.UserApplication" Role="UserApplication" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserApplicationStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserApplication">
+        <PropertyRef Name="UserApplicationStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserApplicationTypeUserApplication">
+    <End Type="ecartdb.UserApplicationType" Role="UserApplicationType" Multiplicity="1" />
+    <End Type="ecartdb.UserApplication" Role="UserApplication" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserApplicationType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserApplication">
+        <PropertyRef Name="UserApplicationTypeId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

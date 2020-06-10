@@ -45,7 +45,9 @@ namespace eCart.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", id);
+            ViewBag.StoreId = id;
             return View();
         }
 
@@ -63,6 +65,7 @@ namespace eCart.Areas.Admin.Controllers
             }
 
             ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", storeKiosk.StoreDetailId);
+            ViewBag.StoreId = storeKiosk.StoreDetailId;
             return View(storeKiosk);
         }
 
@@ -79,6 +82,7 @@ namespace eCart.Areas.Admin.Controllers
                 return HttpNotFound();
             }
             ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", storeKiosk.StoreDetailId);
+            ViewBag.StoreId = storeKiosk.StoreDetailId;
             return View(storeKiosk);
         }
 
@@ -95,6 +99,7 @@ namespace eCart.Areas.Admin.Controllers
                     return RedirectToAction("Details", "StoreDetails", new { id = storeKiosk.StoreDetailId });
             }
             ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", storeKiosk.StoreDetailId);
+            ViewBag.StoreId = storeKiosk.StoreDetailId;
             return View(storeKiosk);
         }
 

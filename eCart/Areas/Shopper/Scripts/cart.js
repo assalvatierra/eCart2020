@@ -32,7 +32,7 @@ function AddtoCart_Submit(e, itemId, itemName, price) {
     var totalPrice = qty * price;
 
     //get item image
-    var itemImg = $(e).parent().parent().siblings('img').attr('src');
+    var itemImg = $(e).parent().parent().parent().siblings('.item-image-container').children('img').attr('src');
 
     //add item with qty to cart
     $.post("/Shopper/CartDetails/AddToCart", data, (response) => {
@@ -43,13 +43,15 @@ function AddtoCart_Submit(e, itemId, itemName, price) {
             $("#item-" + itemId).text("( " + qty + " Added ) ");
 
             //add item to cart summary at footer
-            cartItem = "<div class='col-sm-2 cart-item'> " +
-                "<img src='" + itemImg + "' width='35' class='col-sm-4 img-thumbnail' style='height:50px;width:50px;'>" +
+            cartItem = "<div class='col-lg-2 col-sm-2 col-xs-12 cart-item'>" +
+                "<div class='pull-left'> " +
+                "<img src='" + itemImg + "' width='35' class='img-thumbnail' style='height:50px;width:50px;'>" +
+                "</div>" +
                 "<p class='col-sm-7'> <b> " + itemName + "</b> <br> Qty:" + qty + "  &nbsp;&nbsp;&nbsp; " +
                 "<span class='text-success'> Price: " + totalPrice + " </span> </p>" +
-                "<div><span class='cart-remove-item' onclick='RemoveItem(this," + itemId + ")'> x </span></div>" +
+                "<div> <span class='cart-remove-item' onclick='RemoveItem(this," + itemId + ")'> x </span></div>" +
                 "</div>";
-            $("#Cart-Summary").append(cartItem);
+            $("#Cart-Items").append(cartItem);
         } else {
             alert("Item cannot be added to the cart.");
         }

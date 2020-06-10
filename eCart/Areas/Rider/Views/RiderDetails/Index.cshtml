@@ -26,7 +26,7 @@
             <div class="col-lg-2 pull-right">
                 <div class="btn-group-vertical">
                     @Html.ActionLink("Profile", "Details", new { id = Rider.Id }, new { @class = "btn btn-default" })
-                    <button class="btn btn-default"> Delivered Carts </button>
+                    @Html.ActionLink("Delivered Carts", "DeliveredCarts", new { id = Rider.Id }, new { @class = "btn btn-default" })
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@
                         {
                             <tr>
                                 <td>
-                                    CartID:  @delivery.CartDetailId
+                                    CartID:  @delivery.CartDetailId.ToString("#0000")
                                     <br />
                                     <b> @delivery.dtDelivery.ToString("MMM dd yyyy hh:mm tt") </b>
                                 </td>

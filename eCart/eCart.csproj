@@ -178,6 +178,7 @@
     <Compile Include="Areas\Admin\Controllers\StoreDetailsController.cs" />
     <Compile Include="Areas\Admin\Controllers\StoreKiosksController.cs" />
     <Compile Include="Areas\Admin\Controllers\StorePaymentsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserApplicationsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserDetailsController.cs" />
     <Compile Include="Areas\Rider\Controllers\RiderDetailsController.cs" />
     <Compile Include="Areas\Rider\RiderAreaRegistration.cs" />
@@ -224,6 +225,7 @@
     <Content Include="Areas\Shopper\Scripts\checkout.js" />
     <Content Include="Areas\Shopper\Scripts\checkoutPayment.js" />
     <Content Include="Areas\Shopper\Scripts\checkoutPickup.js" />
+    <Content Include="Areas\Shopper\Scripts\pendingCarts.js" />
     <Content Include="Areas\Store\Scripts\CartDetails\CartStatus.js" />
     <Content Include="Areas\Store\Scripts\CartDetails\ModalCartDeliveryAdd.js" />
     <Content Include="Areas\Store\Scripts\CartDetails\ModalCartDeliveryEdit.js" />
@@ -402,6 +404,18 @@
     <Content Include="Areas\Store\Views\CartDetails\CartRelease.cshtml" />
     <Content Include="Areas\Store\Views\CartDetails\_ModalCartRelease.cshtml" />
     <Content Include="Areas\Shopper\Views\Accounts\Register.cshtml" />
+    <Content Include="Areas\Shopper\Views\UserDetails\Edit.cshtml" />
+    <Content Include="Areas\Shopper\Views\UserDetails\_ModalApplication.cshtml" />
+    <Content Include="Areas\Admin\Views\UserApplications\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\UserApplications\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\UserApplications\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\UserApplications\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\UserApplications\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\UserApplications\CreateStore.cshtml" />
+    <Content Include="Areas\Admin\Views\UserApplications\CreateRider.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Rider\Views\RiderDetails\NoUserRider.cshtml" />
+    <Content Include="Areas\Shopper\Views\Kiosk\PageError.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />
     <Content Include="Scripts\DateRangePicker\moment.min.js" />
@@ -457,7 +471,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\Rider\Data\" />
     <Folder Include="Areas\Shopper\Data\" />
     <Folder Include="Areas\Store\Data\" />

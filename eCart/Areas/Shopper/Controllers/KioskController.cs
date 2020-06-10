@@ -217,5 +217,10 @@ namespace eCart.Areas.Shopper.Controllers
             }
         }
 
+
+        public ActionResult PageError()
+        {
+            return View();
+        }
     }
 }

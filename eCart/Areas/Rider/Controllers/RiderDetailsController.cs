@@ -8,27 +8,35 @@ using System.Web;
 using System.Web.Mvc;
 using eCartModels;
 using eCartServices;
+using Microsoft.AspNet.Identity;
 
 namespace eCart.Areas.Rider.Controllers
 {
     public class RiderDetailsController : Controller
     {
-        private ecartdbContainer db = new ecartdbContainer();
         private StoreFactory store = new StoreFactory();
 
         // GET: Rider/RiderDetails
-        public ActionResult Index(int? id)
+        public ActionResult Index()
         {
-            if (id == null)
+            var riderMgr = store.RiderMgr;
+            var userid = HttpContext.User.Identity.GetUserId();
+
+            var riderDetail = riderMgr.GetRiderDetailByLoginId(userid);
+
+            if (riderDetail != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                ViewBag.RiderId = riderDetail.Id;
+            }
+            else
+            {
+                return RedirectToAction("NoUserRider");
             }
 
-            var rider = store.RiderMgr.GetRiderDetails((int)id);
-            ViewBag.Rider = rider;
+            ViewBag.Rider = riderDetail;
 
-            var riderCarts = rider.CartDeliveries;
-            return View(riderCarts.ToList());
+            var cartDeliveries = riderMgr.GetActiveDeliveries(userid);
+            return View(cartDeliveries);
         }
 
         // GET: Rider/RiderDetails/Details/5
@@ -38,7 +46,7 @@ namespace eCart.Areas.Rider.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RiderDetail riderDetail = db.RiderDetails.Find(id);
+            RiderDetail riderDetail = store.RiderMgr.GetRiderDetails((int)id);
             if (riderDetail == null)
             {
                 return HttpNotFound();
@@ -55,12 +63,11 @@ namespace eCart.Areas.Rider.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            RiderDetail riderDetail = store.RiderMgr.GetRiderDetails((int)id);
-            if (riderDetail == null)
-            {
-                return HttpNotFound();
-            }
-            return View(riderDetail);
+            ViewBag.Rider = store.RiderMgr.GetRiderDetails((int)id);
+
+            var userid = HttpContext.User.Identity.GetUserId();
+            var cartDeliveries = store.RiderMgr.GetDeliveredDeliveries(userid);
+            return View(cartDeliveries);
         }
 
         // GET: Rider/RiderDetails/Create
@@ -207,6 +214,11 @@ namespace eCart.Areas.Rider.Controllers
                 store.RiderMgr.AddCartHistory(cartId, 5);
                 store.RiderMgr.setCartStatusDelivered(cartId);
             }
+        }
+
+        public ActionResult NoUserRider()
+        {
+            return View();
         }
     }
 }

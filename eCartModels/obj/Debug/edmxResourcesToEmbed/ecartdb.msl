@@ -407,5 +407,34 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="UserApplicationStatus">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.UserApplicationStatus)">
+        <MappingFragment StoreEntitySet="UserApplicationStatus">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserApplicationTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.UserApplicationType)">
+        <MappingFragment StoreEntitySet="UserApplicationTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserApplications">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.UserApplication)">
+        <MappingFragment StoreEntitySet="UserApplications">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DtApplied" ColumnName="DtApplied" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="UserDetailId" ColumnName="UserDetailId" />
+          <ScalarProperty Name="UserApplicationStatusId" ColumnName="UserApplicationStatusId" />
+          <ScalarProperty Name="UserApplicationTypeId" ColumnName="UserApplicationTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

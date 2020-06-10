@@ -6,8 +6,55 @@
 
 <div class="panel bordered">
     <div class="panel-body">
-        <h3> Rider Details </h3>
+        <div class="col-lg-12">
+            <h2 class="col-lg-3">
+                Rider Details
 
+            </h2>
+            <div class="col-lg-12">
+                <a href="@Url.Action("Index", "RiderDetails", new { area="Rider" })"> Pending Active Carts </a> |
+                <a href="@Url.Action("Edit", "RiderDetails", new { area="Rider", id = Model.Id })"> Edit </a>
+            </div>
+            <hr class="row col-lg-12" />
+        </div>
+
+        <div class="col-lg-5 User-Account">
+            <label> Name </label>
+            <p>
+                @Model.Name
+            </p>
+        </div>
+        <div class="col-lg-6 User-Account">
+            <label> Address </label>
+            <p>
+                @Model.Address
+            </p>
+        </div>
+        <div class="col-lg-5 User-Account">
+            <label> Mobile </label>
+            <p>
+                @Model.Mobile
+            </p>
+        </div>
+
+        <div class="col-lg-6 User-Account">
+            <label> Status </label>
+            <p>
+                @Model.RiderStatu.Name
+            </p>
+        </div>
+        <div class="col-lg-5 User-Account">
+            <label> City </label>
+            <p>
+                @Model.MasterCity.Name
+            </p>
+        </div>
+        <div class="col-lg-6 User-Account">
+            <label> Remarks </label>
+            <p>
+                @Model.Remarks
+            </p>
+        </div>
 
     </div>
 </div>

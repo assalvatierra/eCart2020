@@ -183,6 +183,15 @@
     <Compile Include="StoreStatus.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserApplication.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserApplicationStatus.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserApplicationType.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
     <Compile Include="UserDetail.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>

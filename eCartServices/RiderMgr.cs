@@ -161,5 +161,58 @@ namespace eCartServices
         {
             return rdb.GetRiderCashDetails().Where(s => s.Id == id).OrderByDescending(s => s.Id).FirstOrDefault();
         }
+
+        public RiderDetail GetRiderDetailByLoginId(string loginId)
+        {
+            return rdb.GetRiderDetails().Where(r=>r.UserId == loginId).FirstOrDefault();
+        }
+
+        public List<CartDelivery> GetActiveDeliveries(string userId)
+        {
+            try
+            {
+                var riderDetail = GetRiderDetailByLoginId(userId);
+                var cartDeliveries = riderDetail.CartDeliveries.ToList();
+
+                var deliveredList = new List<int>();
+                cartDeliveries.ForEach(c => {
+                    if (c.CartDetail.CartStatusId < 5)
+                    {
+                        deliveredList.Add(c.Id);
+                    }
+                });
+
+                return cartDeliveries.Where(c => deliveredList.Contains(c.Id)).ToList();
+
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public List<CartDelivery> GetDeliveredDeliveries(string userId)
+        {
+            try
+            {
+                var riderDetail = GetRiderDetailByLoginId(userId);
+                var cartDeliveries = riderDetail.CartDeliveries.ToList();
+
+                var deliveredList = new List<int>();
+                cartDeliveries.ForEach(c => {
+                    if (c.CartDetail.CartStatusId == 5)
+                    {
+                        deliveredList.Add(c.Id);
+                    }
+                });
+
+                return cartDeliveries.Where(c => deliveredList.Contains(c.Id)).ToList();
+
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }

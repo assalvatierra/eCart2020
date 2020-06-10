@@ -16,11 +16,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("eCart", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Store", "Index", "Store", new { area = "Store" }, null)</li>
+                    <li>@Html.ActionLink("Kiosk", "SelectKiosk", "Kiosk", new { area = "Shopper" }, null)</li>
+                    <li>@Html.ActionLink("Rider", "Index", "RiderDetails", new { area = "Rider" }, null)</li>
+                    <li>@Html.ActionLink("Admin", "Index", "Dashboard", new { area = "Admin" }, null)</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
+                @Html.Partial("_LoginPartial", new { area = "" })
             </div>
         </div>
     </div>
@@ -35,6 +43,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/daterangepicker")
     @RenderSection("scripts", required: false)
 </body>
 </html>

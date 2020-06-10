@@ -1,0 +1,88 @@
+﻿@model IEnumerable<eCartModels.UserApplication>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Application List</h2>
+
+<div class="panel bordered">
+    <div class="panel-body">
+
+        <p>
+            @Html.ActionLink("Back to Dashboard", "Index", "Dashboard") |
+            @Html.ActionLink("Create New", "Create")
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    Date Applied
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Mobile)
+                </th>
+                <th>
+                    User
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Type
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DtApplied)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Mobile)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserDetail.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserApplicationStatu.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserApplicationType.Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+
+                        @if (item.UserApplicationStatusId == 2)
+                        {
+                        }
+                        else
+                        {
+                            <text> | </text>
+                            if (item.UserApplicationTypeId == 1)
+                            {
+                                @Html.ActionLink("Process Application ", "CreateStore", new { id = item.Id })
+                            }
+
+                            if (item.UserApplicationTypeId == 2)
+                            {
+                                @Html.ActionLink("Process Application ", "CreateRider", new { id = item.Id })
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
+</div>

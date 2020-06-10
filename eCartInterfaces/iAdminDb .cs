@@ -70,5 +70,10 @@ namespace eCartInterfaces
         bool AddStoreKiosk(StoreKiosk storeKiosk);
         bool EditStoreKiosk(StoreKiosk storeKiosk);
         bool RemoveStoreKiosk(StoreKiosk storeKiosk);
+
+        IQueryable<UserApplication> GetUserApplications();
+        bool AddUserApplication(UserApplication userApplication);
+        bool EditUserApplication(UserApplication userApplication);
+        bool RemoveUserApplication(UserApplication userApplication);
     }
 }

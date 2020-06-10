@@ -734,6 +734,62 @@ namespace eCartServices
 
         #endregion
 
+        #region Store Kiosk
+        public bool AddUserApplication(UserApplication userApplication)
+        {
+            try
+            {
+                return adminDb.AddUserApplication(userApplication);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public UserApplication GetUserApplication(int id)
+        {
+            try
+            {
+                return adminDb.GetUserApplications().Where(s => s.Id == id).FirstOrDefault();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public List<UserApplication> GetUserApplicationList()
+        {
+            try
+            {
+                return adminDb.GetUserApplications().ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public bool EditUserApplication(UserApplication userApplication)
+        {
+            try
+            {
+                return adminDb.EditUserApplication(userApplication);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool RemoveUserApplication(UserApplication userApplication)
+        {
+            return adminDb.RemoveUserApplication(userApplication);
+        }
+
+        #endregion
+
 
 
 

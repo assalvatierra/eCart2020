@@ -82,5 +82,11 @@ namespace eCartInterfaces
         bool RemoveStoreKiosk(StoreKiosk storeKiosk);
         StoreKiosk GetStoreKiosk(int id);
         List<StoreKiosk> GetStoreKioskList();
+
+        bool AddUserApplication(UserApplication userApplication);
+        bool EditUserApplication(UserApplication userApplication);
+        bool RemoveUserApplication(UserApplication userApplication);
+        UserApplication GetUserApplication(int id);
+        List<UserApplication> GetUserApplicationList();
     }
 }

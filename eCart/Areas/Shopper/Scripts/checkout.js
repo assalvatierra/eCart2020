@@ -58,3 +58,47 @@ function DisableAllButton() {
         $(".btn-primary").attr("disabled", "disabled");
     }
 }
+
+
+
+// Cart Checkout Date
+$('input[name="pickup-date"]').daterangepicker({
+    singleDatePicker: true,
+    startDate: moment().add('hours', 4),
+    showDropdowns: true,
+    timePicker: true,
+    timePicker24Hour: false,
+    timePickerIncrement: 1,
+    autoUpdateInput: true,
+    locale: {
+        format: ' h:mm A MMM DD YYYY'
+    },
+});
+
+function dateChanged(cartId) {
+    let paymentDate = $('input[name="pickup-date"]').val();
+    let now = moment();
+
+    let dateComparision = moment(paymentDate).diff(now, 'minutes');
+    //console.log(dateComparision);
+    if (dateComparision > 120) {    //at least 120 minutes or 2 hours from now
+
+        //update date on session
+        $.post('/Shopper/CartDetails/SetCartPickupDate', { cartId: cartId, date: paymentDate },
+            (result) => {
+                //console.log(result);
+                if (result != 'True') {
+                    $('input[name="pickup-date"]').val(moment().add('hours', 4).format('MMM DD,YYYY h:mm A'));
+                    alert('Invalid Date, please input a valid date for the date and time pickup.');
+                }
+            }
+        );
+    } else {
+        $('input[name="pickup-date"]').val(moment().add('hours', 4).format('MMM DD,YYYY h:mm A'));
+        alert('Invalid Date, please input a valid date for the date and time pickup.');
+    }
+}
+
+function OnModalClose() {
+    window.location.reload();
+}

@@ -34,6 +34,20 @@ textarea {
     border-radius: 25px;
 }
 
+.store-item-name {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 2px;
+    margin-top: 2px;
+}
+
+
+.store-item-price {
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
 
 .store-item:hover {
     border: 1px solid lightgray;
@@ -78,7 +92,7 @@ textarea {
     padding: 5px;
     margin-right: 5px;
     margin-top: 5px;
-    min-height: 130px;
+    /*min-height: 130px;*/
     border-radius: 25px;
 }
 
@@ -106,6 +120,9 @@ textarea {
 
 .add-to-Cart {
     display: none;
+    margin:0px 0px;
+    margin-left:-20px;
+    width:200px;
 }
 
 .item-list img {
@@ -306,6 +323,17 @@ textarea {
     color: gray;
 }
 
+.cart-summary-item-td {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.cart-summary-pickup-text {
+    font-size:18px;
+    padding:0px;
+}
+
 
 /*Login-Resgister*/
 .register-panel {
@@ -337,6 +365,7 @@ textarea {
 .btn-primary {
     background-color: rgb(6, 158, 235);
     border-color: rgb(6, 158, 235);
+    margin-top:0px;
 }
 
     .btn-primary:hover {
@@ -344,6 +373,9 @@ textarea {
         border-color: rgb(0, 135, 203);
     }
 
+.btn{
+    margin-top:1px;
+}
 
 .pill-active {
     color: white;
@@ -412,6 +444,14 @@ textarea {
     cursor: default;
 }
 
+.User-Account label {
+    color: gray;
+}
+
+.User-Account p {
+    font-size: 25px;
+}
+
 /* Store Styles */
 
 .store-cart-status-icon {
@@ -423,6 +463,10 @@ textarea {
     padding:20px;
 }
 
+.table-data-primary-text{
+    font-size:15px;
+    font-weight:600;
+}
 
 
 
@@ -465,5 +509,9 @@ textarea {
 
     .link-other-store {
         width: 75%;
+    }
+
+    .cart-summary-item-td img{
+        display:none;
     }
 }

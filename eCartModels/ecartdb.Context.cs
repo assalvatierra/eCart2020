@@ -65,5 +65,8 @@ namespace eCartModels
         public virtual DbSet<StoreKiosk> StoreKiosks { get; set; }
         public virtual DbSet<StoreKioskOrder> StoreKioskOrders { get; set; }
         public virtual DbSet<CartRelease> CartReleases { get; set; }
+        public virtual DbSet<UserApplicationStatus> UserApplicationStatus { get; set; }
+        public virtual DbSet<UserApplicationType> UserApplicationTypes { get; set; }
+        public virtual DbSet<UserApplication> UserApplications { get; set; }
     }
 }
