@@ -19,6 +19,8 @@ namespace eCartInterfaces
         bool AddUserDetails(UserDetail userDetail);
         bool EditUserDetails(UserDetail userDetail);
         bool RemoveUserDetails(UserDetail userDetail);
+        bool IsUserEmailExist(string email);
+        bool IsUserMobileExist(string mobile);
         UserDetail GetUserDetail(int id);
         List<UserDetail> GetUserDetailList();
 

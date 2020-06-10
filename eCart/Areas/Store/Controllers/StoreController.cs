@@ -60,6 +60,7 @@ namespace eCart.Areas.Store.Controllers
                 ViewBag.PaymentReceiverList = store.RefDbLayer.GetPaymentReceivers().ToList();
                 ViewBag.PaymentStatusList = store.RefDbLayer.GetPaymentStatus().ToList();
                 ViewBag.PaymentPartyList = store.RefDbLayer.GetPaymentParties().ToList();
+                ViewBag.User = HttpContext.User.Identity.Name;
                 return View(storeDetail);
             }
             else

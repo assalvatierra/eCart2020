@@ -1,7 +1,7 @@
 ﻿-- sample data for testing
 
 insert into UserDetails([UserId], [Name], [Address], [Email], [Mobile], [Remarks], [UserStatusId], [MasterCityId], [MasterAreaId] )
-values ('97a5778d-4ef4-4a48-b920-eeac9aee9c50', 'Admin', 'Davao City', 'admin@gmail.com', '0912-345-6789', 'Admin User', 1, 1, 1);
+values ('97a5778d-4ef4-4a48-b920-eeac9aee9c50', 'Admin', 'Davao City', 'admin@gmail.com', '0910-345-1234', 'Admin User', 1, 1, 1);
 
 insert into UserDetails([UserId], [Name], [Address], [Email], [Mobile], [Remarks], [UserStatusId], [MasterCityId], [MasterAreaId] )
 values ('c33996c3-a2ff-4c6c-b330-61ce70931d9b', 'Shopper', 'Davao City', 'shopper@gmail.com', '0912-345-6789', 'Shopper User', 1, 1, 1);

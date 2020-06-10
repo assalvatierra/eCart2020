@@ -30,8 +30,8 @@
                 <td> Contact # </td>
                 <td> Delivery Type </td>
                 <td> Pickup Date </td>
-                <td> Pickup Location </td>
                 <td> Total Items </td>
+                <td> Pickup Location </td>
                 <td> Total Amount </td>
                 <td> Payment </td>
                 <td></td>
@@ -51,7 +51,7 @@
                 }
                 <tr>
                     <td>
-                        @cart.Id
+                        @cart.Id.ToString("#0000")
                     </td>
                     <td>
 
@@ -83,10 +83,10 @@
                         @cart.DtPickup.ToString("MMM dd yyyy h:mm tt")
                     </td>
                     <td>
-                        @cart.StorePickupPoint.Address
+                        @cart.CartItems.Count()
                     </td>
                     <td>
-                        @cart.CartItems.Count()
+                        @cart.StorePickupPoint.Address
                     </td>
                     <td>
                         @{decimal amount = 0;}
@@ -111,7 +111,7 @@
                     </td>
                     <td>
                         @Html.ActionLink("View Cart", "Details", "CartDetails", new { id = cart.Id }, new { @class = "btn btn-primary" })
-                        <button class="btn btn-default" data-target="#PaymentModal" data-toggle="modal" onclick="SetPaymentCart(@cart.Id)"> Payment </button>
+                        <button class="btn btn-default" data-target="#PaymentModal" data-toggle="modal" onclick="SetPaymentCart(@cart.Id, '@cart.UserDetail.Name')"> Payment </button>
                     </td>
                 </tr>
             }

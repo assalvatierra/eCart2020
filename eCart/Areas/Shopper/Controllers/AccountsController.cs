@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -100,16 +101,35 @@ namespace eCart.Areas.Shopper.Controllers
                 ModelState.AddModelError("Address", "Address field is empty.");
                 isValid = false;
             }
+
             if (userDetail.Email.IsNullOrWhiteSpace())
             {
                 ModelState.AddModelError("Email", "Email field is empty.");
                 isValid = false;
             }
+            else 
+            {
+                if (store.AdminMgr.IsUserEmailExist(userDetail.Email))
+                {
+                    ModelState.AddModelError("Email", "Email is already registered.");
+                    isValid = false;
+                }
+            }
+
             if (userDetail.Mobile.IsNullOrWhiteSpace())
             {
                 ModelState.AddModelError("Mobile", "Mobile field is empty.");
                 isValid = false;
             }
+            else
+            {
+                if (store.AdminMgr.IsUserMobileExist(userDetail.Mobile))
+                {
+                    ModelState.AddModelError("Mobile", "Mobile is already registered.");
+                    isValid = false;
+                }
+            }
+
             if (userDetail.Email.IsNullOrWhiteSpace())
             {
                 ModelState.AddModelError("Email", "Email field is empty.");
@@ -117,6 +137,7 @@ namespace eCart.Areas.Shopper.Controllers
             }
             return isValid;
         }
+
 
         public bool CreateCart()
         {

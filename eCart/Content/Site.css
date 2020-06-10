@@ -514,4 +514,8 @@ textarea {
     .cart-summary-item-td img{
         display:none;
     }
+
+    .checkout-modify-row{
+        display:none;
+    }
 }

@@ -5,13 +5,20 @@ function SetPaymentCart(cartId) {
     $("#payment-cartId").val(cartId);
 }
 
+
+function SetPaymentCart(cartId, shopperName) {
+    ResetForm();
+    AutoFillPaymentDetails(shopperName);
+    $("#payment-cartId").val(cartId);
+}
+
 function ResetForm() {
     $("#payment-date").val(moment(Date.now()).format("MMM DD,YYYY h:mm A"));
     $("#payment-Party option:selected").val(1);
     $("#payment-receiverInfo").val("");
     $("#payment-Recievers option:selected").val(1);
     $("#payment-partyInfo").val("");
-    $("#payment-status option:selected").val(1);
+    $("#payment-status").val(2);
     $("#payment-amount").val(0);
 }
 
@@ -28,7 +35,6 @@ $('#payment-date').daterangepicker({
     },
 });
 
-
 function AddPaymentDetails(cartId) {
     var data = {
         date: $("#payment-date").val(),
@@ -42,18 +48,34 @@ function AddPaymentDetails(cartId) {
         cartDetailId: parseInt(cartId)
     }
 
+    console.log(data);
+
     var res = $.post("/Store/CartDetails/AddPayment", data, (result) => {
         console.log(result);
+
+        console.log('status :' + result.status);
+        if (result['status'] == 500) {
+            alert('Unable to submit payment.');
+        }
+
         if (result == 'True') {
             addtoTable(data);
+        } else {
+            alert('Unable to submit payment.');
         }
     });
 
     console.log(res);
+
+    console.log('status :' + res.status);
+    if (res['status'] === 500) {
+        alert('Unable to submit payment.');
+    }
 }
 
 
 function AddPaymentDetails() {
+    $('#payment-error-warning').hide();
     if (validateForm()) {
         var data = {
             date: $("#payment-date").val(),
@@ -66,6 +88,8 @@ function AddPaymentDetails() {
             cartDetailId: $("#payment-cartId").val(),
         }
 
+        console.log(data);
+
         var res = $.post("/Store/CartDetails/AddPayment", data, (result) => {
             console.log(result);
             if (result == 'True') {
@@ -74,13 +98,23 @@ function AddPaymentDetails() {
                     amount.toString("0.00") + "<br>" +
                     $("#payment-status option:selected").text() ;
                 $("#table-payment-" + data.cartDetailId).append(payment);
+
+                ClosePaymentModal();
+                addtoTable(data);
+            } else {
+                console.log("Invalid input");
+                alert("Unable to Submit Payment.");
             }
         });
-
         console.log(res);
+
+        console.log('status :' + res.status);
+        if (res['status'] === 500) {
+            alert('Unable to submit payment.');
+        }
     } else {
         console.log("Invalid input");
-        alert("Unable to Submit Payment. Please fill all fields.");
+       // alert("Unable to Submit Payment. Please fill all fields.");
     }
 }
 
@@ -95,29 +129,41 @@ function addtoTable(data) {
         "<td>" + $("#payment-amount").val().toString("0.00") + "</td>" +
         "</tr>"
     $("#table-payments").append(payment);
+    location.reload();
 }
 
 function validateForm() {
 
-    if ($("#payment-amount").val() == null || $("#payment-amount").val() == " ") {
-        console.log("invalid amount");
+    if ($("#payment-amount").val() == null || $("#payment-amount").val() == " " || isNaN($("#payment-amount").val()) ) {
+        console.log("Invalid amount");
+        $('#payment-error-warning').show();
+        $('#payment-error-warning').text("Invalid amount");
         return false;
     }
 
     if ($("#payment-receiverInfo").val() == null || $("#payment-receiverInfo").val() == " " || $("#payment-receiverInfo").val() == "") {
         console.log("invalid receiverInfo");
+        $('#payment-error-warning').show();
+        $('#payment-error-warning').text("Invalid receiver info");
         return false;
     }
     if ($("#payment-partyInfo").val() == null || $("#payment-partyInfo").val() == " " || $("#payment-partyInfo").val() == "") {
         console.log("invalid partyInfo");
+        $('#payment-error-warning').show();
+        $('#payment-error-warning').text("Invalid partyInfo");
         return false;
     }
 
     if ($("#payment-date").val() == null || $("#payment-date").val() == " ") {
         console.log("invalid date");
+        $('#payment-error-warning').show();
+        $('#payment-error-warning').text("Invalid date");
         return false;
     }
-
     return true;
+}
 
+function ClosePaymentModal() {
+    $('#payment-error-warning').hide();
+    $('#PaymentModal').modal('hide');
 }

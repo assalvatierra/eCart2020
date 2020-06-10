@@ -129,6 +129,37 @@ namespace eCartServices
                 return null;
             }
         }
+
+
+        public bool IsUserEmailExist(string email)
+        {
+            try
+            {
+                var result = adminDb.GetUserDetails().Where(u => u.Email.ToLower() == email.ToLower()).Count();
+                if (result > 0)
+                    return true;
+                return false;
+            }
+            catch
+            {
+                return true;
+            }
+        }
+
+        public bool IsUserMobileExist(string mobile)
+        {
+            try
+            {
+                var result = adminDb.GetUserDetails().Where(u => u.Mobile == mobile).Count();
+                if (result > 0)
+                    return true;
+                return false;
+            }
+            catch
+            {
+                return true;
+            }
+        }
         #endregion
 
         #region Master City

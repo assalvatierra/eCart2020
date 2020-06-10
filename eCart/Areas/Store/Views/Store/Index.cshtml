@@ -86,5 +86,12 @@
 
             }
         }
+
+        function AutoFillPaymentDetails(shopperName) {
+            $("#payment-partyInfo").val(shopperName);
+            $("#payment-receiverInfo").val('@ViewBag.User');
+            $("#payment-status").val(2);
+            
+        }
     </script>
 }

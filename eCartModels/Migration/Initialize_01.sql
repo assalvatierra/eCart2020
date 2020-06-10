@@ -31,7 +31,7 @@ insert into ItemCatGroups("Name","SortOrder") values
 ('Baby Products',5),('Households',6),('Cooking',7),('School Supplies',8);
 
 -- item categories
-insert into ItemCategories('ItemCatGroupId','Name','SortOrder') values
+insert into ItemCategories("ItemCatGroupId","Name","SortOrder") values
 (1,'Cornedbeef',1),(1,'Beefloaf',2),(1,'Sardines',3),(1,'Tuna',4),(1,'Others',5),
 (2,'Softdrinks',1),(1,'Energy Drink',2),(1,'Alcoholic',3),(2,'Others',4),
 (3,'Chips',1),(3,'Bread',2),(3,'Biscuit',3),(3,'Others',4),

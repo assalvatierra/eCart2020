@@ -36,7 +36,7 @@
                 <!-- Error Message -->
                 <div class="alert alert-danger" role="alert" id="cart-alert-box-@cart.Id" hidden>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <p><strong>Warning!</strong> Better check yourself, you're not looking too good.</p>
+                    <p><strong>Error!</strong> Cannot checkout this cart.</p>
                 </div>
                 <!-- Error Message -->
 
@@ -103,14 +103,14 @@
             </div>
             <div class="row panel-footer" style="margin:0px;">
                 <div class="col-lg-10">
-                    <span >
+                    <span>
                         <span class="col-sm-3 col-xs-12" style="font-size:18px;"> Amount: <b class="text-success"> Php @subtotalAmount.ToString("0.00") </b> </span>
 
                         <span class="text-muted col-sm-6 col-xs-12 cart-summary-pickup-text">
                             <span class="col-sm-2 col-xs-4" style="padding:0px;width:60px;"> Pickup: </span>
-                            <span class="col-sm-5 col-xs-8" style="padding:0px;width:180px;" >
+                            <span class="col-sm-5 col-xs-8" style="padding:0px;width:180px;">
                                 <span id="cartID" hidden> @cart.Id </span>
-                                <input type="text" name="pickup-date" value="@cart.DtPickup" class="date-link" onchange="dateChanged(@cart.Id)" >
+                                <input type="text" id="pickup-date-@cart.Id" name="pickup-date" value="@cart.DtPickup" class="date-link" onchange="dateChanged(@cart.Id)">
                             </span>
                             <span class="col-sm-5 col-xs-12" style="padding:0px;">
                                 <span id="cartID" hidden> @cart.Id </span>
@@ -118,37 +118,37 @@
                                 @if (cart.DeliveryType == "Delivery")
                                 {
                                     <a href="" class="pickup-location-link" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetailId')" id="pickupAddress-@cart.Id" value="0">
-                                         &nbsp;- Delivery
+                                        &nbsp;- Delivery
                                     </a>
                                 }
                                 else
                                 {
                                     <a href="" class="pickup-location-link" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetailId')" id="pickupAddress-@cart.Id" value="@cart.StorePickupPointId">
-                                       &nbsp;- @cart.StorePickupPoint.Address
+                                        &nbsp;- @cart.StorePickupPoint.Address
                                     </a>
                                 }
                             </span>
                         </span>
 
                         <span class="col-sm-3 col-xs-12  cart-summary-pickup-text">
-                           <span class="text-muted"> Payment: </span> 
+                            <span class="text-muted"> Payment: </span>
                             <a href="" id="paymentMode-@cart.Id" data-toggle="modal" data-target="#paymentModal" onclick="getPaymentReceivers(@cart.Id)">
                                 @if (cart.PaymentDetails != null)
-                                 {
+                                {
                                     switch (cart.PaymentDetails.LastOrDefault().PaymentReceiverId)
                                     {
-                                        case 1: <text> At Store </text> break;
-                                        case 2: <text> Cash On Delivery </text> break;
-                                        case 3: <text> Bank Transfer  </text> break;
-                                        case 4: <text> Remittance </text> break;
-                                    }
-                                 }
-                                 else
-                                 {
-                                    <span> At Store </span>
-                                 }
-                                </a>
-                         </span>
+                                        case 1:<text> At Store </text> break;
+                                    case 2: <text> Cash On Delivery </text> break;
+                                case 3: <text> Bank Transfer  </text> break;
+                            case 4: <text> Remittance </text> break;
+                    }
+                }
+                else
+                {
+                    <span> At Store </span>
+                }
+                            </a>
+                        </span>
                     </span>
 
                 </div>
@@ -165,6 +165,17 @@
                             Cart Submitted
                         </button>
                     }
+                </div>
+                <!--another row of buttons below-->
+                <div>
+                    <div class="col-lg-offset-3 col-lg-6 col-xs-0 checkout-modify-row" style="padding-left:20px;">
+                        <div class=" col-lg-4">
+                            <button class="btn btn-default btn-xs" onclick="toogleDate(@cart.Id)"> Modify Date/Time </button>
+                        </div>
+                        <div class="col-lg-5">
+                            <button class="btn btn-default btn-xs" onclick="tooglePickupLocation('@cart.Id','@cart.StoreDetailId')"> Modify Pickup Location </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -214,4 +225,17 @@
     <script src="~/Areas/Shopper/Scripts/checkout.js"></script>
     <script src="~/Areas/Shopper/Scripts/checkoutPickup.js"></script>
     <script src="~/Areas/Shopper/Scripts/checkoutPayment.js"></script>
+    <script>
+
+        function toogleDate(cartId) {
+            $('#pickup-date-' + cartId).data('daterangepicker').toggle();
+        }
+
+
+        function tooglePickupLocation(cartId, storeId) {
+
+            $('#pickupModal').modal('show');
+            getPickupPoints(cartId,storeId);
+        }
+    </script>
 }

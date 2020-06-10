@@ -314,7 +314,6 @@
     <Content Include="Areas\Shopper\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Shopper\Views\CartDetails\_CartSummary.cshtml" />
     <Content Include="Areas\Shopper\Views\CartDetails\CartCheckout.cshtml" />
-    <Content Include="Areas\Shopper\Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Areas\Shopper\Views\CartDetails\_ModalCartPayment.cshtml" />
     <Content Include="Areas\Shopper\Views\CartDetails\_ModalCheckoutSuccess.cshtml" />
     <Content Include="Areas\Shopper\Views\CartDetails\_ModalPickupEdit.cshtml" />
@@ -416,6 +415,7 @@
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Rider\Views\RiderDetails\NoUserRider.cshtml" />
     <Content Include="Areas\Shopper\Views\Kiosk\PageError.cshtml" />
+    <Content Include="Areas\Store\Views\Cashier\_ModalPayment.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />
     <Content Include="Scripts\DateRangePicker\moment.min.js" />

@@ -34,46 +34,8 @@
                 <!-- Error Message -->
                 <div class="alert alert-danger" role="alert" id="cart-alert-box-@cart.Id" hidden>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <p><strong>Warning!</strong> Better check yourself, you're not looking too good.</p>
+                    <p><strong>Warning!</strong> Cannot checkout this cart.</p>
                 </div>
-                <!-- Error Message -->
-                @*<div class="row">
-                        <div class="col-lg-12 cart-ID-div">
-                            <p> Cart #: <span class="Cart-ID" id="cartID"> @cart.Id.ToString("0000")  </span></p>
-                        </div>
-                    </div>*@
-
-                @*
-                            <div class="cart-summary-store ">
-                                <div class="col-lg-2 col-md-4 col-sm-12">
-                                    <h3> @cart.StoreDetail.Name </h3>
-                                </div>
-
-
-                                <div class="col-lg-3 col-md-5 col-sm-12">
-                                    <span> Payment: </span> <br />
-                                    <a href="" id="paymentMode-@cart.Id" data-toggle="modal" data-target="#paymentModal" onclick="getPaymentReceivers(@cart.Id)">
-                                        @if (cart.PaymentDetails != null)
-                                        {
-                                            switch (cart.PaymentDetails.LastOrDefault().PaymentReceiverId)
-                                            {
-                                                case 1:<text> Store </text> break;
-                                            case 2: <text> Bank  </text> break;
-                                        case 3: <text> Paypal </text> break;
-                                    case 4: <text> Padala </text> break;
-                                case 0: <text> Cash On Delivery </text> break;
-                        }
-                    }
-                    else
-                    {
-                        <span> On Pickup </span>
-                    }
-
-                                    </a>
-                                </div>
-                            </div>
-                *@
-
 
                 <table class="table">
                     <thead>
