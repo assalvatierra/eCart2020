@@ -390,6 +390,22 @@ namespace eCart.Controllers
             return View(model);
         }
 
+
+        //
+        // POST: /Account/Logout
+        public ActionResult Logout()
+        {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+
+            //clear cart and user session
+            Session["CARTDETAILS"] = null;
+            Session["USER"] = null;
+            Session["USERID"] = null;
+
+            return RedirectToAction("Index", "Home", new { area = "" });
+        }
+
+
         //
         // POST: /Account/LogOff
         [HttpPost]

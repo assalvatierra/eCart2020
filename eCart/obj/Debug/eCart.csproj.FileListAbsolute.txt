@@ -322,8 +322,6 @@ C:\Users\VILLOSA\source\repos\eCart2020\eCart\bin\WebGrease.dll
 C:\Users\VILLOSA\source\repos\eCart2020\eCart\bin\eCartDBLayer.pdb
 C:\Users\VILLOSA\source\repos\eCart2020\eCart\bin\eCartDBLayer.dll.config
 C:\Users\VILLOSA\source\repos\eCart2020\eCart\bin\eCartInterfaces.pdb
-C:\Users\VILLOSA\source\repos\eCart2020\eCart\bin\eCartModels.pdb
-C:\Users\VILLOSA\source\repos\eCart2020\eCart\bin\eCartModels.dll.config
 C:\Users\VILLOSA\source\repos\eCart2020\eCart\bin\eCartServices.pdb
 C:\Users\VILLOSA\source\repos\eCart2020\eCart\bin\eCartServices.dll.config
 C:\Users\VILLOSA\source\repos\eCart2020\eCart\bin\System.Web.Helpers.xml
@@ -355,3 +353,5 @@ C:\Users\VILLOSA\source\repos\eCart2020\eCart\obj\Debug\eCart.csproj.CoreCompile
 C:\Users\VILLOSA\source\repos\eCart2020\eCart\obj\Debug\eCart.csproj.CopyComplete
 C:\Users\VILLOSA\source\repos\eCart2020\eCart\obj\Debug\eCart.dll
 C:\Users\VILLOSA\source\repos\eCart2020\eCart\obj\Debug\eCart.pdb
+C:\Users\VILLOSA\source\repos\eCart2020\eCart\bin\eCartModels.pdb
+C:\Users\VILLOSA\source\repos\eCart2020\eCart\bin\eCartModels.dll.config

@@ -9,6 +9,7 @@ using eCartModels;
 using eCartServices;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
 
 namespace eCart.Areas.Shopper.Controllers
 {
@@ -39,20 +40,12 @@ namespace eCart.Areas.Shopper.Controllers
         /// </summary>
         /// <param name="usertype">Integer: 15-admin, 1-Store, 0 or 2-shopper, 3-rider </param>
         /// <returns></returns>
-        public ActionResult Login(int? usertype)
-        {
-            ViewBag.UserType = usertype; //use for altering the login page info/images and other info to fit the type of user
-            return View();
-        }
+        //public ActionResult Login(int? usertype)
+        //{
+        //    ViewBag.UserType = usertype; //use for altering the login page info/images and other info to fit the type of user
+        //    return View();
+        //}
 
-
-
-        public ActionResult Logout()
-        {
-            Session["CARTDETAILS"] = null;
-            Session["USER"] = null;
-            return RedirectToAction("Login");
-        }
 
 
         // GET: Admin/UserDetails/Create
@@ -188,6 +181,29 @@ namespace eCart.Areas.Shopper.Controllers
 
         }
 
+
+        //
+        // POST: /Account/LogOff
+        public ActionResult Logout()
+        {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+
+            //clear cart and user session
+            Session["CARTDETAILS"] = null;
+            Session["USER"] = null;
+            Session["USERID"] = null;
+
+            return RedirectToAction("Index", "Home", new { area = "" });
+        }
+
+
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
 
         public ActionResult Error()
         {

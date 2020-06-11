@@ -20,8 +20,9 @@ D:\Projects\eCart2020\eCartModels\obj\Debug\eCartModels.csproj.CoreCompileInputs
 D:\Projects\eCart2020\eCartModels\obj\Debug\eCartModels.csproj.CopyComplete
 D:\Projects\eCart2020\eCartModels\obj\Debug\eCartModels.dll
 D:\Projects\eCart2020\eCartModels\obj\Debug\eCartModels.pdb
-C:\Users\VILLOSA\source\repos\eCart2020\eCartModels\bin\Debug\eCartModels.dll.config
 C:\Users\VILLOSA\source\repos\eCart2020\eCartModels\bin\Debug\eCartModels.dll
+D:\Projects\eCart2020\eCartModels\obj\Debug\eCartModels.csprojAssemblyReference.cache
+C:\Users\VILLOSA\source\repos\eCart2020\eCartModels\bin\Debug\eCartModels.dll.config
 C:\Users\VILLOSA\source\repos\eCart2020\eCartModels\bin\Debug\eCartModels.pdb
 C:\Users\VILLOSA\source\repos\eCart2020\eCartModels\bin\Debug\EntityFramework.dll
 C:\Users\VILLOSA\source\repos\eCart2020\eCartModels\bin\Debug\EntityFramework.SqlServer.dll
@@ -31,5 +32,3 @@ C:\Users\VILLOSA\source\repos\eCart2020\eCartModels\obj\Debug\eCartModels.csproj
 C:\Users\VILLOSA\source\repos\eCart2020\eCartModels\obj\Debug\eCartModels.csproj.CopyComplete
 C:\Users\VILLOSA\source\repos\eCart2020\eCartModels\obj\Debug\eCartModels.dll
 C:\Users\VILLOSA\source\repos\eCart2020\eCartModels\obj\Debug\eCartModels.pdb
-D:\Projects\eCart2020\eCartModels\obj\Debug\eCartModels.csprojAssemblyReference.cache
-C:\Users\VILLOSA\source\repos\eCart2020\eCartModels\obj\Debug\eCartModels.csprojAssemblyReference.cache

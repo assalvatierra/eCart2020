@@ -11,7 +11,8 @@
             @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "UserDetails", routeValues: new { area = "shopper" }, htmlAttributes: new { title = "Manage" })
         </li>
         <li>@Html.ActionLink("MyCart", "CartCheckout", "CartDetails", new { area = "Shopper" }, null)</li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        <li>@Html.ActionLink("Log off", "Logout", "Account", new { area = "" }, null)</li>
+         @*<li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>*@
     </ul>
     }
 }

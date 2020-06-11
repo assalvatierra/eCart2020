@@ -46,8 +46,6 @@ C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\bin\Debug\EntityFramework.S
 C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\bin\Debug\Microsoft.AspNet.Identity.Core.dll
 C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
 C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\bin\Debug\eCartInterfaces.pdb
-C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\bin\Debug\eCartModels.pdb
-C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\bin\Debug\eCartModels.dll.config
 C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\bin\Debug\EntityFramework.xml
 C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\bin\Debug\Microsoft.AspNet.Identity.Core.xml
@@ -57,3 +55,5 @@ C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\obj\Debug\eCartDBLayer.cspr
 C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\obj\Debug\eCartDBLayer.csproj.CopyComplete
 C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\obj\Debug\eCartDBLayer.dll
 C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\obj\Debug\eCartDBLayer.pdb
+C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\bin\Debug\eCartModels.pdb
+C:\Users\VILLOSA\source\repos\eCart2020\eCartDBLayer\bin\Debug\eCartModels.dll.config
