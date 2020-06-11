@@ -24,7 +24,7 @@
     <table class="table">
         <thead>
             <tr style="font-weight:bold;">
-                <td> Cart&nbsp;Id </td>
+                <td style="width:100px;"> Cart&nbsp;Id </td>
                 <td style="min-width:120px;"> Status </td>
                 <td> Shopper </td>
                 <td> Contact # </td>
@@ -51,6 +51,16 @@
                 }
                 <tr>
                     <td>
+
+                        @if (cart.DeliveryType == "Kiosk") //Kiosk
+                        {
+                            <img src="~/img/store/icons/purchase-order-48.png" class="store-cart-status-icon" />
+                        }
+                        else
+                        {
+                            <img src="~/img/store/icons/delivery-40.png" class="store-cart-status-icon" />
+                        }
+
                         @cart.Id.ToString("#0000")
                     </td>
                     <td>

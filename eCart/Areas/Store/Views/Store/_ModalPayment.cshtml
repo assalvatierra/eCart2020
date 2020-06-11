@@ -22,6 +22,12 @@
                     </div>
 
                     <div class="form-group">
+                        <p class="control-label">  Amount: </p>
+                        <input class="form-control" type="text" id="payment-amount" style="font-size:22px;font-weight:600;" onclick="this.select()" />
+                    </div>
+
+
+                    <div class="form-group">
                         <p class="control-label"> Payment Party: </p>
                         <div>
                             <select class="form-control" id="payment-Party">
@@ -35,7 +41,7 @@
 
                     <div class="form-group">
                         <p class="control-label">  Payment Party Info: </p>
-                        <input class="form-control" type="text" id="payment-partyInfo" />
+                        <input class="form-control" type="text" id="payment-partyInfo"  onclick="this.select()"  />
                     </div>
 
                     <div class="form-group">
@@ -50,7 +56,7 @@
 
                     <div class="form-group">
                         <p class="control-label"> Payment Receiver Info: </p>
-                        <input class="form-control" type="text" id="payment-receiverInfo" />
+                        <input class="form-control" type="text" id="payment-receiverInfo"  onclick="this.select()"  />
                     </div>
 
                     <div class="form-group">
@@ -62,11 +68,6 @@
                             }
                         </select>
                     </div>
-                    <div class="form-group">
-                        <p class="control-label">  Amount: </p>
-                        <input class="form-control" type="text" id="payment-amount" style="font-size:22px;font-weight:600;" />
-                    </div>
-
 
                     <div class="form-group">
                         <p class="control-label text-danger" id="payment-error-warning" hidden> Unable to add payment, please verify that all input are correct. </p>
