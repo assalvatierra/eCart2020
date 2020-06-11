@@ -1,18 +1,16 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
     @Html.AntiForgeryToken()
-
-    <ul class="nav navbar-nav navbar-right">
+    <!-- The MyCart and Log off links may be hidden in mobile view if items at navigation exceeds 9 -->
+    <ul class="nav navbar-nav navbar-right ">
         <li>
-            @* @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
             @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "UserDetails", routeValues: new { area = "shopper" }, htmlAttributes: new { title = "Manage" })
         </li>
         <li>@Html.ActionLink("MyCart", "CartCheckout", "CartDetails", new { area = "Shopper" }, null)</li>
-        <li>@Html.ActionLink("Log off", "Logout", "Account", new { area = "" }, null)</li>
-         @*<li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>*@
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>
     }
 }
