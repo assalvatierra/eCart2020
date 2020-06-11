@@ -301,6 +301,8 @@
     <Content Include="img\placeholders\shopping-cart-colour-thumbnail.png" />
     <Content Include="img\store\icons\cart-ok-40.png" />
     <Content Include="img\store\icons\cart-process-40.png" />
+    <Content Include="img\store\icons\delivery-40.png" />
+    <Content Include="img\store\icons\purchase-order-48.png" />
     <Content Include="img\store\icons\submit-48.png" />
     <Content Include="img\store\shopping-cart-24.png" />
     <Content Include="img\store\storefront.png" />

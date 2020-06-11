@@ -1,17 +1,17 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Cashier";
 }
 
-<h2>Cart Payments</h2>
+<h2>Cashier - Cart Payments</h2>
 
 @using (Html.BeginForm())
 {
-    <div style="display:flex;justify-content:center;">
-        <div class="panel bordered" style="width:30%;padding:10px 20px;">
+    <div style="display:flex;">
+        <div class="panel bordered" style="padding:10px 20px;min-width:400px;">
             <div class="form-group">
                 <label class="control-label"> Cart Id # : </label>
-                <input class="form-control input-sm" type="text" name="CartId" />
+                <input class="form-control input-sm" type="text" name="CartId" onkeypress="return isNumber(event)" />
                 <div class="btn-group" style="margin:5px 0px;">
                     <button class="btn btn-default" type="submit" value="Save"> Search </button>
                 </div>
@@ -19,4 +19,28 @@
             </div>
         </div>
     </div>
+}
+
+
+@{Html.RenderAction("CartDetails");}
+
+@section Scripts{
+    <script src="~/Areas/Store/Scripts/CartDetails/ModalPayment.js"></script>
+    <script>
+
+        function AutoFillPaymentDetails(shopperName) {
+            $("#payment-partyInfo").val(shopperName);
+            $("#payment-receiverInfo").val('@ViewBag.User');
+            $("#payment-status option:selected").val("2");
+        }
+
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+    </script>
 }

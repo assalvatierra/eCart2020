@@ -20,10 +20,10 @@ namespace eCart.Areas.Store.Controllers
 
         [HttpPost]
         public ActionResult Index(int cartId)
-        {
-            if (ModelState.IsValid)
+        { 
+            if (ModelState.IsValid )
             {
-
+                
                 var userid = HttpContext.User.Identity.GetUserId();
 
                 var storeDetail = store.StoreMgr.GetStoreDetailByLoginId(userid);
@@ -41,11 +41,13 @@ namespace eCart.Areas.Store.Controllers
 
                 if (cart != null && cart.StoreDetailId == storeDetail.Id)
                 {
-                    return RedirectToAction("CartDetails", new { id = cartId });
+                    return RedirectToAction("Index", new { id = cartId });
+                    //return View();
                 }
                 else
                 {
                     ModelState.AddModelError("", "No existing cart found");
+                    return RedirectToAction("Index", new { id = cartId });
                 }
             }
             return View();
@@ -53,17 +55,25 @@ namespace eCart.Areas.Store.Controllers
 
         public ActionResult CartDetails(int id)
         {
+
+            var userid = HttpContext.User.Identity.GetUserId();
+            var storeDetail = store.StoreMgr.GetStoreDetailByLoginId(userid);
+
             var cart = store.CartMgr.GetCartDetail(id);
+            if (cart != null && cart.StoreDetailId == storeDetail.Id)
+            {
 
-            ViewBag.StoreId = cart.StoreDetailId;
-            ViewBag.Store = cart.StoreDetail.Name;
-            ViewBag.PaymentReceiverList = store.RefDbLayer.GetPaymentReceivers().ToList();
-            ViewBag.PaymentStatusList = store.RefDbLayer.GetPaymentStatus().ToList();
-            ViewBag.PaymentPartyList = store.RefDbLayer.GetPaymentParties().ToList();
-            ViewBag.PaymentDetails = store.CartMgr.GetCartPaymentDetails((int)id);
-            ViewBag.User = HttpContext.User.Identity.Name;
+                ViewBag.StoreId = cart.StoreDetailId;
+                ViewBag.Store = cart.StoreDetail.Name;
+                ViewBag.PaymentReceiverList = store.RefDbLayer.GetPaymentReceivers().ToList();
+                ViewBag.PaymentStatusList = store.RefDbLayer.GetPaymentStatus().ToList();
+                ViewBag.PaymentPartyList = store.RefDbLayer.GetPaymentParties().ToList();
+                ViewBag.PaymentDetails = store.CartMgr.GetCartPaymentDetails((int)id);
+                ViewBag.User = HttpContext.User.Identity.Name;
+                return View(cart);
+            }
 
-            return View(cart);
+            return View();
         }
 
     }
