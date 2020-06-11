@@ -289,7 +289,7 @@
     <Property Name="LoginId" Type="nvarchar" Nullable="false" MaxLength="50" />
     <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
     <Property Name="Address" Type="nvarchar" Nullable="false" MaxLength="150" />
-    <Property Name="Remarks" Type="nvarchar" Nullable="false" MaxLength="80" />
+    <Property Name="Remarks" Type="nvarchar" Nullable="true" MaxLength="80" />
     <Property Name="StoreStatusId" Type="int" Nullable="false" />
     <Property Name="StoreCategoryId" Type="int" Nullable="false" />
     <Property Name="MasterCityId" Type="int" Nullable="false" />
@@ -1600,7 +1600,7 @@
           <Property Name="LoginId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Remarks" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Remarks" Type="String" Nullable="true" MaxLength="80" FixedLength="false" Unicode="true" />
           <Property Name="StoreStatusId" Type="Int32" Nullable="false" />
           <Property Name="StoreCategoryId" Type="Int32" Nullable="false" />
           <Property Name="MasterCityId" Type="Int32" Nullable="false" />

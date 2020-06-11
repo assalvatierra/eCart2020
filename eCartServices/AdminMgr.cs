@@ -19,6 +19,7 @@ namespace eCartServices
             return adminDb.DbDispose();
         }
 
+
         #region Store
         public bool AddStoreDetails(StoreDetail storeDetail)
         {

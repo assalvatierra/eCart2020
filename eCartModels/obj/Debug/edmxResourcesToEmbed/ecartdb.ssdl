@@ -284,7 +284,7 @@
     <Property Name="LoginId" Type="nvarchar" Nullable="false" MaxLength="50" />
     <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
     <Property Name="Address" Type="nvarchar" Nullable="false" MaxLength="150" />
-    <Property Name="Remarks" Type="nvarchar" Nullable="false" MaxLength="80" />
+    <Property Name="Remarks" Type="nvarchar" Nullable="true" MaxLength="80" />
     <Property Name="StoreStatusId" Type="int" Nullable="false" />
     <Property Name="StoreCategoryId" Type="int" Nullable="false" />
     <Property Name="MasterCityId" Type="int" Nullable="false" />

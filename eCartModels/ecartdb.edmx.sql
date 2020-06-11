@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 06/05/2020 18:08:10
+-- Date Created: 06/11/2020 12:26:23
 -- Generated from EDMX file: C:\Users\VILLOSA\source\repos\eCart2020\eCartModels\ecartdb.edmx
 -- --------------------------------------------------
 
@@ -339,7 +339,7 @@ CREATE TABLE [dbo].[StoreDetails] (
     [LoginId] nvarchar(50)  NOT NULL,
     [Name] nvarchar(50)  NOT NULL,
     [Address] nvarchar(150)  NOT NULL,
-    [Remarks] nvarchar(80)  NOT NULL,
+    [Remarks] nvarchar(80)  NULL,
     [StoreStatusId] int  NOT NULL,
     [StoreCategoryId] int  NOT NULL,
     [MasterCityId] int  NOT NULL,

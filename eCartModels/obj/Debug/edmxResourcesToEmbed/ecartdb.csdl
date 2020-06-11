@@ -290,7 +290,7 @@
     <Property Name="LoginId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Address" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-    <Property Name="Remarks" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+    <Property Name="Remarks" Type="String" Nullable="true" MaxLength="80" FixedLength="false" Unicode="true" />
     <Property Name="StoreStatusId" Type="Int32" Nullable="false" />
     <Property Name="StoreCategoryId" Type="Int32" Nullable="false" />
     <Property Name="MasterCityId" Type="Int32" Nullable="false" />
