@@ -562,5 +562,78 @@ namespace eCartServices
 
 
         #endregion
+
+        #region Store User
+        public StoreUser GetStoreUser(string userId)
+        {
+            try
+            {
+                return storeDb.GetStoreUsers().Where(s => s.UserDetail.UserId == userId).FirstOrDefault();
+
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        public StoreUser GetStoreUser(int Id)
+        {
+            try
+            {
+                return storeDb.GetStoreUsers().Where(s => s.Id == Id).FirstOrDefault();
+
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public bool CheckStoreUserType(string userId, int typeId)
+        {
+            try
+            {
+                var storeUser = storeDb.GetStoreUsers().Where(s => s.UserDetail.UserId == userId && s.StoreUserTypeId == typeId).FirstOrDefault();
+                if (storeUser != null)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public List<StoreUser> GetStoreUserList(int storeId)
+        {
+            try
+            {
+                return storeDb.GetStoreUsers().Where(s => s.StoreDetailId == storeId).ToList();
+
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public bool AddStoreUser(StoreUser storeUser)
+        {
+            return storeDb.AddStoreUser(storeUser);
+        }
+
+        public bool EditStoreUser(StoreUser storeUser)
+        {
+            return storeDb.EditStoreUser(storeUser);
+        }
+
+        public bool RemoveStoreUser(StoreUser storeUser)
+        {
+            return storeDb.RemoveStoreUser(storeUser);
+        }
+
+        #endregion
     }
 }

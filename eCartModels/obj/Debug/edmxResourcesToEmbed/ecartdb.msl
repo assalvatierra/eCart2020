@@ -436,5 +436,23 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="StoreUserTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StoreUserType)">
+        <MappingFragment StoreEntitySet="StoreUserTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StoreUsers">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StoreUser)">
+        <MappingFragment StoreEntitySet="StoreUsers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StoreDetailId" ColumnName="StoreDetailId" />
+          <ScalarProperty Name="StoreUserTypeId" ColumnName="StoreUserTypeId" />
+          <ScalarProperty Name="UserDetailId" ColumnName="UserDetailId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

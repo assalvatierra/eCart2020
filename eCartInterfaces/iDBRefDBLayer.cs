@@ -30,6 +30,7 @@ namespace eCartInterfaces
         IQueryable<UserDetail> GetUserDetails();
         IQueryable<UserApplicationType> GetUserApplicationTypes();
         IQueryable<UserApplicationStatus> GetUserApplicationStatus();
+        IQueryable<StoreUserType> GetStoreUserTypes();
         List<IdentityUSer> GetAspNetUsers();
 
     }

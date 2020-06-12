@@ -138,6 +138,11 @@ namespace eCartDbLayer
             return userList;
 
         }
+
+        public IQueryable<StoreUserType> GetStoreUserTypes()
+        {
+            return db.StoreUserTypes;
+        }
     }
 
 }

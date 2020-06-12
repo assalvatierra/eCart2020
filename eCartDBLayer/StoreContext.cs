@@ -74,5 +74,9 @@ namespace eCartDbLayer
         public System.Data.Entity.DbSet<StoreKiosk> storeKiosks { get; set; }
 
         public System.Data.Entity.DbSet<StoreKioskOrder> storeKioskOrders { get; set; }
+
+        public System.Data.Entity.DbSet<StoreUserType> StoreUserTypes { get; set; }
+
+        public System.Data.Entity.DbSet<StoreUser> StoreUsers { get; set; }
     }
 }

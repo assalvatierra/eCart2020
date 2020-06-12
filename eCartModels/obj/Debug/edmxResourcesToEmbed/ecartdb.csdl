@@ -260,6 +260,20 @@
       <End Role="UserApplicationType" EntitySet="UserApplicationTypes" />
       <End Role="UserApplication" EntitySet="UserApplications" />
     </AssociationSet>
+    <EntitySet Name="StoreUserTypes" EntityType="ecartdb.StoreUserType" />
+    <EntitySet Name="StoreUsers" EntityType="ecartdb.StoreUser" />
+    <AssociationSet Name="StoreDetailStoreUser" Association="ecartdb.StoreDetailStoreUser">
+      <End Role="StoreDetail" EntitySet="StoreDetails" />
+      <End Role="StoreUser" EntitySet="StoreUsers" />
+    </AssociationSet>
+    <AssociationSet Name="StoreUserTypeStoreUser" Association="ecartdb.StoreUserTypeStoreUser">
+      <End Role="StoreUserType" EntitySet="StoreUserTypes" />
+      <End Role="StoreUser" EntitySet="StoreUsers" />
+    </AssociationSet>
+    <AssociationSet Name="UserDetailStoreUser" Association="ecartdb.UserDetailStoreUser">
+      <End Role="UserDetail" EntitySet="UserDetails" />
+      <End Role="StoreUser" EntitySet="StoreUsers" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="UserDetail">
     <Key>
@@ -281,6 +295,7 @@
     <NavigationProperty Name="MasterArea" Relationship="ecartdb.MasterAreaUserDetail" FromRole="UserDetail" ToRole="MasterArea" />
     <NavigationProperty Name="CartReleases" Relationship="ecartdb.CartReleaseUserDetail" FromRole="UserDetail" ToRole="CartRelease" />
     <NavigationProperty Name="UserApplications" Relationship="ecartdb.UserDetailUserApplication" FromRole="UserDetail" ToRole="UserApplication" />
+    <NavigationProperty Name="StoreUsers" Relationship="ecartdb.UserDetailStoreUser" FromRole="UserDetail" ToRole="StoreUser" />
   </EntityType>
   <EntityType Name="StoreDetail">
     <Key>
@@ -306,6 +321,7 @@
     <NavigationProperty Name="StoreImages" Relationship="ecartdb.StoreDetailStoreImage" FromRole="StoreDetail" ToRole="StoreImage" />
     <NavigationProperty Name="StorePayments" Relationship="ecartdb.StoreDetailStorePayment" FromRole="StoreDetail" ToRole="StorePayment" />
     <NavigationProperty Name="StoreQues" Relationship="ecartdb.StoreDetailStoreQue" FromRole="StoreDetail" ToRole="StoreKiosk" />
+    <NavigationProperty Name="StoreUsers" Relationship="ecartdb.StoreDetailStoreUser" FromRole="StoreDetail" ToRole="StoreUser" />
   </EntityType>
   <EntityType Name="UserStatus">
     <Key>
@@ -1406,6 +1422,62 @@
       </Principal>
       <Dependent Role="UserApplication">
         <PropertyRef Name="UserApplicationTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="StoreUserType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <NavigationProperty Name="StoreUsers" Relationship="ecartdb.StoreUserTypeStoreUser" FromRole="StoreUserType" ToRole="StoreUser" />
+  </EntityType>
+  <EntityType Name="StoreUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="StoreDetail" Relationship="ecartdb.StoreDetailStoreUser" FromRole="StoreUser" ToRole="StoreDetail" />
+    <Property Name="StoreDetailId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="StoreUserType" Relationship="ecartdb.StoreUserTypeStoreUser" FromRole="StoreUser" ToRole="StoreUserType" />
+    <Property Name="StoreUserTypeId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="UserDetail" Relationship="ecartdb.UserDetailStoreUser" FromRole="StoreUser" ToRole="UserDetail" />
+    <Property Name="UserDetailId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="StoreDetailStoreUser">
+    <End Type="ecartdb.StoreDetail" Role="StoreDetail" Multiplicity="1" />
+    <End Type="ecartdb.StoreUser" Role="StoreUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreUser">
+        <PropertyRef Name="StoreDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StoreUserTypeStoreUser">
+    <End Type="ecartdb.StoreUserType" Role="StoreUserType" Multiplicity="1" />
+    <End Type="ecartdb.StoreUser" Role="StoreUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreUserType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreUser">
+        <PropertyRef Name="StoreUserTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserDetailStoreUser">
+    <End Type="ecartdb.UserDetail" Role="UserDetail" Multiplicity="1" />
+    <End Type="ecartdb.StoreUser" Role="StoreUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreUser">
+        <PropertyRef Name="UserDetailId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

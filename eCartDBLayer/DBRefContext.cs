@@ -39,6 +39,7 @@ namespace eCartDbLayer
         public virtual DbSet<RiderCashParty> RiderCashParties { get; set; }
         public virtual DbSet<UserApplicationType> UserApplicationTypes { get; set; }
         public virtual DbSet<UserApplicationStatus> UserApplicationStatus { get; set; }
+        public virtual DbSet<StoreUserType> StoreUserTypes { get; set; }
 
 
 

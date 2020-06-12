@@ -41,5 +41,12 @@ namespace eCartInterfaces
         //kiosk order
         IQueryable<StoreKiosk> GetStoreKiosks();
         IQueryable<StoreKioskOrder> GetStoreKioskOrders();
+
+        //Store User
+        IQueryable<StoreUser> GetStoreUsers();
+        bool AddStoreUser(StoreUser storeUser);
+        bool EditStoreUser(StoreUser storeUser);
+        bool RemoveStoreUser(StoreUser storeUser);
+
     }
 }

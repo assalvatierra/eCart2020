@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 06/11/2020 12:26:23
+-- Date Created: 06/12/2020 13:45:29
 -- Generated from EDMX file: C:\Users\VILLOSA\source\repos\eCart2020\eCartModels\ecartdb.edmx
 -- --------------------------------------------------
 
@@ -179,6 +179,15 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_UserApplicationTypeUserApplication]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[UserApplications] DROP CONSTRAINT [FK_UserApplicationTypeUserApplication];
 GO
+IF OBJECT_ID(N'[dbo].[FK_StoreDetailStoreUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StoreUsers] DROP CONSTRAINT [FK_StoreDetailStoreUser];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StoreUserTypeStoreUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StoreUsers] DROP CONSTRAINT [FK_StoreUserTypeStoreUser];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserDetailStoreUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StoreUsers] DROP CONSTRAINT [FK_UserDetailStoreUser];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -312,6 +321,12 @@ IF OBJECT_ID(N'[dbo].[UserApplicationTypes]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[UserApplications]', 'U') IS NOT NULL
     DROP TABLE [dbo].[UserApplications];
+GO
+IF OBJECT_ID(N'[dbo].[StoreUserTypes]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StoreUserTypes];
+GO
+IF OBJECT_ID(N'[dbo].[StoreUsers]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StoreUsers];
 GO
 
 -- --------------------------------------------------
@@ -710,6 +725,22 @@ CREATE TABLE [dbo].[UserApplications] (
 );
 GO
 
+-- Creating table 'StoreUserTypes'
+CREATE TABLE [dbo].[StoreUserTypes] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'StoreUsers'
+CREATE TABLE [dbo].[StoreUsers] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [StoreDetailId] int  NOT NULL,
+    [StoreUserTypeId] int  NOT NULL,
+    [UserDetailId] int  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -969,6 +1000,18 @@ GO
 -- Creating primary key on [Id] in table 'UserApplications'
 ALTER TABLE [dbo].[UserApplications]
 ADD CONSTRAINT [PK_UserApplications]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'StoreUserTypes'
+ALTER TABLE [dbo].[StoreUserTypes]
+ADD CONSTRAINT [PK_StoreUserTypes]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'StoreUsers'
+ALTER TABLE [dbo].[StoreUsers]
+ADD CONSTRAINT [PK_StoreUsers]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -1784,6 +1827,51 @@ GO
 CREATE INDEX [IX_FK_UserApplicationTypeUserApplication]
 ON [dbo].[UserApplications]
     ([UserApplicationTypeId]);
+GO
+
+-- Creating foreign key on [StoreDetailId] in table 'StoreUsers'
+ALTER TABLE [dbo].[StoreUsers]
+ADD CONSTRAINT [FK_StoreDetailStoreUser]
+    FOREIGN KEY ([StoreDetailId])
+    REFERENCES [dbo].[StoreDetails]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_StoreDetailStoreUser'
+CREATE INDEX [IX_FK_StoreDetailStoreUser]
+ON [dbo].[StoreUsers]
+    ([StoreDetailId]);
+GO
+
+-- Creating foreign key on [StoreUserTypeId] in table 'StoreUsers'
+ALTER TABLE [dbo].[StoreUsers]
+ADD CONSTRAINT [FK_StoreUserTypeStoreUser]
+    FOREIGN KEY ([StoreUserTypeId])
+    REFERENCES [dbo].[StoreUserTypes]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_StoreUserTypeStoreUser'
+CREATE INDEX [IX_FK_StoreUserTypeStoreUser]
+ON [dbo].[StoreUsers]
+    ([StoreUserTypeId]);
+GO
+
+-- Creating foreign key on [UserDetailId] in table 'StoreUsers'
+ALTER TABLE [dbo].[StoreUsers]
+ADD CONSTRAINT [FK_UserDetailStoreUser]
+    FOREIGN KEY ([UserDetailId])
+    REFERENCES [dbo].[UserDetails]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_UserDetailStoreUser'
+CREATE INDEX [IX_FK_UserDetailStoreUser]
+ON [dbo].[StoreUsers]
+    ([UserDetailId]);
 GO
 
 -- --------------------------------------------------

@@ -49,3 +49,6 @@ insert into CartActivityTypes("Name","SortOrder") values
 insert into StorePaymentTypes([Description],[Remarks]) values
 ('Cash',''), ('Bank',''), ('Remittance','');
 
+-- Store User Types --
+insert into StoreUserTypes([Name]) values
+('Merchandiser'),('Kiosk'),('Cashier');

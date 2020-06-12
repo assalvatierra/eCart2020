@@ -313,6 +313,58 @@ namespace eCartDbLayer
         {
             return sdb.storeKioskOrders;
         }
+
+        #endregion
+
+
+        #region Store User
+        public IQueryable<StoreUser> GetStoreUsers()
+        {
+            return sdb.StoreUsers;
+        }
+
+        public bool AddStoreUser(StoreUser storeUser)
+        {
+            try
+            {
+                sdb.StoreUsers.Add(storeUser);
+                sdb.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool EditStoreUser(StoreUser storeUser)
+        {
+            try
+            {
+                sdb.Entry(storeUser).State = EntityState.Modified;
+                sdb.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool RemoveStoreUser(StoreUser storeUser)
+        {
+            try
+            {
+                sdb.StoreUsers.Remove(storeUser);
+                sdb.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         #endregion
     }
 }
