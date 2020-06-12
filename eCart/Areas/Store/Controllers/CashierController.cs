@@ -15,6 +15,7 @@ namespace eCart.Areas.Store.Controllers
         // GET: Store/Cashier
         public ActionResult Index()
         {
+            ViewBag.User = HttpContext.User.Identity.Name;
             return View();
         }
 

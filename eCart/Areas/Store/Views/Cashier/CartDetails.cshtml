@@ -15,6 +15,7 @@
             </h3>
             <div class="col-lg-4">
                 <p><span class="text-muted"> Status: </span> <span id="cart-status-text"> @Model.CartStatu.Name </span></p>
+                <button class="btn btn-primary" data-target="#PaymentModal" data-toggle="modal" onclick="SetPaymentCart(@Model.Id, '@Model.UserDetail.Name')"> Add Payment </button>
             </div>
         </div>
 
@@ -108,9 +109,6 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="pull-right col-2">
-                <button class="btn btn-primary" data-target="#PaymentModal" data-toggle="modal" onclick="SetPaymentCart(@Model.Id, '@Model.UserDetail.Name')"> Add Payment </button>
-            </div>
         </div>
         <br />
     </div>
