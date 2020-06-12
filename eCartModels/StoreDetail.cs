@@ -24,6 +24,7 @@ namespace eCartModels
             this.StoreImages = new HashSet<StoreImage>();
             this.StorePayments = new HashSet<StorePayment>();
             this.StoreQues = new HashSet<StoreKiosk>();
+            this.StoreUsers = new HashSet<StoreUser>();
         }
     
         public int Id { get; set; }
@@ -54,5 +55,7 @@ namespace eCartModels
         public virtual ICollection<StorePayment> StorePayments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StoreKiosk> StoreQues { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StoreUser> StoreUsers { get; set; }
     }
 }
