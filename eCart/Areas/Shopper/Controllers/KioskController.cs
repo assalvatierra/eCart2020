@@ -12,6 +12,7 @@ namespace eCart.Areas.Shopper.Controllers
     public class KioskController : Controller
     {
         StoreFactory store = new StoreFactory();
+        private int KIOSK = 2;
 
 
         // GET: Shopper/Kiosk
@@ -25,11 +26,28 @@ namespace eCart.Areas.Shopper.Controllers
 
             var storeMgr = store.StoreMgr;
             var userid = HttpContext.User.Identity.GetUserId();
-            var storedetail = storeMgr.GetStoreDetailByLoginId(userid);
-            if (store == null)
-                return RedirectToAction("PageError");
+            var storeDetail = storeMgr.GetStoreDetailByLoginId(userid);
+            if (storeDetail == null)
+            {
+                //check if user is assigned to company as KIOSK
+                var storeUser = storeMgr.GetStoreUser(userid);
+                if (storeUser != null)
+                {
+                    storeDetail = storeUser.StoreDetail;
 
-            int storeId = (int)storedetail.Id;
+                    //get user types
+                    var isUserKiosk = storeMgr.CheckStoreUserType(userid, KIOSK);
+
+                    if (!isUserKiosk)
+                        return RedirectToAction("PageError");
+                }
+                else
+                {
+                    return RedirectToAction("PageError");
+                }
+            }
+
+            int storeId = (int)storeDetail.Id;
             Session["STOREID"] = storeId;
 
             if (storeId == 0)
@@ -54,6 +72,7 @@ namespace eCart.Areas.Shopper.Controllers
             ViewBag.StoreAddress = storeDetails.Address;
             ViewBag.StoreImg = storeDetails.StoreImages.FirstOrDefault() != null ? storeDetails.StoreImages.FirstOrDefault().ImageUrl : defaultImg;
             ViewBag.KioskId = (int)id;
+            ViewBag.KioskSetting = (int)store.StoreMgr.GetStoreKiosk((int)id).SettingId;
 
             return View(storeItems);
         }
@@ -149,11 +168,28 @@ namespace eCart.Areas.Shopper.Controllers
                 return RedirectToAction("login", "account", new { area = "" });
 
             var userid = HttpContext.User.Identity.GetUserId();
-            var storedetail = storeMgr.GetStoreDetailByLoginId(userid);
-            if (storedetail == null)
-                return RedirectToAction("PageError");
+            var storeDetail = storeMgr.GetStoreDetailByLoginId(userid);
+            if (storeDetail == null)
+            { 
+                //check if user is assigned to company as KIOSK
+                var storeUser = storeMgr.GetStoreUser(userid);
+                if (storeUser != null)
+                {
+                    storeDetail = storeUser.StoreDetail;
 
-            var kioskList = store.CartMgr.GetStoreKioskList(storedetail.Id);
+                    //get user types
+                    var isUserKiosk = storeMgr.CheckStoreUserType(userid, KIOSK);
+
+                    if (!isUserKiosk)
+                        return RedirectToAction("PageError");
+                }
+                else
+                {
+                    return RedirectToAction("PageError");
+                }
+            }
+
+            var kioskList = store.CartMgr.GetStoreKioskList(storeDetail.Id);
 
             return View(kioskList.ToList());
         }

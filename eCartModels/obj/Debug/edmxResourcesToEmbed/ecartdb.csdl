@@ -718,6 +718,7 @@
     <Property Name="KioskName" Type="String" Nullable="false" MaxLength="20" />
     <NavigationProperty Name="StoreDetail" Relationship="ecartdb.StoreDetailStoreQue" FromRole="StoreKiosk" ToRole="StoreDetail" />
     <NavigationProperty Name="StoreKioskOrders" Relationship="ecartdb.StoreKioskStoreKioskOrder" FromRole="StoreKiosk" ToRole="StoreKioskOrder" />
+    <Property Name="SettingId" Type="Int16" Nullable="true" />
   </EntityType>
   <EntityType Name="StoreKioskOrder">
     <Key>

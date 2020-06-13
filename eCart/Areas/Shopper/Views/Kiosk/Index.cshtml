@@ -16,6 +16,7 @@
     </div>
 </div>
 
+
 <div class="row">
     <div class="col-sm-12">
         <h1> Store Items </h1>
@@ -23,48 +24,143 @@
 
     @foreach (var item in Model)
     {
-
-        <div class="col-sm-2 item-list">
-            @if (item.ItemMaster.ItemImages.FirstOrDefault() != null)
-            {
-                var image = item.ItemMaster.ItemImages.FirstOrDefault();
-                <img src="@image.ImageUrl" class="item-image" width="60" />
-            }
-            else
-            {
-                <img src="~/img/placeholders/placeholder-product.png" class="img-thumbnail" width="60" />
-            }
-            <div class="item-desc">
-                <span style="font-size:9px;color:royalblue;"> @item.StoreDetail.Name </span>
-                <h4 style="margin-top:0px;">
-
-                    @if (item.ItemMaster.Name.Length < 17)
+        if (ViewBag.KioskSetting == 1)
+        {
+            var itemImage = "";
+            <div class="col-sm-12 item-list" style="height:inherit;margin:10px;"> 
+                <div class="col-lg-3">
+                    @if (item.ItemMaster.ItemImages.FirstOrDefault() != null)
                     {
-                        @item.ItemMaster.Name
+                        itemImage = item.ItemMaster.ItemImages.FirstOrDefault().ImageUrl;
+                        <img src="@itemImage" class="item-image" style="min-height:250px;" />
                     }
                     else
                     {
-                        @item.ItemMaster.Name.Substring(0, 17)
-                        <text>... </text>
+                        <img src="~/img/placeholders/placeholder-product.png" class="img-thumbnail col-lg-2" width="60" />
                     }
-                </h4>
-                <b class="text-success"> Php @item.UnitPrice.ToString("0.00") </b>
+                </div>
+                <div class="item-desc col-lg-8" style="display:flex;flex-direction:column;justify-content:space-between;">
+                    <div style="flex:1;margin-left:20px;">
+                        <p style="margin-top:0px;font-size:35px;font-weight:600;">
 
-            </div>
-            <div class="add-to-Cart">
-                <button class="btn btn-primary" onclick="AddtoCart(this)" style="width:100%;"> Add to Cart </button>
-                <div class="btn-group hidden">
-                    <button class="btn btn-default" type="button" onclick="SubtractQty(this)"> - </button>
-                    <div class="btn btn-default disabled item-qty">
-                        1
+                            @if (item.ItemMaster.Name.Length < 50)
+                            {
+                                @item.ItemMaster.Name
+                            }
+                            else
+                            {
+                                @item.ItemMaster.Name.Substring(0, 50)
+                                <text>... </text>
+                            }
+                        </p>
+                        <b class="text-success" style="font-size:20px;"> Php @item.UnitPrice.ToString("0.00") </b>
                     </div>
-                    <button class="btn btn-default" type="button" onclick="AddQty(this)"> + </button>
-                    <button class="btn btn-default" onclick="AddtoCart_Submit(this,'@item.Id', '@item.ItemMaster.Name', '@item.UnitPrice')"> Submit </button>
+                    <div class="add-to-Cart-kiosk col-lg-offset-3 col-lg-9" style="margin-left:0px;margin-top:30px;">
+                        <button class="btn btn-primary" onclick="AddtoCart(this)" style="width:90%;font-size:20px;"> Add to Cart </button>
+                        <div class="btn-group hidden" style="display:flex;flex-direction:row;max-width:200px;">
+                            <button class="btn btn-default" type="button" onclick="SubtractQty(this)"> - </button>
+                            <div class="btn btn-default disabled item-qty" style="width:200px;">
+                                1
+                            </div>
+                            <button class="btn btn-default" type="button" onclick="AddQty(this)"> + </button>
+                            <button class="btn btn-default" onclick="AddtoCart_Submit(this,'@item.Id', '@item.ItemMaster.Name', '@item.UnitPrice', '@itemImage')"> Submit </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
+
+        if (ViewBag.KioskSetting == 2)
+        {
+
+            var itemImage = "";
+            <div class="col-sm-6 item-list" style="height:550px;">
+                @if (item.ItemMaster.ItemImages.FirstOrDefault() != null)
+                {
+                    itemImage = item.ItemMaster.ItemImages.FirstOrDefault().ImageUrl;
+                    <img src="@itemImage" class="item-image" style="height:350px;width:350px" />
+                }
+                else
+                {
+                    <img src="~/img/placeholders/placeholder-product.png" class="img-thumbnail" width="60" />
+                }
+                <div class="item-desc">
+                    <p style="margin-top:10px;font-size:25px;font-weight:600;">
+
+                            @if (item.ItemMaster.Name.Length < 50)
+                            {
+                                @item.ItemMaster.Name
+                            }
+                            else
+                            {
+                                @item.ItemMaster.Name.Substring(0, 50)
+                                <text>... </text>
+                            }
+                        </p>
+                        <b class="text-success" style="font-size:18px;"> Php @item.UnitPrice.ToString("0.00") </b>
+                </div>
+                    <div class="add-to-Cart-kiosk col-lg-offset-2 col-lg-10" style="flex:1;margin-left:-20px;margin-top:10px;">
+                        <button class="btn btn-primary" onclick="AddtoCart(this)" style="width:70%;font-size:20px;"> Add to Cart </button>
+                        <div class="btn-group hidden" style="display:flex;flex-direction:row;max-width:200px;">
+                            <button class="btn btn-default" type="button" onclick="SubtractQty(this)"> - </button>
+                            <div class="btn btn-default disabled item-qty" style="width:200px;">
+                                1
+                            </div>
+                            <button class="btn btn-default" type="button" onclick="AddQty(this)"> + </button>
+                            <button class="btn btn-default" onclick="AddtoCart_Submit(this,'@item.Id', '@item.ItemMaster.Name', '@item.UnitPrice', '@itemImage')"> Submit </button>
+                        </div>
+                    </div>
+            </div>
+
+        }
+
+        if (ViewBag.KioskSetting == 3)
+        {
+            var itemImage = "";
+            <div class="col-sm-2 item-list">
+                @if (item.ItemMaster.ItemImages.FirstOrDefault() != null)
+                {
+                    itemImage = item.ItemMaster.ItemImages.FirstOrDefault().ImageUrl;
+                    <img src="@itemImage" class="item-image" width="60" />
+                }
+                else
+                {
+                    <img src="~/img/placeholders/placeholder-product.png" class="img-thumbnail" width="60" />
+                }
+                <div class="item-desc">
+                    <p style="margin-top:10px;font-size:18px;font-weight:600;">
+
+                            @if (item.ItemMaster.Name.Length < 50)
+                            {
+                                @item.ItemMaster.Name
+                            }
+                            else
+                            {
+                                @item.ItemMaster.Name.Substring(0, 50)
+                                <text>... </text>
+                            }
+                        </p>
+                        <b class="text-success" style="font-size:13px;"> Php @item.UnitPrice.ToString("0.00") </b>
+                </div>
+                <div class="add-to-Cart-kiosk col-lg-offset-2 col-lg-10" style="margin-left:-20px;margin-top:10px;">
+                        <button class="btn btn-primary" onclick="AddtoCart(this)" style="width:120%;"> Add to Cart </button>
+                        <div class="btn-group hidden" style="display:flex;flex-direction:row;max-width:200px;">
+                            <button class="btn btn-default" type="button" onclick="SubtractQty(this)"> - </button>
+                            <div class="btn btn-default disabled item-qty" style="width:200px;">
+                                1
+                            </div>
+                            <button class="btn btn-default" type="button" onclick="AddQty(this)"> + </button>
+                            <button class="btn btn-default" onclick="AddtoCart_Submit(this,'@item.Id', '@item.ItemMaster.Name', '@item.UnitPrice', '@itemImage')"> Submit </button>
+                        </div>
+                 </div>
+            </div>
+        }
     }
 </div>
+
+
+
+
 @{ Html.RenderAction("_CartSummary", "Kiosk", new { area = "Shopper" }); }
 @Html.Partial("_ModalCustomerName")
 

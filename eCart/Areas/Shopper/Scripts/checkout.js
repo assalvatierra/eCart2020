@@ -9,10 +9,13 @@ function RemoveItem(e, Id, subtotal) {
 
     $.post('/Shopper/CartDetails/RemoveCartItem', data, (response) => {
         console.log(response);
-        UpdatePrice(subtotal);
+        if (response == 'True') {
+
+            $(e).parent().parent().remove();
+            UpdatePrice(subtotal);
+        }
     });
 
-    $(e).parent().parent().remove();
 }
 
 function UpdatePrice(removedsubtotal) {

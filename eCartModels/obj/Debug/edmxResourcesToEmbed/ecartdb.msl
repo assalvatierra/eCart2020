@@ -380,6 +380,7 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="StoreDetailId" ColumnName="StoreDetailId" />
           <ScalarProperty Name="KioskName" ColumnName="KioskName" />
+          <ScalarProperty Name="SettingId" ColumnName="SettingId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

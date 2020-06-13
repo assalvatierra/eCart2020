@@ -46,6 +46,7 @@ namespace eCart.Areas.Store.Controllers
             ViewBag.User = HttpContext.User.Identity.Name;
             return View();
         }
+
         [HttpPost]
         public ActionResult Index(int cartId)
         { 
@@ -82,7 +83,6 @@ namespace eCart.Areas.Store.Controllers
                 ViewBag.StoreId = storeId;
                 ViewBag.StoreImage = storeDetail.StoreImages.FirstOrDefault().ImageUrl;
                 ViewBag.User = HttpContext.User.Identity.Name;
-
                 if (cart != null && cart.StoreDetailId == storeDetail.Id)
                 {
                     return RedirectToAction("Index", new { id = cartId });
@@ -120,6 +120,7 @@ namespace eCart.Areas.Store.Controllers
                 ViewBag.PaymentPartyList = store.RefDbLayer.GetPaymentParties().ToList();
                 ViewBag.PaymentDetails = store.CartMgr.GetCartPaymentDetails((int)id);
                 ViewBag.User = HttpContext.User.Identity.Name;
+                ViewBag.HaveCartDetails = true;
                 return View(cart);
             }
 

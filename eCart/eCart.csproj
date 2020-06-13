@@ -195,6 +195,7 @@
     <Compile Include="Areas\Store\Controllers\StoreDetailsController.cs" />
     <Compile Include="Areas\Store\Controllers\StoreItemsController.cs" />
     <Compile Include="Areas\Store\Controllers\StoreKioskOrdersController.cs" />
+    <Compile Include="Areas\Store\Controllers\StoreKiosksController.cs" />
     <Compile Include="Areas\Store\Controllers\StorePaymentsController.cs" />
     <Compile Include="Areas\Store\Controllers\StorePickupPartnersController.cs" />
     <Compile Include="Areas\Store\Controllers\StorePickupPointsController.cs" />
@@ -231,6 +232,7 @@
     <Content Include="Areas\Store\Scripts\CartDetails\ModalCartDeliveryAdd.js" />
     <Content Include="Areas\Store\Scripts\CartDetails\ModalCartDeliveryEdit.js" />
     <Content Include="Areas\Store\Scripts\CartDetails\ModalCartRelease.js" />
+    <Content Include="Areas\Store\Scripts\CartDetails\ModalCashierPayment.js" />
     <Content Include="Areas\Store\Scripts\CartDetails\ModalPayment.js" />
     <Content Include="Areas\Store\Scripts\CartDetails\PartialCartDelivery.js" />
     <Content Include="Areas\Store\Scripts\StoreItems\AddItem.js" />
@@ -424,6 +426,11 @@
     <Content Include="Areas\Store\Views\StoreUsers\Details.cshtml" />
     <Content Include="Areas\Store\Views\StoreUsers\Edit.cshtml" />
     <Content Include="Areas\Store\Views\StoreUsers\Index.cshtml" />
+    <Content Include="Areas\Store\Views\StoreKiosks\Create.cshtml" />
+    <Content Include="Areas\Store\Views\StoreKiosks\Delete.cshtml" />
+    <Content Include="Areas\Store\Views\StoreKiosks\Details.cshtml" />
+    <Content Include="Areas\Store\Views\StoreKiosks\Edit.cshtml" />
+    <Content Include="Areas\Store\Views\StoreKiosks\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />
     <Content Include="Scripts\DateRangePicker\moment.min.js" />

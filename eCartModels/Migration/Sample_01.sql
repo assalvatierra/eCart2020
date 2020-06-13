@@ -89,7 +89,7 @@ insert into StorePayments([StoreDetailId],[dtPayment],[Amount],[StorePaymentType
 (2,'05/09/2020 3:00 PM', '2500', 1, 'Accepted test', '05/09/2020 3:45 PM', 2);
 
 -- Store Kiosk --
-insert into StoreKiosks([StoreDetailId],[KioskName]) values 
-(1,'NCCC-Kiosk01'), (1,'NCCC-Kiosk02'), (1,'NCCC-Kiosk03'), 
-(2,'SM-Kiosk01'), (2,'SM-Kiosk02'), (2,'SM-Kiosk03'), 
-(3,'GS-Kiosk01'), (3,'GS-Kiosk02'), (3,'GS-Kiosk03');
+insert into StoreKiosks([StoreDetailId],[KioskName],[SettingId]) values 
+(1,'NCCC-Kiosk01',1), (1,'NCCC-Kiosk02',2), (1,'NCCC-Kiosk03',3), 
+(2,'SM-Kiosk01',1), (2,'SM-Kiosk02',2), (2,'SM-Kiosk03',3), 
+(3,'GS-Kiosk01',1), (3,'GS-Kiosk02',2), (3,'GS-Kiosk03',3);

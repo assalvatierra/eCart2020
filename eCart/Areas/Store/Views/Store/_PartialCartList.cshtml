@@ -151,7 +151,7 @@
                     </td>
                     <td>
                         @Html.ActionLink("View Cart", "Details", "CartDetails", new { id = cart.Id }, new { @class = "btn btn-primary" })
-                        <button class="btn btn-default" data-target="#PaymentModal" data-toggle="modal" onclick="SetPaymentCart(@cart.Id, '@cart.UserDetail.Name')"> Payment </button>
+                        <button class="btn btn-default" data-target="#PaymentModal" data-toggle="modal" id="payment-btn" onclick="SetPaymentCart(@cart.Id, '@cart.UserDetail.Name',  '@amount.ToString("0.00")')"> Payment </button>
                     </td>
                 </tr>
             }

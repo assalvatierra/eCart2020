@@ -7,12 +7,15 @@ function RemoveItem(e, Id, subtotal) {
         id: Id
     }
 
-    $.post('/Shopper/CartDetails/RemoveCartItem', data, (response) => {
-        console.log(response);
-        UpdatePrice(subtotal);
-    });
 
-    $(e).parent().parent().remove();
+    $.post('/Shopper/Kiosk/RemoveCartItem', data, (response) => {
+        console.log(response);
+        if (response == 'True') {
+
+            $(e).parent().parent().remove();
+            UpdatePrice(subtotal);
+        }
+    });
 }
 
 function UpdatePrice(removedsubtotal) {

@@ -62,6 +62,7 @@
             <thead>
                 <tr>
                     <th> Kiosk Name  </th>
+                    <th> Settings ID  </th>
                     <th> </th>
                 </tr>
             </thead>
@@ -70,6 +71,7 @@
                 {
                     <tr>
                         <td> @kiosk.KioskName </td>
+                        <td> @kiosk.SettingId </td>
                         <td>
                             @Html.ActionLink("Edit", "Edit", "StoreKiosks", new { id = kiosk.Id }, null) |
 

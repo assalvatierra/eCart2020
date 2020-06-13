@@ -21,7 +21,7 @@ function SubtractQty(e) {
     $(e).siblings('.item-qty').text(qty);
 }
 
-function AddtoCart_Submit(e, itemId, itemName, price) {
+function AddtoCart_Submit(e, itemId, itemName, price, img) {
     var qty = $(e).siblings('.item-qty').text();
     var data = {
         id: parseInt(itemId),
@@ -32,7 +32,7 @@ function AddtoCart_Submit(e, itemId, itemName, price) {
     var totalPrice = qty * price;
 
     //get item image
-    var itemImg = $(e).parent().parent().siblings('img').attr('src');
+    var itemImg = img;
 
     //add item with qty to cart
     $.post("/kiosk/AddToCart", data, (response) => {

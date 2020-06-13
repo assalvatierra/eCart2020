@@ -12,6 +12,16 @@ function SetPaymentCart(cartId, shopperName) {
     $("#payment-cartId").val(cartId);
 }
 
+
+function SetPaymentCart(cartId, shopperName, amount) {
+    ResetForm();
+    AutoFillPaymentDetails(shopperName);
+    $("#payment-cartId").val(cartId);
+    $('#payment-amount').val(amount);
+    console.log('show price with amount');
+    setTimeout(function () { $('#payment-amount').select() }, 500);
+}
+
 function ResetForm() {
     $("#payment-date").val(moment(Date.now()).format("MMM DD,YYYY h:mm A"));
     $("#payment-Party option:selected").val(1);
@@ -21,6 +31,24 @@ function ResetForm() {
     $("#payment-status").val(2);
     $("#payment-amount").val(0);
 }
+
+
+$('#payment-btn').click(() => {
+    console.log("set cart payment");
+
+    if ($('#total-amount').text() != "") {
+        setTimeout(function () { $('#payment-amount').select() }, 500);
+        var totalAmount = $('#total-amount').text();
+        $('#payment-amount').val(totalAmount);
+    }
+})
+
+$('#payment-amount').keyup(function (e) {
+    if (e.keyCode == 13) {
+        console.log('submit payment');
+        $("#submitPaymentBtn").click();
+    }
+});
 
 $('#payment-date').daterangepicker({
     singleDatePicker: true,
@@ -99,6 +127,8 @@ function AddPaymentDetails() {
                     $("#payment-status option:selected").text() ;
                 $("#table-payment-" + data.cartDetailId).append(payment);
 
+                //show payment success
+
                 ClosePaymentModal();
                 addtoTable(data);
             } else {
@@ -167,3 +197,4 @@ function ClosePaymentModal() {
     $('#payment-error-warning').hide();
     $('#PaymentModal').modal('hide');
 }
+

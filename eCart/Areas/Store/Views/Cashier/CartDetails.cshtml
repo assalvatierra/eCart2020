@@ -7,16 +7,17 @@
 @if (Model != null)
 {
 
-<div class="panel row" style="padding:15px;">
+<div class="panel row" style="padding:15px;" >
     <div class="panel-body store-cart">
         <div class="row">
-            <h3 class="col-lg-12">
+            <h3 class="col-lg-12" id="cartId">
                 Cart # : @Model.Id.ToString("0000")   &nbsp;
             </h3>
             <div class="col-lg-4">
                 <p><span class="text-muted"> Status: </span> <span id="cart-status-text"> @Model.CartStatu.Name </span></p>
-                <button class="btn btn-primary" data-target="#PaymentModal" data-toggle="modal" onclick="SetPaymentCart(@Model.Id, '@Model.UserDetail.Name')"> Add Payment </button>
+                <button class="btn btn-primary" data-target="#PaymentModal" data-toggle="modal" id="payment-btn" onclick="SetPaymentCart(@Model.Id, '@Model.UserDetail.Name', )"> Add Payment </button>
             </div>
+
         </div>
 
         <hr />
@@ -81,34 +82,43 @@
                                 <b> @subtotal.ToString("0.00") </b>
                             </td>
                         </tr>
-                                    }
+                    }
 
                     <tr>
                         <td colspan="3" style="text-align:right;"> <span style="font-size:16px;color:gray;"> Total Amount: </span> </td>
-                        <td><b style="font-size:20px;"> @total.ToString("0.00") </b></td>
+                        <td><b style="font-size:20px;" id="total-amount"> @total.ToString("0.00") </b></td>
                     </tr>
 
                     <tr>
                         <td colspan="3" style="text-align:right;"> <span style="font-size:16px;color:gray;"> Total Payment: </span> </td>
-                        <td><b style="font-size:20px;color:forestgreen"> @totalPayment.ToString("0.00") </b></td>
+                        <td><b style="font-size:20px;color:forestgreen" id="payment-total"> @totalPayment.ToString("0.00") </b></td>
                     </tr>
                     <tr>
                         @{var change = totalPayment - total;}
                         <td colspan="3" style="text-align:right;"> <span style="font-size:16px;color:gray;"> Change: </span> </td>
-                        <td><span style="font-size:16px;">
-                            @if(change > 0)
-                            {
-                               <text> @change.ToString("0.00") </text>
-                            }
-                            else
-                            {
-                               <text> 0 </text>
-                            }
+                        <td>
+                            <span style="font-size:16px;" id="payment-change">
+                                @if (change > 0)
+                                {
+                                    <text> @change.ToString("0.00") </text>
+                                }
+                                else
+                                {
+                                    <text> 0 </text>
+                                }
 
-                            </span></td>
+                            </span>
+                        </td>
                     </tr>
                 </tbody>
             </table>
+            <div class="col-lg-12 alert alert-success" id="payment-success-msg" style="margin-top:10px;" hidden>
+                Payment Successful
+            </div>
+
+            <div class="col-lg-12 alert alert-danger" id="payment-error-msg" style="margin-top:10px;" hidden>
+                Payment Failed
+            </div>
         </div>
         <br />
     </div>

@@ -23,6 +23,7 @@ namespace eCartModels
         public int Id { get; set; }
         public int StoreDetailId { get; set; }
         public string KioskName { get; set; }
+        public Nullable<short> SettingId { get; set; }
     
         public virtual StoreDetail StoreDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

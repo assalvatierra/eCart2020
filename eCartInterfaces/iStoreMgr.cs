@@ -59,6 +59,7 @@ namespace eCartInterfaces
 
         //Store Kiosks
         List<StoreKiosk> GetStoreKiosks(int storeId);
+        StoreKiosk GetStoreKiosk(int id);
 
         //Store User
         StoreUser GetStoreUser(string userId);

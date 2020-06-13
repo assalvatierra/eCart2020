@@ -11,25 +11,27 @@
         <div class="panel bordered" style="padding:10px 20px;min-width:400px;">
             <div class="form-group">
                 <label class="control-label"> Cart Id # : </label>
-                <input class="form-control input-sm" type="text" name="CartId" onkeypress="return isNumber(event)" />
+                <input class="form-control input-sm" type="text" name="CartId" id="CartId" onkeypress="return isNumber(event)" onclick="this.select()" value="0" />
                 <div class="btn-group" style="margin:5px 0px;">
                     <button class="btn btn-default" type="submit" value="Save"> Search </button>
                 </div>
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger", @id = "cart-error" })
+                </div>
             </div>
         </div>
-        
-            <div class="pull-right" style="margin-top:-10px;">
-                @if (ViewBag.StoreImage != null)
-                {
-                    var image = ViewBag.StoreImage;
-                    <img src="@image" class="store-logo" style="max-height:120px;" />
-                }
-                else
-                {
-                    <img src="~/img/placeholders/placeholder-product.png" class="store-logo login-image-side" />
-                }
-            </div>
+
+        <div class="pull-right" style="margin-top:-10px;">
+            @if (ViewBag.StoreImage != null)
+            {
+                var image = ViewBag.StoreImage;
+                <img src="@image" class="store-logo" style="max-height:120px;" />
+            }
+            else
+            {
+                <img src="~/img/placeholders/placeholder-product.png" class="store-logo login-image-side" />
+            }
+        </div>
     </div>
 }
 
@@ -38,7 +40,18 @@
 
 @section Scripts{
     <script src="~/Areas/Store/Scripts/CartDetails/ModalPayment.js"></script>
+    <script src="~/Areas/Store/Scripts/CartDetails/ModalCashierPayment.js"></script>
     <script>
+
+        $(document).ready(function () {
+            //initialize
+            $("#CartId").focus();
+            $("#CartId").select();
+
+            if ($("#cartId").text() != null) {
+                $("#payment-btn").focus();
+            }
+        });
 
         function AutoFillPaymentDetails(shopperName) {
             $("#payment-partyInfo").val(shopperName);
@@ -54,5 +67,6 @@
             }
             return true;
         }
+
     </script>
 }

@@ -618,6 +618,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="StoreDetailId" Type="int" Nullable="false" />
     <Property Name="KioskName" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="SettingId" Type="smallint" Nullable="true" />
   </EntityType>
   <EntityType Name="StoreKioskOrders">
     <Key>

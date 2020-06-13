@@ -111,6 +111,12 @@ namespace eCart.Areas.Shopper.Controllers
             try
             {
                 var cart = GetCartDetails();
+
+                if(cart == null)
+                {
+                    return false;
+                }
+
                 if (store.CartMgr.RemoveCartItem(cart,id))
                 {
                     return true;
