@@ -18,9 +18,9 @@ namespace eCart.Areas.Admin.Controllers
 
         private static List<SelectListItem> SettingsTypes = new List<SelectListItem>()
         {
-          new SelectListItem{Text = "1", Value = "1"},
-          new SelectListItem{Text = "2", Value = "2"},
-          new SelectListItem{Text = "3", Value = "3"}
+          new SelectListItem{Text = "Layout-A", Value = "1"},
+          new SelectListItem{Text = "Layout-B", Value = "2"},
+          new SelectListItem{Text = "Layout-C", Value = "3"}
         };
 
         // GET: Admin/StoreKiosks

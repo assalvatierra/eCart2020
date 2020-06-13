@@ -30,7 +30,21 @@
                         @Html.DisplayFor(modelItem => item.KioskName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.SettingId)
+                        @switch (item.SettingId)
+                        {
+                            case 1:
+                                <p>Layout-A</p>
+                                break;
+                            case 2:
+                                <p>Layout-B</p>
+                                break;
+                            case 3:
+                                <p>Layout-C</p>
+                                break;
+                            default:
+                                <p>NA</p>
+                                break;
+                        }
                     </td>
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
